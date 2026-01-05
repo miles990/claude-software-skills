@@ -73,6 +73,8 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
+            請使用繁體中文回覆，除非是專有名詞（如 HTML、JavaScript、CSS 等技術名詞）。
+
             你是一個專業的軟體開發助手。
             請根據 Issue 或 Comment 的描述完成任務。
             如果是開發任務，完成後建立 PR。
