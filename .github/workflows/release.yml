@@ -1,0 +1,79 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.claude-plugin/marketplace.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from marketplace.json
+        id: version
+        run: |
+          VERSION=$(jq -r '.metadata.version' .claude-plugin/marketplace.json)
+          echo "version=v$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if git rev-parse "${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get previous tag
+        id: prev_tag
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "tag=$PREV_TAG" >> $GITHUB_OUTPUT
+
+      - name: Generate release notes
+        id: release_notes
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
+          if [ -z "${{ steps.prev_tag.outputs.tag }}" ]; then
+            NOTES=$(git log --oneline -n 20)
+          else
+            NOTES=$(git log --oneline ${{ steps.prev_tag.outputs.tag }}..HEAD)
+          fi
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        if: steps.check_tag.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
+          body: |
+            ## Changes
+
+            ${{ steps.release_notes.outputs.notes }}
+
+            ## Installation
+
+            ```bash
+            git clone https://github.com/${{ github.repository }}.git
+            ```
+          draft: false
+          prerelease: false
+
+      - name: Skip release
+        if: steps.check_tag.outputs.exists == 'true'
+        run: echo "Tag ${{ steps.version.outputs.version }} already exists. Skipping release."

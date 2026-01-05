@@ -1,0 +1,51 @@
+# Claude
+.claude
+
+# macOS
+.DS_Store
+
+# Temporary files
+temp/
+*.tmp
+*.temp
+
+# Python
+pyproject.toml
+uv.lock
+.venv/
+.python-version
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Test outputs
+coverage/
+.nyc_output/
+.pytest_cache/
+
+# Logs
+*.log
+logs/

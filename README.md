@@ -1,6 +1,6 @@
 # Claude Software Skills
 
-> 265+ software development skills for Claude Code - from architecture to deployment
+> 47 modular software development skills for Claude Code - from architecture to deployment
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -9,139 +9,195 @@
 │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
 │   │   Software   │  │   Software   │  │ Development  │         │
 │   │    Design    │  │ Engineering  │  │    Stacks    │         │
-│   │    35+       │  │    45+       │  │     60+      │         │
+│   │      6       │  │      7       │  │      8       │         │
 │   └──────────────┘  └──────────────┘  └──────────────┘         │
 │                                                                 │
 │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
 │   │    Tools &   │  │   Domain     │  │ Programming  │         │
 │   │ Integrations │  │ Applications │  │  Languages   │         │
-│   │    30+       │  │    65+       │  │     70+      │         │
+│   │      6       │  │      8       │  │     12       │         │
 │   └──────────────┘  └──────────────┘  └──────────────┘         │
 │                                                                 │
-│              Total: 50+ domains, 305+ skills                   │
+│                   Total: 47 skill modules                       │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Features
 
-- **Zero Configuration** - Works out of the box with Claude Code
+- **MCP Compatible** - Works with Claude Code, Cursor, and other MCP clients
+- **Semantic Search** - Claude automatically finds relevant skills for your task
 - **Cross-Domain Integration** - Skills work together seamlessly
 - **Best Practices Built-In** - Each skill includes patterns and anti-patterns
-- **Searchable** - AI-friendly documentation for easy discovery
+- **Modular Architecture** - Use only what you need
+
+## Installation
+
+### Option 1: Claude Code (Recommended)
+
+```bash
+# Clone to your skills directory
+git clone https://github.com/user/claude-software-skills.git ~/.claude/skills/software-skills
+```
+
+Claude will automatically discover and use the skills when relevant to your tasks.
+
+### Option 2: With MCP Server
+
+This repository is compatible with [claude-skills-mcp](https://github.com/K-Dense-AI/claude-skills-mcp):
+
+```bash
+# Install the MCP server
+pip install claude-skills-mcp
+
+# Add this repository as a skill source
+# The server will load skills from ~/.claude/skills/
+```
+
+### Option 3: Cursor IDE
+
+Add to your Cursor MCP settings:
+```json
+{
+  "mcpServers": {
+    "software-skills": {
+      "command": "npx",
+      "args": ["-y", "claude-skills-mcp"],
+      "env": {
+        "SKILLS_PATH": "/path/to/claude-software-skills"
+      }
+    }
+  }
+}
+```
+
+### Option 4: Manual Reference
+
+Simply clone and reference the SKILL.md files in your prompts:
+```bash
+git clone https://github.com/user/claude-software-skills.git
+```
 
 ## Skill Categories
 
-### 1. Software Design (35+ skills)
-Architecture patterns, design patterns, API design, system design, data modeling, UX principles
+### 1. Software Design (6 skills)
+- `architecture-patterns` - Microservices, monolith, event-driven, hexagonal
+- `design-patterns` - GoF patterns, SOLID principles, DRY/KISS
+- `api-design` - REST, GraphQL, gRPC, OpenAPI
+- `system-design` - Scalability, high availability, distributed systems
+- `data-design` - Data modeling, normalization, schema design
+- `ux-principles` - Usability, accessibility, design systems
 
-### 2. Software Engineering (45+ skills)
-Code quality, testing strategies, DevOps/CI-CD, performance optimization, security practices, reliability engineering
+### 2. Software Engineering (7 skills)
+- `code-quality` - Clean code, refactoring, code review
+- `testing-strategies` - Unit, integration, E2E, TDD/BDD
+- `devops-cicd` - CI/CD pipelines, GitOps, infrastructure as code
+- `performance-optimization` - Profiling, caching, optimization
+- `security-practices` - OWASP, authentication, encryption
+- `reliability-engineering` - SRE, chaos engineering, observability
+- `documentation` - Technical writing, API docs, architecture docs
 
-### 3. Development Stacks (60+ skills)
-Frontend frameworks, backend frameworks, mobile development, databases, cloud platforms, AI/ML integration
+### 3. Development Stacks (8 skills)
+- `frontend` - React, Vue, Angular, Svelte, Next.js
+- `backend` - Node.js, Python, Go, Rust frameworks
+- `mobile` - React Native, Flutter, iOS, Android
+- `database` - PostgreSQL, MongoDB, Redis, Elasticsearch
+- `cloud-platforms` - AWS, GCP, Azure, Vercel
+- `ai-ml-integration` - LLM APIs, embeddings, vector DBs
+- `realtime-systems` - WebSocket, SSE, message queues
+- `edge-iot` - Edge computing, IoT protocols
 
-### 4. Tools & Integrations (30+ skills)
-Version control, project management, development environment, monitoring, API tools, automation
+### 4. Tools & Integrations (6 skills)
+- `git-workflows` - Branching strategies, hooks, conventional commits
+- `project-management` - Agile, Scrum, Kanban, issue tracking
+- `development-environment` - Docker, VS Code, debugging
+- `monitoring-logging` - Prometheus, Grafana, structured logging
+- `api-tools` - Postman, curl, API testing
+- `automation-scripts` - Make, npm scripts, task runners
 
-### 5. Domain Applications (65+ skills)
-Application patterns, e-commerce, SaaS platforms, content platforms, communication systems, developer tools, game development, desktop apps
+### 5. Domain Applications (8 skills)
+- `application-patterns` - MVC, CQRS, event sourcing
+- `e-commerce` - Shopping cart, payments, inventory
+- `saas-platforms` - Multi-tenancy, billing, user management
+- `content-platforms` - CMS, media handling, search
+- `communication-systems` - Email, notifications, chat
+- `developer-tools` - CLI tools, SDKs, plugins
+- `game-development` - Game loop, physics, rendering
+- `desktop-apps` - Electron, Tauri, native apps
 
-### 6. Programming Languages (70+ skills)
-JavaScript/TypeScript, Python, Go, Rust, Java/Kotlin, C#/.NET, C/C++, Ruby, PHP, Swift, Shell/Bash, SQL
+### 6. Programming Languages (12 skills)
+- `javascript-typescript` - Modern JS/TS, Node.js ecosystem
+- `python` - Python best practices, async, typing
+- `go` - Go idioms, concurrency, performance
+- `rust` - Ownership, lifetimes, safe concurrency
+- `java-kotlin` - JVM ecosystem, Spring, Android
+- `csharp-dotnet` - .NET ecosystem, ASP.NET, LINQ
+- `cpp` - Modern C++, memory management, performance
+- `ruby` - Ruby idioms, Rails, metaprogramming
+- `php` - Modern PHP, Laravel, Composer
+- `swift` - iOS/macOS development, SwiftUI
+- `shell-bash` - Scripting, automation, CLI tools
+- `sql` - Query optimization, database design
 
-## Quick Start
-
-### With Claude Code
-
-```bash
-# Clone the repository
-git clone https://github.com/user/claude-software-skills.git
-
-# The skills are automatically available in Claude Code
-```
-
-### Usage Examples
+## Usage Examples
 
 ```
 User: Help me design a microservices architecture for an e-commerce platform
 
-Claude: [Uses architecture-patterns + e-commerce + api-design skills]
+Claude: [Automatically uses architecture-patterns + e-commerce + api-design skills]
 ```
 
 ```
 User: Review this Python code for performance issues
 
-Claude: [Uses python + performance-optimization + code-quality skills]
+Claude: [Automatically uses python + performance-optimization + code-quality skills]
 ```
 
 ```
 User: Set up CI/CD for a React + Node.js monorepo
 
-Claude: [Uses devops-cicd + frontend + backend + version-control skills]
+Claude: [Automatically uses devops-cicd + frontend + backend + git-workflows skills]
 ```
 
 ## Directory Structure
 
 ```
 claude-software-skills/
-├── software-design/
-│   ├── architecture-patterns/
-│   ├── design-patterns/
-│   ├── api-design/
-│   ├── system-design/
-│   ├── data-design/
-│   └── ux-principles/
-├── software-engineering/
-│   ├── code-quality/
-│   ├── testing-strategies/
-│   ├── devops-cicd/
-│   ├── performance-optimization/
-│   ├── security-practices/
-│   ├── reliability-engineering/
-│   └── documentation/
-├── development-stacks/
-│   ├── frontend/
-│   ├── backend/
-│   ├── mobile/
-│   ├── database/
-│   ├── cloud-platforms/
-│   ├── ai-ml-integration/
-│   ├── realtime-systems/
-│   └── edge-iot/
-├── tools-integrations/
-│   ├── version-control/
-│   ├── project-management/
-│   ├── development-environment/
-│   ├── monitoring-observability/
-│   ├── api-tools/
-│   └── automation/
-├── domain-applications/
-│   ├── application-patterns/
-│   ├── e-commerce/
-│   ├── saas-platforms/
-│   ├── content-platforms/
-│   ├── communication-systems/
-│   ├── developer-tools/
-│   ├── game-development/
-│   └── desktop-apps/
-├── programming-languages/
-│   ├── javascript-typescript/
-│   ├── python/
-│   ├── go/
-│   ├── rust/
-│   ├── java-kotlin/
-│   ├── csharp-dotnet/
-│   ├── cpp/
-│   ├── ruby/
-│   ├── php/
-│   ├── swift/
-│   ├── shell-bash/
-│   └── sql/
+├── .claude-plugin/          # Plugin configuration
+│   └── marketplace.json
+├── .github/
+│   └── workflows/           # CI/CD automation
+│       └── release.yml
+├── software-design/         # Architecture & design skills
+├── software-engineering/    # Development practices
+├── development-stacks/      # Tech stack skills
+├── tools-integrations/      # Developer tools
+├── domain-applications/     # Domain-specific patterns
+├── programming-languages/   # Language-specific skills
 ├── docs/
-│   ├── software-skills.md
-│   └── examples.md
-└── .claude-plugin/
+│   ├── SKILL-TEMPLATE.md    # Template for new skills
+│   └── software-skills.md
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.md
 ```
+
+## How It Works
+
+Each skill module contains a `SKILL.md` file with:
+
+1. **Metadata** - Name, description, tags for semantic search
+2. **Key Concepts** - Core knowledge and terminology
+3. **Best Practices** - Recommended approaches with examples
+4. **Common Pitfalls** - What to avoid and why
+5. **Patterns & Anti-patterns** - Do's and don'ts with code
+6. **Tools & Resources** - Recommended tools and references
+7. **Decision Guide** - When to use this skill
+
+When you describe a task, Claude:
+1. Searches for relevant skills using semantic matching
+2. Loads the appropriate SKILL.md files
+3. Applies the knowledge to your specific context
+4. Follows best practices while avoiding common pitfalls
 
 ## Contributing
 
@@ -158,11 +214,10 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 MIT License - See [LICENSE](LICENSE) for details.
 
-Individual skills may reference external tools or libraries with their own licenses.
+## Related Projects
 
-## Acknowledgments
-
-Inspired by [claude-scientific-skills](https://github.com/K-Dense-AI/claude-scientific-skills)
+- [claude-scientific-skills](https://github.com/K-Dense-AI/claude-scientific-skills) - Scientific research skills
+- [claude-skills-mcp](https://github.com/K-Dense-AI/claude-skills-mcp) - MCP server for skill discovery
 
 ---
 

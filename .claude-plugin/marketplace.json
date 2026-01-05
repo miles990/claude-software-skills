@@ -1,0 +1,97 @@
+{
+  "name": "claude-software-skills",
+  "owner": {
+    "name": "Claude Software Skills",
+    "email": "opensource@example.com"
+  },
+  "metadata": {
+    "description": "Collection of software development skills",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "software-skills",
+      "description": "265+ software development skills for Claude Code",
+      "strict": false,
+      "skills": [
+        {
+          "category": "Software Design",
+          "skills": [
+            "architecture-patterns",
+            "design-patterns",
+            "api-design",
+            "system-design",
+            "data-design",
+            "ux-principles"
+          ]
+        },
+        {
+          "category": "Software Engineering",
+          "skills": [
+            "code-quality",
+            "testing-strategies",
+            "devops-cicd",
+            "performance-optimization",
+            "security-practices",
+            "reliability-engineering",
+            "documentation"
+          ]
+        },
+        {
+          "category": "Development Stacks",
+          "skills": [
+            "frontend",
+            "backend",
+            "mobile",
+            "database",
+            "cloud-platforms",
+            "ai-ml-integration",
+            "realtime-systems",
+            "edge-iot"
+          ]
+        },
+        {
+          "category": "Tools & Integrations",
+          "skills": [
+            "git-workflows",
+            "project-management",
+            "development-environment",
+            "monitoring-logging",
+            "api-tools",
+            "automation-scripts"
+          ]
+        },
+        {
+          "category": "Domain Applications",
+          "skills": [
+            "application-patterns",
+            "e-commerce",
+            "saas-platforms",
+            "content-platforms",
+            "communication-systems",
+            "developer-tools",
+            "game-development",
+            "desktop-apps"
+          ]
+        },
+        {
+          "category": "Programming Languages",
+          "skills": [
+            "javascript-typescript",
+            "python",
+            "go",
+            "rust",
+            "java-kotlin",
+            "csharp-dotnet",
+            "cpp",
+            "ruby",
+            "php",
+            "swift",
+            "shell-bash",
+            "sql"
+          ]
+        }
+      ]
+    }
+  ]
+}
