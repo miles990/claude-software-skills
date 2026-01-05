@@ -1,41 +1,41 @@
 # 🤖 Auto-Dev System
 
 > Human-in-the-Loop 自動化開發系統
+>
+> 使用 [claude-code-action](https://github.com/anthropics/claude-code-action) 官方 GitHub Action
 
-## 在其他專案使用
+## 快速安裝
 
-### 方式 1: 一鍵設定（推薦）
+### 方式 1: API Key
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/user/claude-software-skills/main/scripts/setup-auto-dev.sh | bash
+curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
 ```
 
-### 方式 2: 使用 Reusable Workflow
+安裝後：
+1. 到 https://console.anthropic.com/settings/keys 取得 API Key
+2. 設定 GitHub Secret：`ANTHROPIC_API_KEY`
 
-在你的專案建立 `.github/workflows/auto-dev.yml`：
+### 方式 2: Claude Max（推薦）
 
-```yaml
-name: 🤖 Auto-Dev
-
-on:
-  issues:
-    types: [labeled]
-  issue_comment:
-    types: [created]
-
-jobs:
-  auto-dev:
-    uses: user/claude-software-skills/.github/workflows/auto-dev-reusable.yml@main
-    secrets:
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+```bash
+curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
 ```
 
-### 方式 3: 複製 Workflow
+安裝後：
+```bash
+claude /install-github-app
+```
+這會自動設定 `CLAUDE_CODE_OAUTH_TOKEN`（費用包含在 Max 訂閱中）
 
-直接複製這些檔案到你的專案：
-- `.github/workflows/auto-dev.yml`
-- `.github/workflows/auto-dev-feedback.yml`
-- `.github/workflows/auto-dev-queue.yml`
+---
+
+## 比較
+
+| 方式 | 費用 | 設定難度 | 適合 |
+|------|------|----------|------|
+| API Key | 用量計費 | 簡單 | 一般開發者 |
+| Claude Max | 訂閱包含 | 需安裝 App | Max 訂閱用戶 |
 
 ---
 

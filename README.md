@@ -22,6 +22,38 @@
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+## 🤖 Auto-Dev: Automated Development Workflow
+
+一鍵設定 GitHub Actions 自動開發流程，讓 Claude 幫你完成開發任務。
+
+### 快速安裝
+
+**使用 API Key：**
+```bash
+curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
+```
+
+**使用 Claude Max（OAuth）：**
+```bash
+curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
+```
+
+### 安裝後設定
+
+| 版本 | 設定方式 |
+|------|----------|
+| API Key | 到 [console.anthropic.com](https://console.anthropic.com/settings/keys) 取得 Key，設定到 GitHub Secrets `ANTHROPIC_API_KEY` |
+| Claude Max | 執行 `claude /install-github-app` 自動設定 OAuth Token |
+
+### 使用方式
+
+- **Issue 觸發**：建立 Issue → 加上 `auto-dev` label
+- **留言觸發**：在任何 Issue/PR 留言 `@claude [指令]`
+
+詳細文檔：[AUTO-DEV.md](.github/AUTO-DEV.md)
+
+---
+
 ## Features
 
 - **MCP Compatible** - Works with Claude Code, Cursor, and other MCP clients
