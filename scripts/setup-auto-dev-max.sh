@@ -72,23 +72,22 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          prompt: |
+          # 使用 custom_instructions 而不是 prompt，保留預設行為
+          custom_instructions: |
             請使用繁體中文回覆，除非是專有名詞（如 HTML、JavaScript、CSS 等技術名詞）。
 
-            你是一個專業的軟體開發助手。
-            請根據 Issue 或 Comment 的描述完成任務。
-            如果是開發任務，完成後建立 PR。
-
-            ## 完成報告格式
-            任務完成後，請在回覆中包含：
+            完成任務後，在回覆中包含：
 
             ### 🛠️ 使用的工具與技能
-            - 列出完成此任務使用的程式語言/框架
-            - 使用的 CLI 工具或特殊技術
+            - 列出使用的程式語言/框架
+            - 使用的技術或方法
 
             ### 📝 任務摘要
             - 完成了什麼
             - 建立/修改了哪些檔案
+
+            ### 📚 Memory 更新
+            - 如果有學到新知識或遇到問題，更新 .github/memory/ 中的相關檔案
 EOF
 
 echo -e "${GREEN}✓ Workflow 建立完成${NC}"
