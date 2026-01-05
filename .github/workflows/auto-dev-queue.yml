@@ -1,0 +1,131 @@
+# ============================================================================
+# Auto-Dev Task Queue
+# ============================================================================
+# 管理多個待執行的目標：
+#   - 每小時檢查待處理的 auto-dev issues
+#   - 按優先級排序執行
+#   - 避免同時執行太多任務
+# ============================================================================
+
+name: 📋 Auto-Dev Queue
+
+on:
+  # 定時執行
+  schedule:
+    - cron: '0 * * * *'  # 每小時執行一次
+
+  # 手動觸發
+  workflow_dispatch:
+    inputs:
+      process_count:
+        description: '處理幾個任務'
+        required: false
+        type: number
+        default: 1
+
+jobs:
+  # =========================================================================
+  # 檢查並處理任務佇列
+  # =========================================================================
+  process-queue:
+    name: 📋 Process Queue
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check queue and trigger tasks
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const processCount = ${{ github.event.inputs.process_count || 1 }};
+
+            // 搜尋所有帶有 auto-dev label 但還沒有對應 PR 的 issues
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'auto-dev',
+              state: 'open',
+              sort: 'created',
+              direction: 'asc',
+              per_page: 20
+            });
+
+            console.log(`Found ${issues.length} open auto-dev issues`);
+
+            // 過濾已經有 PR 的 issues
+            const pendingIssues = [];
+            for (const issue of issues) {
+              // 檢查是否有連結的 PR
+              const { data: events } = await github.rest.issues.listEvents({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number
+              });
+
+              const hasLinkedPR = events.some(e =>
+                e.event === 'cross-referenced' &&
+                e.source?.issue?.pull_request
+              );
+
+              // 檢查是否有 "processing" label
+              const isProcessing = issue.labels.some(l =>
+                l.name === 'processing' || l.name === '⏳ processing'
+              );
+
+              if (!hasLinkedPR && !isProcessing) {
+                pendingIssues.push(issue);
+              }
+            }
+
+            console.log(`${pendingIssues.length} issues pending processing`);
+
+            // 按優先級排序
+            const priorityOrder = { 'priority:high': 0, 'priority:normal': 1, 'priority:low': 2 };
+            pendingIssues.sort((a, b) => {
+              const aPriority = a.labels.find(l => l.name.startsWith('priority:'))?.name || 'priority:normal';
+              const bPriority = b.labels.find(l => l.name.startsWith('priority:'))?.name || 'priority:normal';
+              return (priorityOrder[aPriority] || 1) - (priorityOrder[bPriority] || 1);
+            });
+
+            // 處理前 N 個
+            const toProcess = pendingIssues.slice(0, processCount);
+
+            for (const issue of toProcess) {
+              console.log(`Triggering auto-dev for issue #${issue.number}: ${issue.title}`);
+
+              // 加上 processing label
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: ['⏳ processing']
+              });
+
+              // 觸發 auto-dev workflow
+              await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'auto-dev.yml',
+                ref: 'main',
+                inputs: {
+                  goal: `Issue #${issue.number}: ${issue.title}\n\n${issue.body || ''}`,
+                  priority: issue.labels.find(l => l.name.startsWith('priority:'))?.name.split(':')[1] || 'normal'
+                }
+              });
+            }
+
+            // 輸出摘要
+            const summary = `
+            ## 📋 Auto-Dev Queue 處理完成
+
+            - 總待處理: ${pendingIssues.length}
+            - 本次處理: ${toProcess.length}
+            - 剩餘待處理: ${pendingIssues.length - toProcess.length}
+
+            ### 本次處理的 Issues
+            ${toProcess.map(i => `- #${i.number}: ${i.title}`).join('\n') || '無'}
+
+            ### 待處理佇列
+            ${pendingIssues.slice(processCount).map(i => `- #${i.number}: ${i.title}`).join('\n') || '無'}
+            `;
+
+            console.log(summary);

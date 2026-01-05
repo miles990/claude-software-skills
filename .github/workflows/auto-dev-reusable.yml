@@ -1,0 +1,240 @@
+# ============================================================================
+# Reusable Auto-Dev Workflow
+# ============================================================================
+# 其他專案可以直接呼叫這個 workflow，不需要複製程式碼
+#
+# 使用方式（在其他專案的 .github/workflows/auto-dev.yml）：
+#
+#   name: Auto-Dev
+#   on:
+#     issues:
+#       types: [labeled]
+#     issue_comment:
+#       types: [created]
+#
+#   jobs:
+#     auto-dev:
+#       uses: user/claude-software-skills/.github/workflows/auto-dev-reusable.yml@main
+#       secrets:
+#         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+#
+# ============================================================================
+
+name: 🤖 Auto-Dev (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      goal:
+        description: '開發目標'
+        required: false
+        type: string
+      max_iterations:
+        description: '最大迭代次數'
+        required: false
+        type: number
+        default: 10
+      skills_repo:
+        description: 'Skills 來源 repo（可選）'
+        required: false
+        type: string
+        default: ''
+      custom_instructions:
+        description: '額外指示'
+        required: false
+        type: string
+        default: ''
+
+    secrets:
+      ANTHROPIC_API_KEY:
+        required: true
+      GH_PAT:
+        required: false
+
+    outputs:
+      pr_number:
+        description: '建立的 PR 號碼'
+        value: ${{ jobs.evolve.outputs.pr_number }}
+      pr_url:
+        description: 'PR URL'
+        value: ${{ jobs.evolve.outputs.pr_url }}
+      has_changes:
+        description: '是否有變更'
+        value: ${{ jobs.evolve.outputs.has_changes }}
+
+jobs:
+  parse:
+    name: 📋 Parse
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      goal: ${{ steps.check.outputs.goal }}
+      issue_number: ${{ steps.check.outputs.issue_number }}
+
+    steps:
+      - name: Parse trigger
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const event = context.eventName;
+            let shouldRun = false;
+            let goal = '${{ inputs.goal }}' || '';
+            let issueNumber = null;
+
+            // Issue labeled
+            if (event === 'issues' && context.payload.action === 'labeled') {
+              const label = context.payload.label.name;
+              if (label === 'auto-dev' || label.includes('auto-dev')) {
+                shouldRun = true;
+                goal = context.payload.issue.title + '\n\n' + context.payload.issue.body;
+                issueNumber = context.payload.issue.number;
+              }
+            }
+
+            // Comment command
+            if (event === 'issue_comment') {
+              const comment = context.payload.comment.body;
+              const match = comment.match(/^\/evolve\s+(.+)/s);
+              if (match) {
+                shouldRun = true;
+                goal = match[1].trim();
+                issueNumber = context.payload.issue.number;
+              }
+            }
+
+            // Manual/workflow_call with goal
+            if (goal && !shouldRun) {
+              shouldRun = true;
+            }
+
+            core.setOutput('should_run', shouldRun);
+            core.setOutput('goal', goal);
+            core.setOutput('issue_number', issueNumber);
+
+  evolve:
+    name: 🧬 Evolve
+    needs: parse
+    if: needs.parse.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    outputs:
+      pr_number: ${{ steps.create-pr.outputs.pr_number }}
+      pr_url: ${{ steps.create-pr.outputs.pr_url }}
+      has_changes: ${{ steps.check-changes.outputs.has_changes }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup
+        id: setup
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          ISSUE="${{ needs.parse.outputs.issue_number }}"
+
+          if [ -n "$ISSUE" ]; then
+            BRANCH="auto-dev/issue-${ISSUE}-${TIMESTAMP}"
+          else
+            BRANCH="auto-dev/run-${TIMESTAMP}"
+          fi
+
+          echo "branch=${BRANCH}" >> $GITHUB_OUTPUT
+
+          git checkout -b "$BRANCH"
+          git config user.name "Auto-Dev Bot"
+          git config user.email "auto-dev[bot]@users.noreply.github.com"
+
+      - name: Init memory
+        run: |
+          mkdir -p .github/memory/{learnings,failures,decisions,patterns,strategies}
+
+          if [ ! -f .github/memory/index.md ]; then
+            echo "# Project Memory" > .github/memory/index.md
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Clone skills (optional)
+        if: inputs.skills_repo != ''
+        run: |
+          git clone --depth 1 https://github.com/${{ inputs.skills_repo }} /tmp/skills
+
+          # 複製 skills 到本地（如果需要）
+          if [ -d /tmp/skills/.claude/skills ]; then
+            mkdir -p .claude/skills
+            cp -r /tmp/skills/.claude/skills/* .claude/skills/
+          fi
+
+      - name: Run evolve
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GOAL: ${{ needs.parse.outputs.goal }}
+          CUSTOM: ${{ inputs.custom_instructions }}
+        run: |
+          PROMPT="/evolve ${GOAL}"
+
+          if [ -n "$CUSTOM" ]; then
+            PROMPT="${PROMPT}\n\n額外指示：${CUSTOM}"
+          fi
+
+          claude --dangerously-skip-permissions \
+                 --max-turns 50 \
+                 "$PROMPT" 2>&1 | tee execution.log
+
+      - name: Check changes
+        id: check-changes
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit & Push
+        if: steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          git commit -m "feat: Auto-dev execution
+
+          Goal: $(echo '${{ needs.parse.outputs.goal }}' | head -1)
+
+          🤖 Generated by Auto-Dev"
+          git push origin "${{ steps.setup.outputs.branch }}"
+
+      - name: Create PR
+        id: create-pr
+        if: steps.check-changes.outputs.has_changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = ${{ needs.parse.outputs.issue_number || 'null' }};
+            const goal = `${{ needs.parse.outputs.goal }}`.split('\n')[0];
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🤖 Auto-Dev: ${goal.substring(0, 80)}`,
+              body: `## 🤖 Auto-Dev PR\n\n${issue ? `Closes #${issue}` : ''}\n\n### Goal\n${goal}`,
+              head: '${{ steps.setup.outputs.branch }}',
+              base: 'main'
+            });
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              labels: ['🤖 auto-dev']
+            });
+
+            core.setOutput('pr_number', pr.number);
+            core.setOutput('pr_url', pr.html_url);

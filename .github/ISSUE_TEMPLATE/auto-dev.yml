@@ -1,0 +1,68 @@
+name: 🤖 Auto-Dev Task
+description: 建立一個自動開發任務
+title: "[Auto-Dev] "
+labels: ["auto-dev"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🤖 Auto-Dev 任務
+        描述你的開發目標，Bot 會自動執行並建立 PR。
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目標
+      description: 清楚描述你想要達成的目標
+      placeholder: |
+        例如：
+        - 實作用戶登入功能，支援 Email + 密碼
+        - 優化首頁載入速度，目標 < 2 秒
+        - 重構 UserService，改用 Repository Pattern
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 驗收標準
+      description: 如何判斷任務完成？
+      placeholder: |
+        - [ ] 功能正常運作
+        - [ ] 有單元測試
+        - [ ] 通過 CI
+    validations:
+      required: false
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: 約束條件
+      description: 有什麼技術限制或偏好？
+      placeholder: |
+        - 使用 TypeScript
+        - 不要新增依賴
+        - 遵循現有的程式碼風格
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 優先級
+      options:
+        - normal
+        - high
+        - low
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: 確認
+      options:
+        - label: 我理解 Bot 會自動修改程式碼並建立 PR
+          required: true
+        - label: 我會審查 PR 後再合併
+          required: true

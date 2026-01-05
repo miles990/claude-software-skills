@@ -1,0 +1,460 @@
+# ============================================================================
+# Auto Development Workflow
+# ============================================================================
+# 觸發方式：
+#   1. Issue 加上 "auto-dev" label
+#   2. PR comment 包含 "/evolve" 命令
+#   3. 手動觸發 (workflow_dispatch)
+#
+# 流程：
+#   Issue/Command → Claude Code + Evolve → PR → 人類審查 → 記憶更新
+# ============================================================================
+
+name: 🤖 Auto Development
+
+on:
+  # 觸發點 1: Issue 標記
+  issues:
+    types: [labeled]
+
+  # 觸發點 2: Issue/PR Comment 命令
+  issue_comment:
+    types: [created]
+
+  # 觸發點 3: 手動觸發
+  workflow_dispatch:
+    inputs:
+      goal:
+        description: '開發目標'
+        required: true
+        type: string
+      priority:
+        description: '優先級'
+        required: false
+        type: choice
+        options:
+          - normal
+          - high
+          - low
+        default: normal
+      max_iterations:
+        description: '最大迭代次數'
+        required: false
+        type: number
+        default: 10
+
+# 確保同時只有一個自動開發任務運行
+concurrency:
+  group: auto-dev-${{ github.event.issue.number || github.run_id }}
+  cancel-in-progress: false
+
+env:
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  NODE_ENV: production
+
+jobs:
+  # =========================================================================
+  # Job 1: 解析觸發條件
+  # =========================================================================
+  parse-trigger:
+    name: 📋 Parse Trigger
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      goal: ${{ steps.check.outputs.goal }}
+      issue_number: ${{ steps.check.outputs.issue_number }}
+      trigger_type: ${{ steps.check.outputs.trigger_type }}
+      priority: ${{ steps.check.outputs.priority }}
+      max_iterations: ${{ steps.check.outputs.max_iterations }}
+
+    steps:
+      - name: Check trigger conditions
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const event = context.eventName;
+            let shouldRun = false;
+            let goal = '';
+            let issueNumber = null;
+            let triggerType = '';
+            let priority = 'normal';
+            let maxIterations = 10;
+
+            // Case 1: Issue labeled with "auto-dev"
+            if (event === 'issues' && context.payload.action === 'labeled') {
+              const label = context.payload.label.name;
+              if (label === 'auto-dev' || label === '🤖 auto-dev') {
+                shouldRun = true;
+                goal = context.payload.issue.title + '\n\n' + context.payload.issue.body;
+                issueNumber = context.payload.issue.number;
+                triggerType = 'issue_label';
+
+                // 檢查是否有優先級 label
+                const labels = context.payload.issue.labels.map(l => l.name);
+                if (labels.includes('priority:high')) priority = 'high';
+                if (labels.includes('priority:low')) priority = 'low';
+              }
+            }
+
+            // Case 2: Comment with /evolve command
+            if (event === 'issue_comment' && context.payload.action === 'created') {
+              const comment = context.payload.comment.body;
+              const evolveMatch = comment.match(/^\/evolve\s+(.+)/s);
+
+              if (evolveMatch) {
+                shouldRun = true;
+                goal = evolveMatch[1].trim();
+                issueNumber = context.payload.issue.number;
+                triggerType = 'comment_command';
+
+                // 解析可選參數
+                const priorityMatch = comment.match(/--priority[=\s]+(\w+)/);
+                if (priorityMatch) priority = priorityMatch[1];
+
+                const iterMatch = comment.match(/--max-iterations[=\s]+(\d+)/);
+                if (iterMatch) maxIterations = parseInt(iterMatch[1]);
+              }
+            }
+
+            // Case 3: Manual dispatch
+            if (event === 'workflow_dispatch') {
+              shouldRun = true;
+              goal = context.payload.inputs.goal;
+              triggerType = 'manual';
+              priority = context.payload.inputs.priority || 'normal';
+              maxIterations = parseInt(context.payload.inputs.max_iterations) || 10;
+            }
+
+            core.setOutput('should_run', shouldRun);
+            core.setOutput('goal', goal);
+            core.setOutput('issue_number', issueNumber);
+            core.setOutput('trigger_type', triggerType);
+            core.setOutput('priority', priority);
+            core.setOutput('max_iterations', maxIterations);
+
+            console.log(`Trigger: ${triggerType}, Should Run: ${shouldRun}`);
+            if (goal) console.log(`Goal: ${goal.substring(0, 100)}...`);
+
+  # =========================================================================
+  # Job 2: 執行自動開發
+  # =========================================================================
+  evolve:
+    name: 🧬 Evolve
+    needs: parse-trigger
+    if: needs.parse-trigger.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60  # 最長執行 1 小時
+
+    outputs:
+      branch_name: ${{ steps.setup.outputs.branch_name }}
+      has_changes: ${{ steps.check-changes.outputs.has_changes }}
+      summary: ${{ steps.evolve.outputs.summary }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup environment
+        id: setup
+        run: |
+          # 生成分支名稱
+          ISSUE_NUM="${{ needs.parse-trigger.outputs.issue_number }}"
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+
+          if [ -n "$ISSUE_NUM" ]; then
+            BRANCH_NAME="auto-dev/issue-${ISSUE_NUM}-${TIMESTAMP}"
+          else
+            BRANCH_NAME="auto-dev/manual-${TIMESTAMP}"
+          fi
+
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+
+          # 建立並切換分支
+          git checkout -b "$BRANCH_NAME"
+
+          # 設定 Git 用戶
+          git config user.name "Auto-Dev Bot"
+          git config user.email "auto-dev-bot@users.noreply.github.com"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code
+        run: |
+          npm install -g @anthropic-ai/claude-code
+
+      - name: Initialize memory system
+        run: |
+          # 確保記憶目錄存在
+          mkdir -p .github/memory/{learnings,failures,decisions,patterns,strategies}
+
+          # 初始化 index.md（如果不存在）
+          if [ ! -f .github/memory/index.md ]; then
+            cat > .github/memory/index.md << 'EOF'
+          # 專案記憶索引
+
+          > 自動維護，請勿手動編輯主要區塊
+
+          ## 最近學習
+          <!-- LEARNINGS_START -->
+          <!-- LEARNINGS_END -->
+
+          ## 重要決策
+          <!-- DECISIONS_START -->
+          <!-- DECISIONS_END -->
+
+          ## 失敗經驗
+          <!-- FAILURES_START -->
+          <!-- FAILURES_END -->
+
+          ## 推理模式
+          <!-- PATTERNS_START -->
+          <!-- PATTERNS_END -->
+
+          ## 標籤索引
+          <!-- TAGS_START -->
+          <!-- TAGS_END -->
+          EOF
+          fi
+
+      - name: Post start notification
+        if: needs.parse-trigger.outputs.issue_number
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = ${{ needs.parse-trigger.outputs.issue_number }};
+            const branchName = '${{ steps.setup.outputs.branch_name }}';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `## 🤖 Auto-Dev 開始執行
+
+            | 項目 | 值 |
+            |------|-----|
+            | 分支 | \`${branchName}\` |
+            | 優先級 | ${{ needs.parse-trigger.outputs.priority }} |
+            | 最大迭代 | ${{ needs.parse-trigger.outputs.max_iterations }} |
+            | 執行紀錄 | [查看 Action](${runUrl}) |
+
+            ⏳ 執行中，完成後會自動建立 PR...`
+            });
+
+      - name: Run Claude Code with Evolve
+        id: evolve
+        env:
+          GOAL: ${{ needs.parse-trigger.outputs.goal }}
+          MAX_ITERATIONS: ${{ needs.parse-trigger.outputs.max_iterations }}
+          ISSUE_NUMBER: ${{ needs.parse-trigger.outputs.issue_number }}
+        run: |
+          # 建立執行紀錄
+          EXECUTION_LOG=".github/memory/executions/$(date +%Y%m%d-%H%M%S).md"
+          mkdir -p .github/memory/executions
+
+          # 執行 Claude Code
+          # --dangerously-skip-permissions: CI 環境需要
+          # --max-turns: 限制對話輪數
+          # --output-format: 結構化輸出
+          claude --dangerously-skip-permissions \
+                 --max-turns 50 \
+                 --output-format json \
+                 "/evolve $GOAL" 2>&1 | tee execution.log
+
+          # 提取執行摘要
+          SUMMARY=$(tail -50 execution.log | head -20)
+          echo "summary<<EOF" >> $GITHUB_OUTPUT
+          echo "$SUMMARY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected:"
+            git diff --cached --stat
+          fi
+
+      - name: Commit changes
+        if: steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          ISSUE_NUM="${{ needs.parse-trigger.outputs.issue_number }}"
+
+          # Commit message
+          if [ -n "$ISSUE_NUM" ]; then
+            COMMIT_MSG="feat: Auto-dev for issue #${ISSUE_NUM}
+
+          Goal: $(echo '${{ needs.parse-trigger.outputs.goal }}' | head -1)
+
+          🤖 Generated by Auto-Dev Bot
+          See: #${ISSUE_NUM}"
+          else
+            COMMIT_MSG="feat: Auto-dev execution
+
+          Goal: $(echo '${{ needs.parse-trigger.outputs.goal }}' | head -1)
+
+          🤖 Generated by Auto-Dev Bot"
+          fi
+
+          git commit -m "$COMMIT_MSG"
+          git push origin "${{ steps.setup.outputs.branch_name }}"
+
+  # =========================================================================
+  # Job 3: 建立 Pull Request
+  # =========================================================================
+  create-pr:
+    name: 📝 Create PR
+    needs: [parse-trigger, evolve]
+    if: needs.evolve.outputs.has_changes == 'true'
+    runs-on: ubuntu-latest
+
+    outputs:
+      pr_number: ${{ steps.create-pr.outputs.pr_number }}
+      pr_url: ${{ steps.create-pr.outputs.pr_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.evolve.outputs.branch_name }}
+
+      - name: Create Pull Request
+        id: create-pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = ${{ needs.parse-trigger.outputs.issue_number || 'null' }};
+            const branchName = '${{ needs.evolve.outputs.branch_name }}';
+            const goal = `${{ needs.parse-trigger.outputs.goal }}`.substring(0, 200);
+
+            // PR 標題
+            let title = '🤖 Auto-Dev: ';
+            if (issueNumber) {
+              title += `#${issueNumber} - ${goal.split('\n')[0]}`;
+            } else {
+              title += goal.split('\n')[0];
+            }
+
+            // PR 內容
+            let body = `## 🤖 Auto-Dev Pull Request
+
+            ### 目標
+            ${goal}
+
+            ### 執行摘要
+            \`\`\`
+            ${{ needs.evolve.outputs.summary }}
+            \`\`\`
+
+            ### 審查指南
+            - [ ] 程式碼品質檢查
+            - [ ] 測試覆蓋確認
+            - [ ] 安全性審查
+            - [ ] 文檔更新確認
+
+            ### 審查後操作
+            - ✅ **合併**: 直接 merge
+            - ✏️ **需要調整**: 留言說明，使用 \`/evolve [調整說明]\` 繼續
+            - ➕ **發現新需求**: 建立新 Issue 並加上 \`auto-dev\` label
+            - ❌ **拒絕**: Close PR 並說明原因
+
+            ---
+            `;
+
+            if (issueNumber) {
+              body += `\nCloses #${issueNumber}`;
+            }
+
+            body += `\n\n🤖 Generated by [Auto-Dev Bot]`;
+
+            // 建立 PR
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title.substring(0, 256),
+              body: body,
+              head: branchName,
+              base: 'main',
+              draft: false
+            });
+
+            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
+
+            // 加上 labels
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              labels: ['🤖 auto-dev', 'needs-review']
+            });
+
+            // 如果有對應的 Issue，加上連結
+            if (issueNumber) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: `## ✅ Auto-Dev 完成！
+
+            PR 已建立：#${pr.number}
+
+            請審查並決定：
+            - ✅ 合併 PR
+            - ✏️ 留言調整目標
+            - ❌ 關閉並說明原因`
+              });
+            }
+
+            core.setOutput('pr_number', pr.number);
+            core.setOutput('pr_url', pr.html_url);
+
+  # =========================================================================
+  # Job 4: 通知（無變更時）
+  # =========================================================================
+  notify-no-changes:
+    name: 📢 Notify No Changes
+    needs: [parse-trigger, evolve]
+    if: needs.evolve.outputs.has_changes == 'false'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Post no-changes notification
+        if: needs.parse-trigger.outputs.issue_number
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = ${{ needs.parse-trigger.outputs.issue_number }};
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `## ⚠️ Auto-Dev 完成但無變更
+
+            執行完成，但沒有產生任何程式碼變更。
+
+            可能原因：
+            - 目標已經達成
+            - 目標描述不夠明確
+            - 遇到無法自動解決的問題
+
+            ### 執行摘要
+            \`\`\`
+            ${{ needs.evolve.outputs.summary }}
+            \`\`\`
+
+            請檢查目標描述並重試，或使用 \`/evolve [更明確的目標]\` 重新執行。`
+            });
