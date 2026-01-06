@@ -63,46 +63,46 @@ my-skill/
 
 ---
 
-### P1: 高價值 (12 skills)
+### P1: 高價值 (12 skills) ✅
 
-**預估工作量：3-4 小時**
+**狀態：已完成** (45 檔案, 4169 行)
 
 #### software-engineering/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| testing-strategies | 532 | `templates/` | jest.config.ts, vitest.config.ts, pytest.ini |
-| code-quality | 501 | `templates/` | eslint.config.js, .prettierrc, .editorconfig |
-| security-practices | 486 | `templates/` | helmet-config.js, csp-policy.json |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| testing-strategies | 532 | `templates/` | jest.config.ts, vitest.config.ts, pytest.ini | ✅ |
+| code-quality | 501 | `templates/` | eslint.config.js, .prettierrc, .editorconfig | ✅ |
+| security-practices | 486 | `templates/` | helmet-config.js, csp-policy.json, .env.example | ✅ |
 
 #### development-stacks/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| database | 644 | `templates/` | migration.sql, schema.prisma, docker-compose.db.yml |
-| cloud-platforms | 540 | `templates/` | main.tf, cdk-stack.ts, serverless.yml |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| database | 644 | `templates/` | schema.prisma, migration.sql, docker-compose.db.yml | ✅ |
+| cloud-platforms | 540 | `templates/` | main.tf, cdk-stack.ts, serverless.yml | ✅ |
 
 #### tools-integrations/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| automation-scripts | 570 | `templates/` | Makefile.example, turbo.json |
-| development-environment | 610 | `templates/` | .vscode/settings.json, devcontainer.json |
-| monitoring-logging | 500 | `templates/` | prometheus.yml, grafana-dashboard.json |
-| project-management | 438 | `templates/` | ISSUE_TEMPLATE.md, PULL_REQUEST_TEMPLATE.md |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| automation-scripts | 570 | `templates/` | Makefile.example, turbo.json | ✅ |
+| development-environment | 610 | `templates/` | .vscode/settings.json, extensions.json, devcontainer.json | ✅ |
+| monitoring-logging | 500 | `templates/` | prometheus.yml, grafana-dashboard.json, docker-compose.monitoring.yml | ✅ |
+| project-management | 438 | `templates/` | ISSUE_TEMPLATE/, PULL_REQUEST_TEMPLATE.md | ✅ |
 
 #### software-design/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| api-design | 463 | `templates/` | openapi.yaml, graphql.schema |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| api-design | 463 | `templates/` | openapi.yaml, schema.graphql | ✅ |
 
 #### programming-languages/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| javascript-typescript | 536 | `templates/` | tsconfig.json, package.json |
-| python | 467 | `templates/` | pyproject.toml, setup.cfg |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| javascript-typescript | 536 | `templates/` | tsconfig.json, tsconfig.react.json, package.json | ✅ |
+| python | 467 | `templates/` | pyproject.toml, requirements.txt, requirements-dev.txt | ✅ |
 
 ---
 
