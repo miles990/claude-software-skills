@@ -1,0 +1,99 @@
+// Prisma Schema Template
+// Usage: Copy to prisma/schema.prisma
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or "mysql", "sqlite", "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// ===========================================
+// User & Authentication
+// ===========================================
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?  // Hashed password
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  posts    Post[]
+  sessions Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// ===========================================
+// Example Domain Models
+// ===========================================
+
+model Post {
+  id          String    @id @default(cuid())
+  title       String
+  content     String?
+  published   Boolean   @default(false)
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id])
+  categories  Category[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([authorId])
+  @@map("posts")
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  posts Post[]
+
+  @@map("categories")
+}
+
+// ===========================================
+// Audit / Soft Delete Pattern
+// ===========================================
+
+// Add these fields for audit trail:
+// createdAt   DateTime  @default(now())
+// updatedAt   DateTime  @updatedAt
+// deletedAt   DateTime? // For soft delete
+
+// ===========================================
+// Common Patterns
+// ===========================================
+
+// UUID primary key:
+// id String @id @default(uuid())
+
+// Auto-increment:
+// id Int @id @default(autoincrement())
+
+// JSON field (PostgreSQL):
+// metadata Json?
+
+// Decimal for money:
+// price Decimal @db.Decimal(10, 2)

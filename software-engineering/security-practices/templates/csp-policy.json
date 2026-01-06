@@ -1,0 +1,65 @@
+{
+  "_comment": "Content Security Policy Template - Adapt directives to your needs",
+  "_usage": "Use with helmet.js or as HTTP header value",
+
+  "strict": {
+    "_description": "Strict policy for high-security applications",
+    "default-src": ["'self'"],
+    "script-src": ["'self'"],
+    "style-src": ["'self'"],
+    "img-src": ["'self'", "data:"],
+    "font-src": ["'self'"],
+    "connect-src": ["'self'"],
+    "frame-src": ["'none'"],
+    "object-src": ["'none'"],
+    "base-uri": ["'self'"],
+    "form-action": ["'self'"],
+    "frame-ancestors": ["'none'"],
+    "upgrade-insecure-requests": true
+  },
+
+  "moderate": {
+    "_description": "Balanced policy for typical web apps",
+    "default-src": ["'self'"],
+    "script-src": ["'self'", "'unsafe-inline'"],
+    "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+    "img-src": ["'self'", "data:", "https:"],
+    "font-src": ["'self'", "https://fonts.gstatic.com"],
+    "connect-src": ["'self'", "https://api.example.com"],
+    "frame-src": ["https://www.youtube.com"],
+    "object-src": ["'none'"],
+    "base-uri": ["'self'"],
+    "form-action": ["'self'"]
+  },
+
+  "spa": {
+    "_description": "Policy for Single Page Applications",
+    "default-src": ["'self'"],
+    "script-src": ["'self'"],
+    "style-src": ["'self'", "'unsafe-inline'"],
+    "img-src": ["'self'", "data:", "blob:", "https:"],
+    "font-src": ["'self'", "data:"],
+    "connect-src": ["'self'", "wss:", "https:"],
+    "worker-src": ["'self'", "blob:"],
+    "frame-src": ["'self'"],
+    "object-src": ["'none'"],
+    "base-uri": ["'self'"]
+  },
+
+  "report-only": {
+    "_description": "Use Content-Security-Policy-Report-Only header for testing",
+    "_header": "Content-Security-Policy-Report-Only",
+    "report-uri": ["/csp-report"],
+    "report-to": ["csp-endpoint"]
+  },
+
+  "common-third-party": {
+    "_description": "Common third-party services to whitelist",
+    "google-analytics": ["https://www.google-analytics.com", "https://www.googletagmanager.com"],
+    "google-fonts": ["https://fonts.googleapis.com", "https://fonts.gstatic.com"],
+    "stripe": ["https://js.stripe.com", "https://api.stripe.com"],
+    "cloudflare": ["https://cdnjs.cloudflare.com"],
+    "jsdelivr": ["https://cdn.jsdelivr.net"],
+    "unpkg": ["https://unpkg.com"]
+  }
+}

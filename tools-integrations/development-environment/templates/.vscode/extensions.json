@@ -1,0 +1,61 @@
+{
+  "recommendations": [
+    // ===========================================
+    // Essential
+    // ===========================================
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+
+    // ===========================================
+    // TypeScript / JavaScript
+    // ===========================================
+    "ms-vscode.vscode-typescript-next",
+    "yoavbls.pretty-ts-errors",
+    "streetsidesoftware.code-spell-checker",
+
+    // ===========================================
+    // Git
+    // ===========================================
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+
+    // ===========================================
+    // Productivity
+    // ===========================================
+    "christian-kohler.path-intellisense",
+    "visualstudioexptteam.vscodeintellicode",
+    "usernamehw.errorlens",
+    "gruntfuggly.todo-tree",
+
+    // ===========================================
+    // Testing
+    // ===========================================
+    "vitest.explorer",
+    "orta.vscode-jest",
+
+    // ===========================================
+    // Docker & DevContainers
+    // ===========================================
+    "ms-azuretools.vscode-docker",
+    "ms-vscode-remote.remote-containers",
+
+    // ===========================================
+    // API Development
+    // ===========================================
+    "humao.rest-client",
+    "42crunch.vscode-openapi",
+
+    // ===========================================
+    // AI Assistants
+    // ===========================================
+    "github.copilot",
+    "saoudrizwan.claude-dev",
+
+    // ===========================================
+    // Themes (Optional)
+    // ===========================================
+    "pkief.material-icon-theme"
+  ],
+  "unwantedRecommendations": []
+}

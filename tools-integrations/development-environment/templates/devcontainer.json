@@ -1,0 +1,89 @@
+{
+  // ===========================================
+  // Dev Container Configuration
+  // Usage: Copy to .devcontainer/devcontainer.json
+  // ===========================================
+  "name": "Node.js Development",
+
+  // Use pre-built image or build from Dockerfile
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20",
+
+  // Or build from Dockerfile:
+  // "build": {
+  //   "dockerfile": "Dockerfile",
+  //   "context": ".."
+  // },
+
+  // ===========================================
+  // Features (Additional Tools)
+  // ===========================================
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/aws-cli:1": {}
+  },
+
+  // ===========================================
+  // Port Forwarding
+  // ===========================================
+  "forwardPorts": [3000, 5432, 6379],
+  "portsAttributes": {
+    "3000": { "label": "App", "onAutoForward": "notify" },
+    "5432": { "label": "PostgreSQL", "onAutoForward": "silent" },
+    "6379": { "label": "Redis", "onAutoForward": "silent" }
+  },
+
+  // ===========================================
+  // VS Code Settings
+  // ===========================================
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens",
+        "github.copilot"
+      ]
+    }
+  },
+
+  // ===========================================
+  // Lifecycle Scripts
+  // ===========================================
+  "postCreateCommand": "npm ci",
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+
+  // ===========================================
+  // Environment Variables
+  // ===========================================
+  "containerEnv": {
+    "NODE_ENV": "development"
+  },
+
+  // ===========================================
+  // Mount Points
+  // ===========================================
+  "mounts": [
+    "source=${localWorkspaceFolder}/.env,target=${containerWorkspaceFolder}/.env,type=bind,consistency=cached"
+  ],
+
+  // ===========================================
+  // User Settings
+  // ===========================================
+  "remoteUser": "node",
+
+  // ===========================================
+  // Docker Compose (for multi-container setup)
+  // ===========================================
+  // Uncomment to use docker-compose:
+  // "dockerComposeFile": "docker-compose.yml",
+  // "service": "app",
+  // "workspaceFolder": "/workspace"
+}

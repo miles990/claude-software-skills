@@ -1,0 +1,119 @@
+# Makefile Template
+# Usage: Copy to Makefile (no extension)
+# Run: make <target>
+
+.PHONY: help install dev build test lint format clean deploy
+
+# Default target
+.DEFAULT_GOAL := help
+
+# ===========================================
+# Variables
+# ===========================================
+PROJECT_NAME := myproject
+NODE_ENV ?= development
+DOCKER_IMAGE := $(PROJECT_NAME):latest
+
+# ===========================================
+# Help
+# ===========================================
+help: ## Show this help message
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
+
+# ===========================================
+# Development
+# ===========================================
+install: ## Install dependencies
+	npm ci
+
+dev: ## Start development server
+	npm run dev
+
+build: ## Build for production
+	npm run build
+
+# ===========================================
+# Quality
+# ===========================================
+test: ## Run tests
+	npm test
+
+test-watch: ## Run tests in watch mode
+	npm test -- --watch
+
+test-coverage: ## Run tests with coverage
+	npm test -- --coverage
+
+lint: ## Run linter
+	npm run lint
+
+lint-fix: ## Fix linting issues
+	npm run lint -- --fix
+
+format: ## Format code with Prettier
+	npm run format
+
+typecheck: ## Run TypeScript type checking
+	npx tsc --noEmit
+
+# ===========================================
+# Docker
+# ===========================================
+docker-build: ## Build Docker image
+	docker build -t $(DOCKER_IMAGE) .
+
+docker-run: ## Run Docker container
+	docker run -p 3000:3000 $(DOCKER_IMAGE)
+
+docker-push: ## Push Docker image to registry
+	docker push $(DOCKER_IMAGE)
+
+# ===========================================
+# Database
+# ===========================================
+db-migrate: ## Run database migrations
+	npx prisma migrate dev
+
+db-seed: ## Seed database
+	npx prisma db seed
+
+db-reset: ## Reset database
+	npx prisma migrate reset
+
+db-studio: ## Open Prisma Studio
+	npx prisma studio
+
+# ===========================================
+# Deployment
+# ===========================================
+deploy-staging: ## Deploy to staging
+	NODE_ENV=staging npm run deploy
+
+deploy-prod: ## Deploy to production
+	NODE_ENV=production npm run deploy
+
+# ===========================================
+# Utilities
+# ===========================================
+clean: ## Clean build artifacts
+	rm -rf dist node_modules/.cache coverage .next
+
+clean-all: clean ## Clean everything including node_modules
+	rm -rf node_modules
+
+update-deps: ## Update dependencies
+	npm update
+	npm outdated
+
+audit: ## Run security audit
+	npm audit
+
+# ===========================================
+# Git Hooks
+# ===========================================
+setup-hooks: ## Setup Git hooks
+	npx husky install
+	chmod +x .husky/*

@@ -1,0 +1,154 @@
+# Serverless Framework Configuration Template
+# Usage: Copy to serverless.yml
+# Install: npm install -g serverless
+
+service: my-service
+
+frameworkVersion: '3'
+
+# ===========================================
+# Provider Configuration
+# ===========================================
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+
+  # Environment variables
+  environment:
+    STAGE: ${self:provider.stage}
+    TABLE_NAME: ${self:service}-${self:provider.stage}
+
+  # IAM permissions
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - !GetAtt DynamoDBTable.Arn
+            - !Sub '${DynamoDBTable.Arn}/index/*'
+
+  # API Gateway
+  httpApi:
+    cors: true
+
+# ===========================================
+# Functions
+# ===========================================
+functions:
+  # REST API endpoints
+  getItems:
+    handler: src/handlers/items.getAll
+    events:
+      - httpApi:
+          path: /items
+          method: GET
+
+  getItem:
+    handler: src/handlers/items.getOne
+    events:
+      - httpApi:
+          path: /items/{id}
+          method: GET
+
+  createItem:
+    handler: src/handlers/items.create
+    events:
+      - httpApi:
+          path: /items
+          method: POST
+
+  updateItem:
+    handler: src/handlers/items.update
+    events:
+      - httpApi:
+          path: /items/{id}
+          method: PUT
+
+  deleteItem:
+    handler: src/handlers/items.remove
+    events:
+      - httpApi:
+          path: /items/{id}
+          method: DELETE
+
+  # Scheduled function
+  scheduledTask:
+    handler: src/handlers/scheduled.run
+    events:
+      - schedule: rate(1 hour)
+
+  # SQS trigger
+  processQueue:
+    handler: src/handlers/queue.process
+    events:
+      - sqs:
+          arn: !GetAtt ProcessingQueue.Arn
+          batchSize: 10
+
+# ===========================================
+# Resources (CloudFormation)
+# ===========================================
+resources:
+  Resources:
+    # DynamoDB Table
+    DynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-${self:provider.stage}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: sk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sk
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: sk
+                KeyType: HASH
+              - AttributeName: pk
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+
+    # SQS Queue
+    ProcessingQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:service}-${self:provider.stage}-queue
+        VisibilityTimeout: 300
+
+  Outputs:
+    ApiEndpoint:
+      Value: !Sub 'https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com'
+
+# ===========================================
+# Plugins
+# ===========================================
+plugins:
+  - serverless-offline
+  - serverless-esbuild
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    target: node20
+
+  serverless-offline:
+    httpPort: 3000

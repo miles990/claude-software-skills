@@ -1,0 +1,28 @@
+# Requirements Template
+# Usage: pip install -r requirements.txt
+
+# ===========================================
+# Core Dependencies
+# ===========================================
+pydantic>=2.0
+httpx>=0.25
+python-dotenv>=1.0
+
+# ===========================================
+# Web Framework (choose one)
+# ===========================================
+# fastapi>=0.109
+# flask>=3.0
+# django>=5.0
+
+# ===========================================
+# Database
+# ===========================================
+# sqlalchemy>=2.0
+# asyncpg>=0.29  # PostgreSQL async
+# redis>=5.0
+
+# ===========================================
+# Development (install with: pip install -r requirements-dev.txt)
+# ===========================================
+# See requirements-dev.txt

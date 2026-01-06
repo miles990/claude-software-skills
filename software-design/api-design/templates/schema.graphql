@@ -1,0 +1,218 @@
+# GraphQL Schema Template
+# Usage: Copy to schema.graphql or src/schema.graphql
+# Tools: Apollo Server, GraphQL Yoga, Pothos
+
+# ===========================================
+# Scalar Types
+# ===========================================
+
+scalar DateTime
+scalar UUID
+scalar JSON
+
+# ===========================================
+# Enums
+# ===========================================
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ItemStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+# ===========================================
+# Input Types
+# ===========================================
+
+input PaginationInput {
+  page: Int = 1
+  limit: Int = 20
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  name: String
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+  role: Role
+}
+
+input CreateItemInput {
+  title: String!
+  description: String
+  status: ItemStatus = DRAFT
+}
+
+input UpdateItemInput {
+  title: String
+  description: String
+  status: ItemStatus
+}
+
+input ItemFilterInput {
+  status: ItemStatus
+  authorId: UUID
+  search: String
+}
+
+input ItemSortInput {
+  field: ItemSortField!
+  order: SortOrder = DESC
+}
+
+enum ItemSortField {
+  CREATED_AT
+  UPDATED_AT
+  TITLE
+}
+
+# ===========================================
+# Types
+# ===========================================
+
+type User {
+  id: UUID!
+  email: String!
+  name: String
+  role: Role!
+  items: [Item!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Item {
+  id: UUID!
+  title: String!
+  description: String
+  status: ItemStatus!
+  author: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ===========================================
+# Pagination
+# ===========================================
+
+type PageInfo {
+  page: Int!
+  limit: Int!
+  total: Int!
+  totalPages: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type UserConnection {
+  nodes: [User!]!
+  pageInfo: PageInfo!
+}
+
+type ItemConnection {
+  nodes: [Item!]!
+  pageInfo: PageInfo!
+}
+
+# ===========================================
+# Query
+# ===========================================
+
+type Query {
+  # Users
+  me: User
+  user(id: UUID!): User
+  users(pagination: PaginationInput): UserConnection!
+
+  # Items
+  item(id: UUID!): Item
+  items(
+    pagination: PaginationInput
+    filter: ItemFilterInput
+    sort: ItemSortInput
+  ): ItemConnection!
+
+  # Health check
+  health: HealthStatus!
+}
+
+type HealthStatus {
+  status: String!
+  timestamp: DateTime!
+  version: String!
+}
+
+# ===========================================
+# Mutation
+# ===========================================
+
+type Mutation {
+  # Auth
+  login(email: String!, password: String!): AuthPayload!
+  register(input: CreateUserInput!): AuthPayload!
+  logout: Boolean!
+
+  # Users
+  updateUser(id: UUID!, input: UpdateUserInput!): User!
+  deleteUser(id: UUID!): Boolean!
+
+  # Items
+  createItem(input: CreateItemInput!): Item!
+  updateItem(id: UUID!, input: UpdateItemInput!): Item!
+  deleteItem(id: UUID!): Boolean!
+  publishItem(id: UUID!): Item!
+  archiveItem(id: UUID!): Item!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+# ===========================================
+# Subscription (Optional)
+# ===========================================
+
+type Subscription {
+  itemCreated: Item!
+  itemUpdated(id: UUID): Item!
+}
+
+# ===========================================
+# Directives (Custom)
+# ===========================================
+
+# Authentication directive
+directive @auth(
+  requires: Role = USER
+) on FIELD_DEFINITION
+
+# Rate limiting directive
+directive @rateLimit(
+  max: Int!
+  window: Int! # seconds
+) on FIELD_DEFINITION
+
+# Caching directive
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on FIELD_DEFINITION | OBJECT
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
