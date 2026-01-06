@@ -35,15 +35,18 @@ jobs:
               continue
             fi
 
-            # Check name field
-            if ! grep -q "^name:" "$skill"; then
-              echo "❌ Missing 'name' field: $skill"
+            # Extract frontmatter (lines between first --- and second ---)
+            FRONTMATTER=$(sed -n '2,/^---$/p' "$skill")
+
+            # Check name field in frontmatter only
+            if ! echo "$FRONTMATTER" | grep -q "^name:"; then
+              echo "❌ Missing 'name' field in frontmatter: $skill"
               ERRORS=$((ERRORS + 1))
             fi
 
-            # Check description field
-            if ! grep -q "^description:" "$skill"; then
-              echo "❌ Missing 'description' field: $skill"
+            # Check description field in frontmatter only
+            if ! echo "$FRONTMATTER" | grep -q "^description:"; then
+              echo "❌ Missing 'description' field in frontmatter: $skill"
               ERRORS=$((ERRORS + 1))
             fi
 
@@ -63,9 +66,17 @@ jobs:
         run: |
           echo "🔍 Checking for duplicate skill names..."
 
-          # Extract all skill names
-          NAMES=$(find . -name "SKILL.md" -type f -exec grep -h "^name:" {} \; | cut -d: -f2 | tr -d ' ' | sort)
-          DUPLICATES=$(echo "$NAMES" | uniq -d)
+          # Extract skill names from frontmatter only (between first --- and second ---)
+          NAMES=""
+          for skill in $(find . -name "SKILL.md" -type f); do
+            # Extract frontmatter and get name field
+            NAME=$(sed -n '2,/^---$/p' "$skill" | grep "^name:" | head -1 | cut -d: -f2 | tr -d ' ')
+            if [ -n "$NAME" ]; then
+              NAMES="$NAMES$NAME"$'\n'
+            fi
+          done
+
+          DUPLICATES=$(echo "$NAMES" | sort | uniq -d)
 
           if [ -n "$DUPLICATES" ]; then
             echo "❌ Duplicate skill names found:"
