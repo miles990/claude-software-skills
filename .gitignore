@@ -1,5 +1,6 @@
-# Claude
+# Claude (except skills)
 .claude
+!.claude/skills/
 
 # macOS
 .DS_Store

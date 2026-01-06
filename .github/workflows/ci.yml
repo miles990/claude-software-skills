@@ -1,0 +1,170 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-skills:
+    name: Validate Skills
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find all SKILL.md files
+        id: find-skills
+        run: |
+          SKILL_COUNT=$(find . -name "SKILL.md" -type f | wc -l)
+          echo "Found $SKILL_COUNT SKILL.md files"
+          echo "skill_count=$SKILL_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          echo "🔍 Validating SKILL.md files..."
+          ERRORS=0
+
+          for skill in $(find . -name "SKILL.md" -type f); do
+            # Check frontmatter exists
+            if ! head -1 "$skill" | grep -q "^---$"; then
+              echo "❌ Missing frontmatter: $skill"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+
+            # Check name field
+            if ! grep -q "^name:" "$skill"; then
+              echo "❌ Missing 'name' field: $skill"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # Check description field
+            if ! grep -q "^description:" "$skill"; then
+              echo "❌ Missing 'description' field: $skill"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            echo "✅ $skill"
+          done
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          if [ $ERRORS -gt 0 ]; then
+            echo "❌ Validation failed with $ERRORS error(s)"
+            exit 1
+          else
+            echo "✅ All ${{ steps.find-skills.outputs.skill_count }} skills validated successfully"
+          fi
+
+      - name: Check for duplicate skill names
+        run: |
+          echo "🔍 Checking for duplicate skill names..."
+
+          # Extract all skill names
+          NAMES=$(find . -name "SKILL.md" -type f -exec grep -h "^name:" {} \; | cut -d: -f2 | tr -d ' ' | sort)
+          DUPLICATES=$(echo "$NAMES" | uniq -d)
+
+          if [ -n "$DUPLICATES" ]; then
+            echo "❌ Duplicate skill names found:"
+            echo "$DUPLICATES"
+            exit 1
+          else
+            echo "✅ No duplicate skill names"
+          fi
+
+  markdown-lint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
+
+      - name: Create markdownlint config
+        run: |
+          cat > .markdownlint.json << 'EOF'
+          {
+            "default": true,
+            "MD013": false,
+            "MD033": false,
+            "MD041": false,
+            "MD024": false,
+            "MD036": false,
+            "MD040": false
+          }
+          EOF
+
+      - name: Run markdownlint on SKILL.md files
+        run: |
+          find . -name "SKILL.md" -type f | xargs markdownlint || true
+          echo "⚠️ Markdown lint completed (warnings only)"
+
+  structure-check:
+    name: Structure Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required files exist
+        run: |
+          echo "🔍 Checking required files..."
+          ERRORS=0
+
+          # Check README.md
+          if [ ! -f "README.md" ]; then
+            echo "❌ Missing README.md"
+            ERRORS=$((ERRORS + 1))
+          else
+            echo "✅ README.md exists"
+          fi
+
+          # Check LICENSE
+          if [ ! -f "LICENSE" ]; then
+            echo "❌ Missing LICENSE"
+            ERRORS=$((ERRORS + 1))
+          else
+            echo "✅ LICENSE exists"
+          fi
+
+          # Check CONTRIBUTING.md
+          if [ ! -f "CONTRIBUTING.md" ]; then
+            echo "❌ Missing CONTRIBUTING.md"
+            ERRORS=$((ERRORS + 1))
+          else
+            echo "✅ CONTRIBUTING.md exists"
+          fi
+
+          if [ $ERRORS -gt 0 ]; then
+            echo "❌ Structure check failed"
+            exit 1
+          else
+            echo "✅ All required files present"
+          fi
+
+      - name: Check category directories
+        run: |
+          echo "🔍 Checking category directories..."
+
+          EXPECTED_DIRS="software-design software-engineering development-stacks tools-integrations domain-applications programming-languages"
+
+          for dir in $EXPECTED_DIRS; do
+            if [ -d "$dir" ]; then
+              SKILL_COUNT=$(find "$dir" -name "SKILL.md" | wc -l)
+              echo "✅ $dir/ ($SKILL_COUNT skills)"
+            else
+              echo "⚠️ Missing directory: $dir/"
+            fi
+          done
