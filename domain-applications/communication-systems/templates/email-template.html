@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--
+  Responsive Email Template
+  Usage: Copy and customize for transactional/marketing emails
+  Compatible: Gmail, Outlook, Apple Mail, Yahoo
+
+  Variables to replace:
+  - {{preheader}} - Preview text
+  - {{logo_url}} - Company logo URL
+  - {{company_name}} - Company name
+  - {{headline}} - Main headline
+  - {{content}} - Main content
+  - {{cta_url}} - CTA button URL
+  - {{cta_text}} - CTA button text
+  - {{footer_address}} - Company address
+  - {{unsubscribe_url}} - Unsubscribe link
+  - {{current_year}} - Current year
+-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+  <title>{{company_name}}</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <style>
+    /* Reset styles */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+
+    /* Base styles */
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      background-color: #f4f4f4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      body, .email-bg { background-color: #1a1a1a !important; }
+      .email-container { background-color: #2d2d2d !important; }
+      h1, h2, h3, p, td { color: #ffffff !important; }
+      .footer-text { color: #999999 !important; }
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .fluid { max-width: 100% !important; height: auto !important; margin-left: auto !important; margin-right: auto !important; }
+      .stack-column { display: block !important; width: 100% !important; max-width: 100% !important; }
+      .stack-column-center { text-align: center !important; }
+      .center-on-narrow { text-align: center !important; display: block !important; margin-left: auto !important; margin-right: auto !important; float: none !important; }
+      table.center-on-narrow { display: inline-block !important; }
+      .padding-mobile { padding: 20px !important; }
+    }
+  </style>
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #f4f4f4;">
+  <!-- Preheader (hidden preview text) -->
+  <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
+    {{preheader}}
+    &#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
+  </div>
+
+  <!-- Email wrapper -->
+  <table role="presentation" class="email-bg" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f4f4f4;">
+    <tr>
+      <td align="center" style="padding: 20px 10px;">
+
+        <!-- Email container -->
+        <table role="presentation" class="email-container" width="600" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center; background-color: #ffffff;">
+              <a href="https://example.com" target="_blank">
+                <img src="{{logo_url}}" alt="{{company_name}}" width="150" style="max-width: 150px; height: auto;">
+              </a>
+            </td>
+          </tr>
+
+          <!-- Hero Section -->
+          <tr>
+            <td class="padding-mobile" style="padding: 20px 40px 30px 40px;">
+              <h1 style="margin: 0 0 20px 0; font-size: 28px; font-weight: 700; color: #1a1a1a; line-height: 1.3;">
+                {{headline}}
+              </h1>
+              <p style="margin: 0 0 25px 0; font-size: 16px; line-height: 1.6; color: #4a4a4a;">
+                {{content}}
+              </p>
+
+              <!-- CTA Button -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 0 auto;">
+                <tr>
+                  <td style="border-radius: 6px; background-color: #0066cc;">
+                    <a href="{{cta_url}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none; border-radius: 6px;">
+                      {{cta_text}}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="padding: 0 40px;">
+              <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 0;">
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td class="padding-mobile" style="padding: 30px 40px;">
+              <p class="footer-text" style="margin: 0 0 10px 0; font-size: 13px; line-height: 1.5; color: #888888; text-align: center;">
+                {{footer_address}}
+              </p>
+              <p class="footer-text" style="margin: 0; font-size: 13px; line-height: 1.5; color: #888888; text-align: center;">
+                <a href="{{unsubscribe_url}}" style="color: #888888; text-decoration: underline;">Unsubscribe</a>
+                &nbsp;|&nbsp;
+                <a href="https://example.com/preferences" style="color: #888888; text-decoration: underline;">Email Preferences</a>
+                &nbsp;|&nbsp;
+                <a href="https://example.com/privacy" style="color: #888888; text-decoration: underline;">Privacy Policy</a>
+              </p>
+              <p class="footer-text" style="margin: 15px 0 0 0; font-size: 12px; color: #aaaaaa; text-align: center;">
+                &copy; {{current_year}} {{company_name}}. All rights reserved.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- End email container -->
+
+      </td>
+    </tr>
+  </table>
+  <!-- End email wrapper -->
+
+</body>
+</html>

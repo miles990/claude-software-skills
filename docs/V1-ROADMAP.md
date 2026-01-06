@@ -155,37 +155,37 @@ my-skill/
 
 ---
 
-### P3: 低價值 (11 skills)
+### P3: 低價值 (11 skills) ✅
 
-**預估工作量：2-3 小時**
+**狀態：已完成**
 
 #### programming-languages/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| java-kotlin | 499 | `templates/` | build.gradle.kts, pom.xml |
-| csharp-dotnet | 588 | `templates/` | .csproj, appsettings.json |
-| cpp | 607 | `templates/` | CMakeLists.txt |
-| ruby | 604 | `templates/` | Gemfile, .rubocop.yml |
-| php | 682 | `templates/` + `reference.md` | composer.json, phpunit.xml |
-| swift | 617 | `templates/` + `reference.md` | Package.swift |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| java-kotlin | 499 | `templates/` | build.gradle.kts, pom.xml | ✅ |
+| csharp-dotnet | 588 | `templates/` | WebApi.csproj, appsettings.json | ✅ |
+| cpp | 607 | `templates/` | CMakeLists.txt | ✅ |
+| ruby | 604 | `templates/` | Gemfile, .rubocop.yml | ✅ |
+| php | 682 | `templates/` | composer.json, phpunit.xml | ✅ |
+| swift | 617 | `templates/` | Package.swift | ✅ |
 
 #### domain-applications/
 
-| Skill | 行數 | 新增 | 內容 |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| content-platforms | 502 | `templates/` | cms-schema.ts | ✅ |
+| communication-systems | 530 | `templates/` | email-template.html, notification-types.ts | ✅ |
+| developer-tools | 485 | `templates/` | cli-boilerplate.ts | ✅ |
+| desktop-apps | 515 | `templates/` | electron-main.ts, tauri.conf.json | ✅ |
+
+#### 拆分完成 (reference.md)
+
+| Skill | 行數 | 新增 | 狀態 |
 |-------|------|------|------|
-| content-platforms | 502 | `templates/` | cms-schema.ts |
-| communication-systems | 530 | `templates/` | email-template.html |
-| developer-tools | 485 | `templates/` | cli-boilerplate/ |
-| desktop-apps | 515 | `templates/` | electron-main.ts, tauri.conf.json |
-
-#### 需要拆分 (reference.md)
-
-| Skill | 行數 | 新增 |
-|-------|------|------|
-| edge-iot | 659 | `reference.md` |
-| ux-principles | 554 | `reference.md` |
-| performance-optimization | 515 | `reference.md` |
+| edge-iot | 659 | `reference.md` | ✅ |
+| ux-principles | 554 | `reference.md` | ⏳ |
+| performance-optimization | 515 | `reference.md` | ⏳ |
 
 ---
 

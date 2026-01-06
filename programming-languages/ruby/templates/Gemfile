@@ -1,0 +1,88 @@
+# ===========================================
+# Gemfile Template
+# Usage: Copy to project root
+# ===========================================
+
+source 'https://rubygems.org'
+
+ruby '~> 3.2'
+
+# ===========================================
+# Web Framework (uncomment as needed)
+# ===========================================
+
+# Rails
+# gem 'rails', '~> 7.1'
+# gem 'puma', '~> 6.4'
+# gem 'bootsnap', require: false
+
+# Sinatra
+# gem 'sinatra', '~> 3.1'
+# gem 'sinatra-contrib', '~> 3.1'
+
+# ===========================================
+# Database
+# ===========================================
+
+gem 'pg', '~> 1.5'
+gem 'sequel', '~> 5.74'
+# gem 'activerecord', '~> 7.1'
+# gem 'redis', '~> 5.0'
+
+# ===========================================
+# HTTP & API
+# ===========================================
+
+gem 'faraday', '~> 2.7'
+gem 'faraday-retry', '~> 2.2'
+gem 'oj', '~> 3.16'  # Fast JSON
+
+# ===========================================
+# Authentication & Security
+# ===========================================
+
+gem 'bcrypt', '~> 3.1'
+gem 'jwt', '~> 2.7'
+gem 'rack-attack', '~> 6.7'
+
+# ===========================================
+# Background Jobs
+# ===========================================
+
+gem 'sidekiq', '~> 7.2'
+gem 'sidekiq-scheduler', '~> 5.0'
+
+# ===========================================
+# Utilities
+# ===========================================
+
+gem 'dotenv', '~> 2.8'
+gem 'dry-validation', '~> 1.10'
+gem 'dry-types', '~> 1.7'
+gem 'zeitwerk', '~> 2.6'
+
+# ===========================================
+# Development & Test
+# ===========================================
+
+group :development, :test do
+  gem 'rspec', '~> 3.12'
+  gem 'factory_bot', '~> 6.4'
+  gem 'faker', '~> 3.2'
+  gem 'pry', '~> 0.14'
+  gem 'pry-byebug', '~> 3.10'
+end
+
+group :development do
+  gem 'rubocop', '~> 1.57', require: false
+  gem 'rubocop-rspec', '~> 2.25', require: false
+  gem 'rubocop-performance', '~> 1.19', require: false
+  gem 'solargraph', '~> 0.49', require: false
+end
+
+group :test do
+  gem 'simplecov', '~> 0.22', require: false
+  gem 'webmock', '~> 3.19'
+  gem 'vcr', '~> 6.2'
+  gem 'database_cleaner-sequel', '~> 2.0'
+end
