@@ -184,8 +184,8 @@ my-skill/
 | Skill | 行數 | 新增 | 狀態 |
 |-------|------|------|------|
 | edge-iot | 659 | `reference.md` | ✅ |
-| ux-principles | 554 | `reference.md` | ⏳ |
-| performance-optimization | 515 | `reference.md` | ⏳ |
+| ux-principles | 554 | `reference.md` | ✅ |
+| performance-optimization | 515 | `reference.md` | ✅ |
 
 ---
 
