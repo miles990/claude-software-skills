@@ -1,0 +1,275 @@
+// ===========================================
+// SaaS Multi-tenant Schema Template
+// Usage: Prisma schema for multi-tenant SaaS
+// ===========================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===========================================
+// Tenant & Organization
+// ===========================================
+
+model Tenant {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  domain      String?  @unique  // Custom domain
+
+  // Plan & Billing
+  planId      String?
+  plan        Plan?    @relation(fields: [planId], references: [id])
+  billingEmail String?
+  stripeCustomerId String? @unique
+
+  // Settings
+  settings    Json     @default("{}")
+  features    String[] @default([])
+
+  // Limits
+  maxUsers    Int      @default(5)
+  maxStorage  BigInt   @default(1073741824) // 1GB in bytes
+
+  // Status
+  status      TenantStatus @default(ACTIVE)
+  trialEndsAt DateTime?
+
+  // Relations
+  users       User[]
+  memberships Membership[]
+  invitations Invitation[]
+  apiKeys     ApiKey[]
+
+  // Audit
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([status])
+}
+
+enum TenantStatus {
+  ACTIVE
+  TRIAL
+  SUSPENDED
+  CANCELLED
+}
+
+// ===========================================
+// Users & Authentication
+// ===========================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+
+  // Auth
+  passwordHash  String?
+
+  // Multi-tenant
+  tenantId      String?
+  tenant        Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  memberships   Membership[]
+
+  // Sessions
+  sessions      Session[]
+
+  // Audit
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([email])
+  @@index([tenantId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+
+  // Device info
+  userAgent    String?
+  ipAddress    String?
+
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+}
+
+// ===========================================
+// Team & Permissions
+// ===========================================
+
+model Membership {
+  id        String   @id @default(cuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  role      Role     @default(MEMBER)
+
+  // Audit
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, tenantId])
+  @@index([tenantId])
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+model Invitation {
+  id        String   @id @default(cuid())
+  email     String
+  role      Role     @default(MEMBER)
+  token     String   @unique @default(cuid())
+
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  invitedBy String   // User ID who sent invitation
+
+  expiresAt DateTime
+  acceptedAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@unique([email, tenantId])
+  @@index([token])
+  @@index([tenantId])
+}
+
+// ===========================================
+// Plans & Subscriptions
+// ===========================================
+
+model Plan {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+
+  // Pricing
+  priceMonthly  Int    // In cents
+  priceYearly   Int    // In cents
+  currency      String @default("usd")
+
+  // Stripe
+  stripePriceIdMonthly String?
+  stripePriceIdYearly  String?
+
+  // Limits
+  maxUsers    Int
+  maxStorage  BigInt   // In bytes
+  features    String[] @default([])
+
+  // Status
+  isPublic    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+
+  // Relations
+  tenants     Tenant[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+}
+
+// ===========================================
+// API Keys
+// ===========================================
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  name        String
+  keyHash     String   @unique  // Hashed API key
+  keyPrefix   String             // First 8 chars for identification
+
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  // Permissions
+  scopes      String[] @default(["read"])
+
+  // Usage
+  lastUsedAt  DateTime?
+  usageCount  Int      @default(0)
+
+  // Expiry
+  expiresAt   DateTime?
+  revokedAt   DateTime?
+
+  createdAt   DateTime @default(now())
+
+  @@index([tenantId])
+  @@index([keyPrefix])
+}
+
+// ===========================================
+// Audit Log
+// ===========================================
+
+model AuditLog {
+  id          String   @id @default(cuid())
+
+  tenantId    String
+  userId      String?
+
+  action      String   // e.g., "user.created", "settings.updated"
+  resource    String   // e.g., "user", "tenant"
+  resourceId  String?
+
+  metadata    Json     @default("{}")
+
+  ipAddress   String?
+  userAgent   String?
+
+  createdAt   DateTime @default(now())
+
+  @@index([tenantId])
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// ===========================================
+// Feature Flags
+// ===========================================
+
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  name        String
+  description String?
+
+  // Targeting
+  enabled     Boolean  @default(false)
+  percentage  Int      @default(100)  // Rollout percentage
+  tenantIds   String[] @default([])   // Specific tenants
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([key])
+}

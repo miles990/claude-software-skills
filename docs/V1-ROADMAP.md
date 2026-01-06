@@ -106,52 +106,52 @@ my-skill/
 
 ---
 
-### P2: 中價值 (13 skills)
+### P2: 中價值 (13 skills) ✅
 
-**預估工作量：3-4 小時**
+**狀態：已完成**
 
 #### development-stacks/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| mobile | 662 | `templates/` + `reference.md` | react-native config, flutter pubspec |
-| realtime-systems | 689 | `templates/` + `reference.md` | websocket-server.ts, sse-handler.ts |
-| ai-ml-integration | 564 | `templates/` | llm-config.ts, embedding-utils.py |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| mobile | 662 | `templates/` | react-native.config.js, pubspec.yaml | ✅ |
+| realtime-systems | 689 | `templates/` | websocket-server.ts, sse-handler.ts | ✅ |
+| ai-ml-integration | 564 | `templates/` | llm-config.ts, embedding-utils.py | ✅ |
 
 #### tools-integrations/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| api-tools | 590 | `scripts/` + `templates/` | curl-examples.sh, postman-collection.json |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| api-tools | 590 | `scripts/` + `templates/` | curl-examples.sh, postman-collection.json | ✅ |
 
 #### domain-applications/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| e-commerce | 539 | `templates/` | cart-schema.ts, checkout-flow.ts |
-| saas-platforms | 464 | `templates/` | tenant-schema.prisma, billing-config.ts |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| e-commerce | 539 | `templates/` | cart-schema.ts, checkout-flow.ts | ✅ |
+| saas-platforms | 464 | `templates/` | tenant-schema.prisma, billing-config.ts | ✅ |
 
 #### programming-languages/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| go | 623 | `templates/` | go.mod, Makefile |
-| rust | 540 | `templates/` | Cargo.toml, build.rs |
-| shell-bash | 528 | `scripts/` | common-utils.sh, logging.sh |
-| sql | 578 | `templates/` | migration-template.sql |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| go | 623 | `templates/` | go.mod, Makefile | ✅ |
+| rust | 540 | `templates/` | Cargo.toml | ✅ |
+| shell-bash | 528 | `scripts/` | common-utils.sh | ✅ |
+| sql | 578 | `templates/` | migration-template.sql | ✅ |
 
 #### software-design/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| data-design | 464 | `templates/` | schema-examples.sql, erd-template.md |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| data-design | 464 | `templates/` | schema-patterns.sql | ✅ |
 
 #### software-engineering/
 
-| Skill | 行數 | 新增 | 內容 |
-|-------|------|------|------|
-| reliability-engineering | 470 | `templates/` | health-check.ts, circuit-breaker.ts |
-| documentation | 493 | `templates/` | README-template.md, CHANGELOG-template.md |
+| Skill | 行數 | 新增 | 內容 | 狀態 |
+|-------|------|------|------|------|
+| reliability-engineering | 470 | `templates/` | health-check.ts, circuit-breaker.ts | ✅ |
+| documentation | 493 | `templates/` | README-template.md, CHANGELOG-template.md | ✅ |
 
 ---
 

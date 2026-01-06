@@ -1,0 +1,150 @@
+# Rust Cargo.toml Template
+# Usage: Copy to project root and update package details
+
+[package]
+name = "myproject"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <you@example.com>"]
+description = "A Rust project"
+license = "MIT"
+repository = "https://github.com/yourorg/myproject"
+readme = "README.md"
+keywords = ["rust", "example"]
+categories = ["command-line-utilities"]
+
+# See more keys at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# ===========================================
+# Async Runtime (choose one)
+# ===========================================
+tokio = { version = "1.35", features = ["full"] }
+# async-std = { version = "1.12", features = ["attributes"] }
+
+# ===========================================
+# Web Framework (choose one)
+# ===========================================
+# axum = "0.7"
+# actix-web = "4"
+# rocket = "0.5"
+# warp = "0.3"
+
+# ===========================================
+# Serialization
+# ===========================================
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+# toml = "0.8"
+# serde_yaml = "0.9"
+
+# ===========================================
+# Database
+# ===========================================
+# sqlx = { version = "0.7", features = ["runtime-tokio", "postgres", "migrate"] }
+# diesel = { version = "2.1", features = ["postgres"] }
+# sea-orm = { version = "0.12", features = ["runtime-tokio-native-tls", "sqlx-postgres"] }
+
+# ===========================================
+# Error Handling
+# ===========================================
+thiserror = "1.0"
+anyhow = "1.0"
+# miette = { version = "7.0", features = ["fancy"] }
+# color-eyre = "0.6"
+
+# ===========================================
+# Logging
+# ===========================================
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+# log = "0.4"
+# env_logger = "0.10"
+
+# ===========================================
+# Configuration
+# ===========================================
+# config = "0.14"
+# dotenvy = "0.15"
+
+# ===========================================
+# CLI
+# ===========================================
+# clap = { version = "4.4", features = ["derive"] }
+# dialoguer = "0.11"
+# indicatif = "0.17"
+
+# ===========================================
+# HTTP Client
+# ===========================================
+# reqwest = { version = "0.11", features = ["json"] }
+
+# ===========================================
+# Utilities
+# ===========================================
+# chrono = { version = "0.4", features = ["serde"] }
+# uuid = { version = "1.6", features = ["v4", "serde"] }
+# regex = "1.10"
+# once_cell = "1.19"
+# parking_lot = "0.12"
+
+[dev-dependencies]
+# Testing
+# tokio-test = "0.4"
+# mockall = "0.12"
+# wiremock = "0.5"
+# fake = { version = "2.9", features = ["derive"] }
+# rstest = "0.18"
+# criterion = "0.5"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+# Faster compile times during development
+opt-level = 0
+
+[profile.dev.package."*"]
+# Optimize dependencies even in dev
+opt-level = 2
+
+# ===========================================
+# Workspace (for monorepo)
+# ===========================================
+# [workspace]
+# members = [
+#     "crates/*",
+# ]
+# resolver = "2"
+
+# ===========================================
+# Binary targets
+# ===========================================
+[[bin]]
+name = "myproject"
+path = "src/main.rs"
+
+# ===========================================
+# Library target
+# ===========================================
+# [lib]
+# name = "myproject"
+# path = "src/lib.rs"
+
+# ===========================================
+# Features
+# ===========================================
+[features]
+default = []
+# full = ["feature-a", "feature-b"]
+# feature-a = []
+# feature-b = ["dep:optional-dep"]
+
+# ===========================================
+# Build dependencies
+# ===========================================
+# [build-dependencies]
+# built = "0.7"
