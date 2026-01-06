@@ -68,7 +68,7 @@ curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/mai
 
 ```bash
 # Clone to your skills directory
-git clone https://github.com/user/claude-software-skills.git ~/.claude/skills/software-skills
+git clone https://github.com/miles990/claude-software-skills.git ~/.claude/skills/software-skills
 ```
 
 Claude will automatically discover and use the skills when relevant to your tasks.
@@ -106,7 +106,7 @@ Add to your Cursor MCP settings:
 
 Simply clone and reference the SKILL.md files in your prompts:
 ```bash
-git clone https://github.com/user/claude-software-skills.git
+git clone https://github.com/miles990/claude-software-skills.git
 ```
 
 ## Skill Categories
