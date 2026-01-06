@@ -1,0 +1,8 @@
+# FastAPI Requirements
+# Usage: Copy to requirements.txt
+
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+python-dotenv>=1.0.0
+httpx>=0.26.0
