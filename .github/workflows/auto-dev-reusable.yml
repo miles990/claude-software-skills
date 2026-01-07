@@ -150,10 +150,10 @@ jobs:
 
       - name: Init memory
         run: |
-          mkdir -p .github/memory/{learnings,failures,decisions,patterns,strategies}
+          mkdir -p .claude/memory/{learnings,failures,decisions,patterns,strategies}
 
-          if [ ! -f .github/memory/index.md ]; then
-            echo "# Project Memory" > .github/memory/index.md
+          if [ ! -f .claude/memory/index.md ]; then
+            echo "# Project Memory" > .claude/memory/index.md
           fi
 
       - name: Setup Node.js

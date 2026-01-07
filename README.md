@@ -64,7 +64,34 @@ curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/mai
 
 ## Installation
 
-### Option 1: Claude Code (Recommended)
+### Option 1: skillpkg (Recommended)
+
+使用 [skillpkg](https://github.com/anthropics/skillpkg) 安裝單一 skill 或多個 skills：
+
+```python
+# 安裝單一 skill
+mcp__skillpkg__install_skill(
+    source="github:miles990/claude-software-skills#development-stacks/frontend",
+    scope="local"
+)
+
+# 安裝多個 skills（依專案需求選擇）
+skills = [
+    "development-stacks/frontend",
+    "development-stacks/backend",
+    "programming-languages/python",
+    "software-engineering/code-quality",
+]
+for skill in skills:
+    mcp__skillpkg__install_skill(
+        source=f"github:miles990/claude-software-skills#{skill}",
+        scope="local"
+    )
+```
+
+📚 **完整教學**: [USAGE-GUIDE.md](docs/USAGE-GUIDE.md) | [安裝範例](examples/install-for-project.md)
+
+### Option 2: Clone to Skills Directory
 
 ```bash
 # Clone to your skills directory
@@ -73,7 +100,7 @@ git clone https://github.com/miles990/claude-software-skills.git ~/.claude/skill
 
 Claude will automatically discover and use the skills when relevant to your tasks.
 
-### Option 2: With MCP Server
+### Option 3: With MCP Server
 
 This repository is compatible with [claude-skills-mcp](https://github.com/K-Dense-AI/claude-skills-mcp):
 
@@ -85,7 +112,7 @@ pip install claude-skills-mcp
 # The server will load skills from ~/.claude/skills/
 ```
 
-### Option 3: Cursor IDE
+### Option 4: Cursor IDE
 
 Add to your Cursor MCP settings:
 ```json
@@ -102,7 +129,7 @@ Add to your Cursor MCP settings:
 }
 ```
 
-### Option 4: Manual Reference
+### Option 5: Manual Reference
 
 Simply clone and reference the SKILL.md files in your prompts:
 ```bash

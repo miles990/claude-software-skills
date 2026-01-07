@@ -39,7 +39,7 @@ echo -e "${BLUE}📁 建立目錄結構...${NC}"
 
 # 建立目錄
 mkdir -p .github/workflows
-mkdir -p .github/memory/{learnings,failures,decisions,patterns,strategies}
+mkdir -p .claude/memory/{learnings,failures,decisions,patterns,strategies}
 mkdir -p .github/ISSUE_TEMPLATE
 
 echo -e "${GREEN}✓ 目錄建立完成${NC}"
@@ -158,7 +158,7 @@ echo -e "${GREEN}✓ Issue Template 建立完成${NC}"
 
 echo -e "${BLUE}📝 初始化 Memory 系統...${NC}"
 
-cat > .github/memory/index.md << 'EOF'
+cat > .claude/memory/index.md << 'EOF'
 # 專案記憶索引
 
 > 自動維護
@@ -177,7 +177,7 @@ cat > .github/memory/index.md << 'EOF'
 EOF
 
 # 建立 .gitkeep
-touch .github/memory/{learnings,failures,decisions,patterns,strategies}/.gitkeep
+touch .claude/memory/{learnings,failures,decisions,patterns,strategies}/.gitkeep
 
 echo -e "${GREEN}✓ Memory 系統初始化完成${NC}"
 

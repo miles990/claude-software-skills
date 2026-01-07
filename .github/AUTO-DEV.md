@@ -70,7 +70,7 @@ claude /install-github-app
 │         │  經驗   │   │         │   │  教訓   │               │
 │         └─────────┘   └─────────┘   └─────────┘               │
 │                             │                                   │
-│              .github/memory/ ← 累積經驗                        │
+│              .claude/memory/ ← 累積經驗                        │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -170,10 +170,10 @@ Actions → Auto Development → Run workflow
 
 ## 記憶系統
 
-所有經驗都儲存在 `.github/memory/`：
+所有經驗都儲存在 `.claude/memory/`：
 
 ```
-.github/memory/
+.claude/memory/
 ├── index.md              # 快速索引
 ├── learnings/            # 成功經驗
 │   └── 2025-01-05-user-login.md
@@ -284,7 +284,7 @@ A: 在 PR review 時明確說明，bot 會記錄到 memory
 
 ## 整合 GitHub Copilot
 
-由於記憶存在 `.github/memory/`，GitHub Copilot 也能讀取：
+由於記憶存在 `.claude/memory/`，GitHub Copilot 也能讀取：
 
 ```
 .github/
@@ -296,5 +296,5 @@ A: 在 PR review 時明確說明，bot 會記錄到 memory
 
 在 `instructions.md` 中：
 ```markdown
-參考 .github/memory/ 了解專案偏好和過去經驗
+參考 .claude/memory/ 了解專案偏好和過去經驗
 ```

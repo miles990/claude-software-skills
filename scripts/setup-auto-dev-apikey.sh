@@ -26,9 +26,9 @@ fi
 
 echo -e "${BLUE}📁 建立目錄結構...${NC}"
 mkdir -p .github/workflows
-mkdir -p .github/memory/{learnings,failures,decisions,patterns,strategies}
+mkdir -p .claude/memory/{learnings,failures,decisions,patterns,strategies}
 mkdir -p .github/ISSUE_TEMPLATE
-touch .github/memory/{learnings,failures,decisions,patterns,strategies}/.gitkeep
+touch .claude/memory/{learnings,failures,decisions,patterns,strategies}/.gitkeep
 
 echo -e "${GREEN}✓ 目錄建立完成${NC}"
 
@@ -115,7 +115,7 @@ echo -e "${GREEN}✓ Issue Template 建立完成${NC}"
 # ============================================================================
 echo -e "${BLUE}📝 初始化 Memory 系統...${NC}"
 
-cat > .github/memory/index.md << 'EOF'
+cat > .claude/memory/index.md << 'EOF'
 # 專案記憶索引
 
 ## 最近學習

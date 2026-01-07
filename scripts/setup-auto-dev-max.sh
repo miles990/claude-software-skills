@@ -26,9 +26,9 @@ fi
 
 echo -e "${BLUE}📁 建立目錄結構...${NC}"
 mkdir -p .github/workflows
-mkdir -p .github/memory/{learnings,failures,decisions,patterns,strategies}
+mkdir -p .claude/memory/{learnings,failures,decisions,patterns,strategies}
 mkdir -p .github/ISSUE_TEMPLATE
-touch .github/memory/{learnings,failures,decisions,patterns,strategies}/.gitkeep
+touch .claude/memory/{learnings,failures,decisions,patterns,strategies}/.gitkeep
 
 echo -e "${GREEN}✓ 目錄建立完成${NC}"
 
@@ -87,7 +87,7 @@ jobs:
             - 建立/修改了哪些檔案
 
             ### 📚 Memory 更新
-            - 如果有學到新知識或遇到問題，更新 .github/memory/ 中的相關檔案
+            - 如果有學到新知識或遇到問題，更新 .claude/memory/ 中的相關檔案
 EOF
 
 echo -e "${GREEN}✓ Workflow 建立完成${NC}"
@@ -128,7 +128,7 @@ echo -e "${GREEN}✓ Issue Template 建立完成${NC}"
 # ============================================================================
 echo -e "${BLUE}📝 初始化 Memory 系統...${NC}"
 
-cat > .github/memory/index.md << 'EOF'
+cat > .claude/memory/index.md << 'EOF'
 # 專案記憶索引
 
 ## 最近學習
@@ -155,7 +155,7 @@ cat > CLAUDE.md << 'EOF'
 
 ## Memory 系統
 
-完成任務後，請更新 `.github/memory/` 中的相關檔案：
+完成任務後，請更新 `.claude/memory/` 中的相關檔案：
 
 ### 學習記錄 (`learnings/`)
 記錄在此專案學到的技術知識或最佳實踐。
@@ -170,7 +170,7 @@ cat > CLAUDE.md << 'EOF'
 記錄發現的程式碼模式。
 
 ### 更新 index.md
-每次新增記錄後，更新 `.github/memory/index.md` 的索引。
+每次新增記錄後，更新 `.claude/memory/index.md` 的索引。
 
 ## 完成任務報告格式
 

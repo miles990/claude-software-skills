@@ -46,7 +46,7 @@ triggers:
 
 ```bash
 mkdir -p .github/workflows
-mkdir -p .github/memory/{learnings,failures,decisions,patterns,strategies}
+mkdir -p .claude/memory/{learnings,failures,decisions,patterns,strategies}
 mkdir -p .github/ISSUE_TEMPLATE
 ```
 
@@ -107,7 +107,7 @@ body:
 ### Step 5: 初始化 Memory
 
 ```markdown
-# .github/memory/index.md
+# .claude/memory/index.md
 # 專案記憶索引
 
 ## 最近學習

@@ -192,11 +192,11 @@ jobs:
       - name: Initialize memory system
         run: |
           # 確保記憶目錄存在
-          mkdir -p .github/memory/{learnings,failures,decisions,patterns,strategies}
+          mkdir -p .claude/memory/{learnings,failures,decisions,patterns,strategies}
 
           # 初始化 index.md（如果不存在）
-          if [ ! -f .github/memory/index.md ]; then
-            cat > .github/memory/index.md << 'EOF'
+          if [ ! -f .claude/memory/index.md ]; then
+            cat > .claude/memory/index.md << 'EOF'
           # 專案記憶索引
 
           > 自動維護，請勿手動編輯主要區塊
@@ -256,8 +256,8 @@ jobs:
           ISSUE_NUMBER: ${{ needs.parse-trigger.outputs.issue_number }}
         run: |
           # 建立執行紀錄
-          EXECUTION_LOG=".github/memory/executions/$(date +%Y%m%d-%H%M%S).md"
-          mkdir -p .github/memory/executions
+          EXECUTION_LOG=".claude/memory/executions/$(date +%Y%m%d-%H%M%S).md"
+          mkdir -p .claude/memory/executions
 
           # 執行 Claude Code
           # --dangerously-skip-permissions: CI 環境需要
