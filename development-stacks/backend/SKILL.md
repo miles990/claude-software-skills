@@ -11,6 +11,41 @@ triggers:
   context_boost: [service, endpoint, database, http]
   context_penalty: [frontend, css, ui, mobile]
   priority: high
+collaboration:
+  prerequisites:
+    - skill: typescript
+      reason: Type-safe backend development
+  delegation_triggers:
+    - trigger: API endpoint design decisions
+      delegate_to: api-design
+      context: RESTful conventions, versioning, error formats
+    - trigger: Database schema design or query optimization
+      delegate_to: database
+      context: Data modeling, indexing strategy
+    - trigger: Writing tests for services or controllers
+      delegate_to: testing-strategies
+      context: Integration test patterns, mocking strategies
+  receives_context_from:
+    - skill: api-design
+      receives:
+        - Endpoint naming conventions
+        - Request/response formats
+        - Error response structure
+    - skill: database
+      receives:
+        - Connection pool settings
+        - Query optimization hints
+        - Transaction patterns
+  provides_context_to:
+    - skill: frontend
+      provides:
+        - API endpoints list
+        - Authentication flow
+        - WebSocket events
+    - skill: testing-strategies
+      provides:
+        - Service dependencies to mock
+        - Integration test scenarios
 ---
 
 # Backend Development

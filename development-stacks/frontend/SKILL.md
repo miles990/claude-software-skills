@@ -11,6 +11,41 @@ triggers:
   context_boost: [typescript, javascript, html, browser, client]
   context_penalty: [backend, server, database, api]
   priority: high
+collaboration:
+  prerequisites:
+    - skill: typescript
+      reason: Type-safe component development
+  delegation_triggers:
+    - trigger: API integration or backend communication
+      delegate_to: backend
+      context: API endpoints, authentication flow
+    - trigger: API response format questions
+      delegate_to: api-design
+      context: Expected data structures, error handling
+    - trigger: Component or integration testing
+      delegate_to: testing-strategies
+      context: Testing library patterns, mocking APIs
+  receives_context_from:
+    - skill: backend
+      receives:
+        - API endpoints list
+        - Authentication flow
+        - WebSocket events
+    - skill: api-design
+      receives:
+        - API documentation
+        - Error response formats
+        - Pagination patterns
+  provides_context_to:
+    - skill: testing-strategies
+      provides:
+        - Component structure
+        - User interaction patterns
+        - State management approach
+    - skill: backend
+      provides:
+        - Required API endpoints
+        - Expected response formats
 ---
 
 # Frontend Development

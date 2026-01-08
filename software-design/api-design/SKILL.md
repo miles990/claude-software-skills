@@ -11,6 +11,43 @@ triggers:
   context_boost: [backend, microservice, integration, http]
   context_penalty: [frontend, ui, css]
   priority: high
+collaboration:
+  prerequisites: []
+  delegation_triggers:
+    - trigger: Implementation of API endpoints
+      delegate_to: backend
+      context: Framework-specific implementation patterns
+    - trigger: Data model for API responses
+      delegate_to: database
+      context: Schema design, query requirements
+    - trigger: API contract testing
+      delegate_to: testing-strategies
+      context: Contract tests, integration tests
+  receives_context_from:
+    - skill: backend
+      receives:
+        - Framework capabilities
+        - Middleware available
+        - Authentication mechanism
+    - skill: database
+      receives:
+        - Available data structures
+        - Query performance characteristics
+  provides_context_to:
+    - skill: backend
+      provides:
+        - Endpoint specifications
+        - Request/response formats
+        - Error code conventions
+    - skill: frontend
+      provides:
+        - API documentation
+        - Authentication flow
+        - Rate limiting rules
+    - skill: testing-strategies
+      provides:
+        - API contract specifications
+        - Expected behaviors
 ---
 
 # API Design

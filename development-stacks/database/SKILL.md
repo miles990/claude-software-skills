@@ -11,6 +11,40 @@ triggers:
   context_boost: [data, storage, persistence, backend]
   context_penalty: [frontend, css, ui]
   priority: high
+collaboration:
+  prerequisites:
+    - skill: backend
+      reason: Database is typically used within backend context
+  delegation_triggers:
+    - trigger: API for data access patterns
+      delegate_to: backend
+      context: Repository pattern, service layer design
+    - trigger: Data validation at API level
+      delegate_to: api-design
+      context: Request validation, error responses
+    - trigger: Database integration tests
+      delegate_to: testing-strategies
+      context: Test data setup, cleanup strategies
+  receives_context_from:
+    - skill: backend
+      receives:
+        - Expected query patterns
+        - Transaction requirements
+        - Caching strategy
+    - skill: api-design
+      receives:
+        - Pagination requirements
+        - Filtering capabilities
+  provides_context_to:
+    - skill: backend
+      provides:
+        - Connection pool configuration
+        - Query optimization hints
+        - Index usage recommendations
+    - skill: testing-strategies
+      provides:
+        - Test database setup scripts
+        - Seed data patterns
 ---
 
 # Database Development

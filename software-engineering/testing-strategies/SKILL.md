@@ -11,6 +11,49 @@ triggers:
   context_boost: [quality, ci, automation, reliability]
   context_penalty: [design, architecture, frontend]
   priority: high
+collaboration:
+  prerequisites: []
+  delegation_triggers:
+    - trigger: Backend service to be tested
+      delegate_to: backend
+      context: Service architecture, dependencies
+    - trigger: Frontend component to be tested
+      delegate_to: frontend
+      context: Component props, user interactions
+    - trigger: API contract tests
+      delegate_to: api-design
+      context: API specifications, expected behaviors
+    - trigger: Database fixtures and test data
+      delegate_to: database
+      context: Schema structure, seed data patterns
+  receives_context_from:
+    - skill: backend
+      receives:
+        - Service dependencies to mock
+        - Integration test scenarios
+        - Database transaction boundaries
+    - skill: frontend
+      receives:
+        - Component structure
+        - User interaction patterns
+        - State management approach
+    - skill: api-design
+      receives:
+        - API contract specifications
+        - Expected response formats
+    - skill: database
+      receives:
+        - Test database setup scripts
+        - Seed data patterns
+  provides_context_to:
+    - skill: backend
+      provides:
+        - Test coverage requirements
+        - Mocking best practices
+    - skill: frontend
+      provides:
+        - Component testing patterns
+        - E2E test scenarios
 ---
 
 # Testing Strategies
