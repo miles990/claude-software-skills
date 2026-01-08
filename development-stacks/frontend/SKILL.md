@@ -523,3 +523,64 @@ describe('LoginForm', () => {
 - [[performance-optimization]] - Web performance
 - [[ux-principles]] - User experience
 
+---
+
+## Sharp Edges（常見陷阱）
+
+> 這些是前端開發中最常見且代價最高的錯誤
+
+### SE-1: useEffect 無限迴圈
+- **嚴重度**: critical
+- **情境**: useEffect 中更新 state，而該 state 又是 dependency，導致無限重新渲染
+- **原因**: 不了解 React 的 dependency 機制、object/array 作為 dependency
+- **症狀**:
+  - 頁面卡死或極度緩慢
+  - 瀏覽器記憶體持續增長
+  - Network tab 顯示大量重複請求
+- **檢測**: `useEffect.*setState.*\].*\{|useEffect\(\(\).*fetch.*\[\]`
+- **解法**: 正確設定 dependencies、使用 useCallback/useMemo、考慮用 useRef 追蹤值
+
+### SE-2: 記憶體洩漏 (Memory Leak)
+- **嚴重度**: high
+- **情境**: Component unmount 後仍有 subscription、timer 或 async 操作更新 state
+- **原因**: 沒有清理 effect、沒有取消進行中的 fetch
+- **症狀**:
+  - Console 警告「Can't perform state update on unmounted component」
+  - 應用程式越用越慢
+  - 切換頁面後舊資料閃現
+- **檢測**: `useEffect.*setInterval(?!.*return)|useEffect.*addEventListener(?!.*return.*remove)|useEffect.*subscribe(?!.*return)`
+- **解法**: 在 useEffect 中 return cleanup function、使用 AbortController 取消 fetch
+
+### SE-3: Props Drilling 地獄
+- **嚴重度**: medium
+- **情境**: 為了傳遞資料給深層 component，中間層需要傳遞不需要的 props
+- **原因**: 沒有使用 Context 或狀態管理、component 結構設計不當
+- **症狀**:
+  - 修改一個 prop 需要改動 5+ 個 component
+  - 中間層 component 有很多只是「傳遞」的 props
+  - 難以追蹤資料流向
+- **檢測**: `props\.\w+.*props\.\w+.*props\.\w+|{.*,.*,.*,.*,.*,.*}.*=>`
+- **解法**: 使用 Context、Zustand/Redux、或 Component Composition
+
+### SE-4: 過早優化 (Premature Optimization)
+- **嚴重度**: medium
+- **情境**: 在沒有效能問題時過度使用 useMemo/useCallback/React.memo
+- **原因**: 誤解這些 hooks 的用途、盲目「優化」
+- **症狀**:
+  - 程式碼充滿 useMemo 但沒有效能改善
+  - 反而因為額外的記憶體和比較操作變慢
+  - 程式碼難以閱讀
+- **檢測**: `useMemo\(\(\).*return.*\d+|useCallback\(\(\).*console|React\.memo\(.*\)(?!.*areEqual)`
+- **解法**: 先測量效能、只在確定有問題時優化、理解何時使用這些工具
+
+### SE-5: 不安全的 HTML 渲染
+- **嚴重度**: critical
+- **情境**: 使用 dangerouslySetInnerHTML 或直接渲染用戶輸入的 HTML
+- **原因**: 為了渲染 rich text、不了解 XSS 風險
+- **症狀**:
+  - XSS 攻擊漏洞
+  - 用戶可以注入惡意腳本
+  - 網站被用於釣魚或竊取資料
+- **檢測**: `dangerouslySetInnerHTML|innerHTML.*=.*user|v-html.*user`
+- **解法**: 使用 DOMPurify 消毒、使用安全的 Markdown 渲染器、避免直接渲染用戶輸入
+

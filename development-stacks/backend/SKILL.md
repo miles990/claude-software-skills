@@ -631,3 +631,64 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 - [[database]] - Database patterns
 - [[security-practices]] - Backend security
 
+---
+
+## Sharp Edges（常見陷阱）
+
+> 這些是後端開發中最常見且代價最高的錯誤
+
+### SE-1: 未處理的 Promise Rejection
+- **嚴重度**: critical
+- **情境**: Async 函數中的錯誤沒有被 catch，導致應用程式崩潰或無聲失敗
+- **原因**: 忘記 await、沒有錯誤處理、或在 callback 中使用 async
+- **症狀**:
+  - UnhandledPromiseRejectionWarning
+  - API 請求 hang 住不回應
+  - 資料庫操作部分完成
+- **檢測**: `\.then\([^)]*\)(?!\s*\.catch)|async.*(?<!await\s)db\.|async.*(?<!await\s)fetch`
+- **解法**: 使用 try-catch 包裝、加上 global error handler、使用 ESLint no-floating-promises 規則
+
+### SE-2: N+1 查詢問題
+- **嚴重度**: high
+- **情境**: 在迴圈中執行資料庫查詢，導致效能急劇下降
+- **原因**: ORM 的 lazy loading、沒有使用 batch fetch
+- **症狀**:
+  - 查詢數量與資料量成正比
+  - API 響應時間隨資料量線性增長
+  - 資料庫連接池耗盡
+- **檢測**: `for.*await.*findOne|forEach.*await.*find|\.map\(.*await.*query`
+- **解法**: 使用 eager loading (include/populate)、DataLoader、批次查詢
+
+### SE-3: 敏感資訊洩露
+- **嚴重度**: critical
+- **情境**: 錯誤訊息、日誌、或 API 回應中包含敏感資訊
+- **原因**: 開發環境的 debug 設定被帶到生產、錯誤處理過於詳細
+- **症狀**:
+  - 錯誤回應包含 stack trace
+  - 日誌中有密碼或 token
+  - API 回應包含內部資料庫結構
+- **檢測**: `console\.log.*password|console\.log.*token|res\.json\(err\)|stack.*trace`
+- **解法**: 生產環境只回傳通用錯誤訊息、使用專門的錯誤序列化、過濾敏感欄位
+
+### SE-4: 競態條件 (Race Condition)
+- **嚴重度**: high
+- **情境**: 多個請求同時修改同一資源，導致資料不一致
+- **原因**: 缺乏適當的鎖定機制、read-modify-write 沒有原子性
+- **症狀**:
+  - 庫存數量變成負數
+  - 重複扣款
+  - 資料覆蓋（後來的寫入覆蓋先前的）
+- **檢測**: `findOne.*update|get.*set|read.*write`
+- **解法**: 使用資料庫事務、樂觀鎖 (version field)、分散式鎖
+
+### SE-5: 未驗證的用戶輸入
+- **嚴重度**: critical
+- **情境**: 直接使用用戶輸入進行資料庫查詢或系統命令
+- **原因**: 信任前端驗證、沒有後端驗證、拼接 SQL/命令字串
+- **症狀**:
+  - SQL Injection 攻擊
+  - NoSQL Injection
+  - Command Injection
+- **檢測**: `\$\{.*req\.body|query\(.*\+.*req\.|exec\(.*req\.|eval\(`
+- **解法**: 使用參數化查詢、輸入驗證（Zod/Joi）、白名單驗證
+

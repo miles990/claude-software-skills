@@ -468,3 +468,64 @@ res.setHeader('X-RateLimit-Reset', '1640000000');
 - [[architecture-patterns]] - API Gateway, microservices
 - [[security-practices]] - Authentication, authorization
 - [[documentation]] - API documentation tools
+
+---
+
+## Sharp Edges（常見陷阱）
+
+> 這些是 API 設計中最常見且代價最高的錯誤
+
+### SE-1: 破壞性變更 (Breaking Changes)
+- **嚴重度**: critical
+- **情境**: 修改現有 API 導致客戶端崩潰，沒有適當的版本控制
+- **原因**: 刪除欄位、改變欄位類型、修改必填性、重新命名
+- **症狀**:
+  - 客戶端突然出現錯誤
+  - 舊版 App 無法使用
+  - 用戶投訴「昨天還能用，今天就壞了」
+- **檢測**: `\-.*field|rename.*property|required.*true.*→.*false|type.*string.*→.*number`
+- **解法**: 使用 API 版本控制、只做 additive changes、設定 deprecation 期限
+
+### SE-2: 過度取得 (Over-fetching)
+- **嚴重度**: medium
+- **情境**: API 回傳太多客戶端不需要的資料
+- **原因**: 「反正都有就回傳」的心態、沒有考慮不同使用場景
+- **症狀**:
+  - API 響應很大但客戶端只用其中一小部分
+  - 行動裝置載入緩慢
+  - 頻寬浪費
+- **檢測**: `select\s*\*|findMany\(\)|findAll\(\)(?!.*select)`
+- **解法**: 使用 fields selection、GraphQL、按需求設計 endpoint
+
+### SE-3: 取得不足 (Under-fetching)
+- **嚴重度**: medium
+- **情境**: 需要呼叫多個 API 才能取得完整資料
+- **原因**: 過度細分 endpoint、沒有考慮常見使用場景
+- **症狀**:
+  - 前端需要 5+ 個 API 呼叫才能渲染一個頁面
+  - 複雜的前端資料整合邏輯
+  - N+1 API 請求問題
+- **檢測**: `Promise\.all\(.*fetch.*fetch.*fetch|\.then\(.*fetch`
+- **解法**: 設計聚合 endpoint、使用 include/expand 參數、考慮 BFF pattern
+
+### SE-4: 不一致的錯誤格式
+- **嚴重度**: high
+- **情境**: 不同 endpoint 回傳不同格式的錯誤，客戶端難以統一處理
+- **原因**: 沒有統一的錯誤處理規範、不同開發者各自實作
+- **症狀**:
+  - 有的錯誤用 `error`，有的用 `message`，有的用 `errors`
+  - HTTP status code 使用不一致
+  - 客戶端需要寫很多 if-else 處理不同錯誤格式
+- **檢測**: `res\.json\(\{.*error|res\.json\(\{.*message|res\.status\(500\).*error`
+- **解法**: 定義統一的錯誤回應格式、使用 global error handler、建立錯誤碼系統
+
+### SE-5: 缺乏 Rate Limiting
+- **嚴重度**: critical
+- **情境**: API 沒有請求頻率限制，容易被濫用或攻擊
+- **原因**: 「先做出來再說」、不了解風險
+- **症狀**:
+  - DDoS 攻擊導致服務癱瘓
+  - 單一用戶耗盡所有資源
+  - 雲端帳單爆炸
+- **檢測**: `app\.use\((?!.*rateLimit)|router\.(?!.*limit)|express\(\)(?!.*rate)`
+- **解法**: 實作 rate limiting middleware、使用 Redis 追蹤請求、設定合理的限制

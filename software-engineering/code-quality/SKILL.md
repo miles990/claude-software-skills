@@ -506,3 +506,64 @@ module.exports = {
 - [[refactoring]] - Improving existing code
 - [[testing-strategies]] - Ensuring quality through tests
 - [[design-patterns]] - Proven solutions
+
+---
+
+## Sharp Edges（常見陷阱）
+
+> 這些是程式碼品質中最常見且代價最高的錯誤
+
+### SE-1: 過度工程 (Over-engineering)
+- **嚴重度**: high
+- **情境**: 為了「未來可能需要」而增加不必要的抽象和複雜度
+- **原因**: YAGNI 原則被忽視、設計模式濫用、「萬一以後要...」的心態
+- **症狀**:
+  - 簡單功能需要改動 10+ 個檔案
+  - 新人看不懂架構
+  - 程式碼比需求複雜 10 倍
+- **檢測**: `Factory.*Factory|Abstract.*Abstract|interface.*\{.*\}(?=.*interface.*\{.*\})|Strategy.*Strategy`
+- **解法**: YAGNI（You Aren't Gonna Need It）、先寫最簡單的實作、需要時再重構
+
+### SE-2: 命名不一致
+- **嚴重度**: medium
+- **情境**: 同一個概念在不同地方用不同名稱，或不同概念用相似名稱
+- **原因**: 沒有統一術語、多人開發沒有對齊、複製貼上沒改名
+- **症狀**:
+  - `user`, `customer`, `client`, `account` 指同一件事
+  - 搜尋不到相關程式碼
+  - 新人經常問「這個和那個有什麼差別？」
+- **檢測**: `(user|customer|client|account).*=.*find|(get|fetch|retrieve|load).*User`
+- **解法**: 建立術語表（Ubiquitous Language）、Code Review 時檢查命名、重構統一命名
+
+### SE-3: 深層巢狀 (Deep Nesting)
+- **嚴重度**: medium
+- **情境**: if-else 或 callback 巢狀超過 3-4 層，難以閱讀
+- **原因**: 沒有提早 return、沒有抽取函數、callback hell
+- **症狀**:
+  - 需要橫向捲動才能看到程式碼
+  - 很難追蹤哪個 `}` 對應哪個 `{`
+  - Cyclomatic complexity 超高
+- **檢測**: `\{.*\{.*\{.*\{|if.*if.*if.*if|\.then\(.*\.then\(.*\.then\(`
+- **解法**: Guard clause（提早 return）、抽取函數、使用 async/await 取代 callback
+
+### SE-4: 神奇數字/字串 (Magic Numbers)
+- **嚴重度**: medium
+- **情境**: 程式碼中直接使用意義不明的數字或字串
+- **原因**: 懶得定義常數、「只用一次不用抽出來」
+- **症狀**:
+  - 看到 `86400` 不知道是什麼（一天的秒數）
+  - 修改時需要全域搜尋 replace
+  - 同一個數字在不同地方意義不同但值相同
+- **檢測**: `\b(86400|3600|1000|60000|1024|65535)\b|status\s*===?\s*['"][^'"]+['"]`
+- **解法**: 抽取為有意義名稱的常數、使用 enum、集中管理設定值
+
+### SE-5: 大泥球 (Big Ball of Mud)
+- **嚴重度**: critical
+- **情境**: 程式碼沒有明確架構，所有東西混在一起，到處都有依賴
+- **原因**: 沒有模組化設計、趕時間「先 work 再說」、缺乏重構
+- **症狀**:
+  - 改 A 會壞 B
+  - 單一檔案 1000+ 行
+  - 所有東西都 import 所有東西
+- **檢測**: `import.*from.*\.\.\/\.\.\/\.\.\/|require\(.*\.\..*\.\..*\.\.\)|lines.*>\s*1000`
+- **解法**: 分層架構、明確的模組邊界、定期重構、嚴格的 import 規則

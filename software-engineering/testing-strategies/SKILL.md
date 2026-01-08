@@ -537,3 +537,64 @@ module.exports = {
 - [[code-quality]] - Writing testable code
 - [[devops-cicd]] - CI integration
 - [[performance-optimization]] - Performance testing
+
+---
+
+## Sharp Edges（常見陷阱）
+
+> 這些是測試中最常見且代價最高的錯誤
+
+### SE-1: 測試實作而非行為
+- **嚴重度**: high
+- **情境**: 測試過度耦合內部實作，重構時測試全部壞掉
+- **原因**: 測試私有方法、mock 太細、驗證內部狀態
+- **症狀**:
+  - 改了一行程式碼，10 個測試失敗
+  - 測試檔案比程式碼還長
+  - 重構時花更多時間修測試
+- **檢測**: `expect.*\.toHaveBeenCalledTimes\(\d{2,}\)|mock.*private|spy.*internal`
+- **解法**: 測試公開 API/行為、使用 black-box testing、減少 mock 數量
+
+### SE-2: 假陽性測試 (False Positive)
+- **嚴重度**: critical
+- **情境**: 測試永遠通過，但實際上沒有驗證任何東西
+- **原因**: 忘記 await、expect 沒有執行、條件判斷錯誤
+- **症狀**:
+  - 測試通過但 bug 仍然存在
+  - 刪掉測試中的關鍵 assertion 測試還是通過
+  - Coverage 高但信心低
+- **檢測**: `it\(.*\{\s*\}\)|expect\(.*\)(?!\.)|\.resolves(?!\.)|\.rejects(?!\.)`
+- **解法**: TDD（先寫失敗的測試）、review 測試程式碼、使用 ESLint no-floating-promises
+
+### SE-3: Flaky Tests（不穩定測試）
+- **嚴重度**: high
+- **情境**: 測試有時通過有時失敗，沒有程式碼變更
+- **原因**: 依賴時間、依賴外部服務、競態條件、共享狀態
+- **症狀**:
+  - CI 需要 retry 才能通過
+  - 本地通過但 CI 失敗
+  - 團隊開始忽略失敗的測試
+- **檢測**: `new Date\(\)|Date\.now\(\)|setTimeout.*\d{4,}|sleep\(\d+\)`
+- **解法**: 使用 fake timers、隔離測試狀態、避免 hard-coded delays、mock 外部依賴
+
+### SE-4: 測試金字塔倒置
+- **嚴重度**: medium
+- **情境**: E2E 測試太多，單元測試太少，CI 超慢
+- **原因**: 「E2E 測試更接近真實」的誤解、不想寫單元測試
+- **症狀**:
+  - CI 跑 30+ 分鐘
+  - 測試失敗難以定位問題
+  - E2E 測試經常 flaky
+- **檢測**: `describe.*E2E|playwright.*test|cypress.*it` (數量遠超 unit test)
+- **解法**: 遵循 70% unit / 20% integration / 10% E2E 比例、E2E 只測關鍵路徑
+
+### SE-5: 過度 Mocking
+- **嚴重度**: medium
+- **情境**: Mock 太多導致測試失去意義，只是在測試 mock
+- **原因**: 為了隔離而 mock 所有依賴、測試執行時間焦慮
+- **症狀**:
+  - 測試通過但整合時失敗
+  - Mock 的行為與真實行為不符
+  - 更新依賴後 mock 過時
+- **檢測**: `jest\.mock.*jest\.mock.*jest\.mock|mock\(.*\).*mock\(.*\).*mock\(`
+- **解法**: 只 mock 外部依賴（網路、檔案系統）、使用真實的 in-memory 實作、寫更多整合測試
