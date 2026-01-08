@@ -61,6 +61,9 @@ curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/mai
 - **Cross-Domain Integration** - Skills work together seamlessly
 - **Best Practices Built-In** - Each skill includes patterns and anti-patterns
 - **Modular Architecture** - Use only what you need
+- **Sharp Edges** - Proactive warnings about common pitfalls with detection patterns
+- **Validations** - Executable code quality rules with regex/ast patterns
+- **Collaboration** - Skills declare relationships for smart delegation and context passing
 
 ## Installation
 
