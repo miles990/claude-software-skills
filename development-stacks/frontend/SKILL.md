@@ -584,3 +584,47 @@ describe('LoginForm', () => {
 - **檢測**: `dangerouslySetInnerHTML|innerHTML.*=.*user|v-html.*user`
 - **解法**: 使用 DOMPurify 消毒、使用安全的 Markdown 渲染器、避免直接渲染用戶輸入
 
+---
+
+## Validations
+
+### V-1: useEffect 缺少 cleanup
+- **類型**: regex
+- **嚴重度**: high
+- **模式**: `useEffect\s*\([^)]*=>\s*\{[^}]*(setInterval|addEventListener|subscribe)[^}]*\}(?![^}]*return)`
+- **訊息**: useEffect with subscription/timer missing cleanup function
+- **修復建議**: Add cleanup: `return () => clearInterval(id)` or `return () => unsubscribe()`
+- **適用**: `*.tsx`, `*.jsx`
+
+### V-2: 禁止 dangerouslySetInnerHTML
+- **類型**: regex
+- **嚴重度**: critical
+- **模式**: `dangerouslySetInnerHTML`
+- **訊息**: dangerouslySetInnerHTML is a security risk (XSS)
+- **修復建議**: Use DOMPurify: `dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }}`
+- **適用**: `*.tsx`, `*.jsx`
+
+### V-3: useEffect 空 dependency array + state 更新
+- **類型**: regex
+- **嚴重度**: high
+- **模式**: `useEffect\s*\([^)]*=>\s*\{[^}]*set\w+\([^}]*\},\s*\[\s*\]\s*\)`
+- **訊息**: useEffect with empty deps but updates state - possible stale closure
+- **修復建議**: Add necessary dependencies or use useRef for values that shouldn't trigger re-run
+- **適用**: `*.tsx`, `*.jsx`
+
+### V-4: 禁止 inline styles 物件字面量
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `style=\{\s*\{[^}]+\}\s*\}`
+- **訊息**: Inline style object creates new reference on every render
+- **修復建議**: Extract to variable or use useMemo: `const styles = useMemo(() => ({...}), [])`
+- **適用**: `*.tsx`, `*.jsx`
+
+### V-5: 禁止在 JSX 中使用 index 作為 key
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `key=\{(index|i|idx)\}`
+- **訊息**: Using array index as key can cause issues with reordering
+- **修復建議**: Use a unique identifier: `key={item.id}` or `key={item.uniqueField}`
+- **適用**: `*.tsx`, `*.jsx`
+

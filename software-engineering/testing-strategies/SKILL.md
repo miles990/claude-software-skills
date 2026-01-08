@@ -598,3 +598,47 @@ module.exports = {
   - 更新依賴後 mock 過時
 - **檢測**: `jest\.mock.*jest\.mock.*jest\.mock|mock\(.*\).*mock\(.*\).*mock\(`
 - **解法**: 只 mock 外部依賴（網路、檔案系統）、使用真實的 in-memory 實作、寫更多整合測試
+
+---
+
+## Validations
+
+### V-1: 禁止空的測試
+- **類型**: regex
+- **嚴重度**: critical
+- **模式**: `(it|test)\s*\([^)]+,\s*(async\s*)?\(\)\s*=>\s*\{\s*\}\s*\)`
+- **訊息**: Empty test detected - test has no assertions
+- **修復建議**: Add meaningful assertions with expect()
+- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+
+### V-2: 測試缺少 assertion
+- **類型**: regex
+- **嚴重度**: high
+- **模式**: `(it|test)\s*\([^)]+,\s*(async\s*)?\(\)\s*=>\s*\{[^}]*\}(?![^}]*expect)`
+- **訊息**: Test without expect() assertion may be a false positive
+- **修復建議**: Add at least one expect() assertion
+- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+
+### V-3: 禁止 fit/fdescribe (focused tests)
+- **類型**: regex
+- **嚴重度**: critical
+- **模式**: `\b(fit|fdescribe|it\.only|describe\.only|test\.only)\s*\(`
+- **訊息**: Focused test will skip other tests in CI
+- **修復建議**: Remove `f` prefix or `.only` before committing
+- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+
+### V-4: 禁止 skip tests 無說明
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `(xit|xdescribe|it\.skip|describe\.skip|test\.skip)\s*\([^)]+\)`
+- **訊息**: Skipped test without documented reason
+- **修復建議**: Add comment explaining why test is skipped and tracking issue
+- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+
+### V-5: 測試中使用 setTimeout
+- **類型**: regex
+- **嚴重度**: high
+- **模式**: `setTimeout\s*\(\s*[^,]+,\s*\d{3,}\s*\)`
+- **訊息**: Hard-coded delays in tests cause flakiness and slow tests
+- **修復建議**: Use `jest.useFakeTimers()` or `waitFor()` from testing-library
+- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`

@@ -692,3 +692,47 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 - **檢測**: `\$\{.*req\.body|query\(.*\+.*req\.|exec\(.*req\.|eval\(`
 - **解法**: 使用參數化查詢、輸入驗證（Zod/Joi）、白名單驗證
 
+---
+
+## Validations
+
+### V-1: 禁止空的 catch block
+- **類型**: regex
+- **嚴重度**: critical
+- **模式**: `catch\s*\([^)]*\)\s*\{\s*\}`
+- **訊息**: Empty catch block silently swallows errors
+- **修復建議**: Add error logging: `console.error(err)` or `logger.error(err)`
+- **適用**: `*.ts`, `*.js`
+
+### V-2: 禁止 forEach + async
+- **類型**: regex
+- **嚴重度**: high
+- **模式**: `\.forEach\s*\(\s*async`
+- **訊息**: forEach does not await async callbacks - use for...of or Promise.all
+- **修復建議**: Replace with `for (const item of items)` or `await Promise.all(items.map(...))`
+- **適用**: `*.ts`, `*.js`
+
+### V-3: 檢測未處理的 Promise
+- **類型**: regex
+- **嚴重度**: high
+- **模式**: `(?<!await\s)(?<!return\s)(?<!\.\s*catch\()fetch\(|db\.(find|query|insert|update|delete)`
+- **訊息**: Async operation may not be awaited or caught
+- **修復建議**: Add `await` keyword or `.catch()` handler
+- **適用**: `*.ts`, `*.js`
+
+### V-4: 禁止硬編碼密鑰
+- **類型**: regex
+- **嚴重度**: critical
+- **模式**: `(password|secret|api_key|apikey|token)\s*[=:]\s*["'][^"']+["']`
+- **訊息**: Hardcoded secret detected - use environment variables
+- **修復建議**: Move to environment variables: `process.env.SECRET_KEY`
+- **適用**: `*.ts`, `*.js`, `*.json`
+
+### V-5: 禁止 SELECT *
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `SELECT\s+\*\s+FROM|\.findMany\s*\(\s*\)|\.find\s*\(\s*\{\s*\}\s*\)`
+- **訊息**: SELECT * fetches unnecessary data - specify fields
+- **修復建議**: Explicitly list needed fields: `SELECT id, name FROM...`
+- **適用**: `*.ts`, `*.js`, `*.sql`
+

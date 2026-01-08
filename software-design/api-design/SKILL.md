@@ -529,3 +529,47 @@ res.setHeader('X-RateLimit-Reset', '1640000000');
   - 雲端帳單爆炸
 - **檢測**: `app\.use\((?!.*rateLimit)|router\.(?!.*limit)|express\(\)(?!.*rate)`
 - **解法**: 實作 rate limiting middleware、使用 Redis 追蹤請求、設定合理的限制
+
+---
+
+## Validations
+
+### V-1: 禁止 HTTP status 200 回傳錯誤
+- **類型**: regex
+- **嚴重度**: high
+- **模式**: `res\.json\(\s*\{\s*error|res\.send\(\s*\{\s*error|\.json\(\{.*success:\s*false`
+- **訊息**: Error responses should use appropriate HTTP status codes (4xx/5xx)
+- **修復建議**: Use `res.status(400).json({ error: ... })` for client errors
+- **適用**: `*.ts`, `*.js`
+
+### V-2: API 路徑使用動詞
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `(get|create|update|delete|fetch|remove|add)\/|\/get|\/create|\/update|\/delete`
+- **訊息**: REST API paths should use nouns, not verbs (use HTTP methods instead)
+- **修復建議**: Change `/getUsers` to `GET /users`, `/createUser` to `POST /users`
+- **適用**: `*.ts`, `*.js`
+
+### V-3: 缺少輸入驗證
+- **類型**: regex
+- **嚴重度**: critical
+- **模式**: `req\.body\.\w+(?!.*validate|.*schema|.*zod|.*joi|.*yup)`
+- **訊息**: Request body accessed without apparent validation
+- **修復建議**: Add validation with Zod/Joi before using request data
+- **適用**: `*.ts`, `*.js`
+
+### V-4: 硬編碼 HTTP status code
+- **類型**: regex
+- **嚴重度**: low
+- **模式**: `res\.status\(\d{3}\)`
+- **訊息**: Consider using named status codes for readability
+- **修復建議**: Use `HttpStatus.OK` or constants instead of magic numbers
+- **適用**: `*.ts`, `*.js`
+
+### V-5: 缺少 API 版本控制
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `app\.(get|post|put|delete)\s*\(\s*['"]\/(?!v\d|api\/v\d)`
+- **訊息**: API route missing version prefix
+- **修復建議**: Add version prefix: `/api/v1/users` or use header-based versioning
+- **適用**: `*.ts`, `*.js`

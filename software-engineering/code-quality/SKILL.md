@@ -567,3 +567,47 @@ module.exports = {
   - 所有東西都 import 所有東西
 - **檢測**: `import.*from.*\.\.\/\.\.\/\.\.\/|require\(.*\.\..*\.\..*\.\.\)|lines.*>\s*1000`
 - **解法**: 分層架構、明確的模組邊界、定期重構、嚴格的 import 規則
+
+---
+
+## Validations
+
+### V-1: 禁止 console.log (生產代碼)
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `console\.(log|debug|info)\(`
+- **訊息**: console.log should not be in production code
+- **修復建議**: Use a proper logger (winston, pino) or remove debug statements
+- **適用**: `*.ts`, `*.js`
+
+### V-2: 禁止 any 類型
+- **類型**: ast
+- **嚴重度**: high
+- **模式**: `TSAnyKeyword`
+- **訊息**: 'any' type defeats TypeScript's type safety
+- **修復建議**: Use specific type, 'unknown', or generic type parameter
+- **適用**: `*.ts`, `*.tsx`
+
+### V-3: 函數參數過多
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `function\s+\w+\s*\([^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*\)|=>\s*\([^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*\)`
+- **訊息**: Function has more than 4 parameters - consider using an object
+- **修復建議**: Replace multiple params with single options object: `function(options: Options)`
+- **適用**: `*.ts`, `*.js`
+
+### V-4: TODO 無追蹤
+- **類型**: regex
+- **嚴重度**: low
+- **模式**: `//\s*TODO(?!.*#\d|.*JIRA|.*\w+-\d+)`
+- **訊息**: TODO comment without tracking reference
+- **修復建議**: Add issue reference: `// TODO(#123): description` or create ticket
+- **適用**: `*.ts`, `*.js`, `*.tsx`, `*.jsx`
+
+### V-5: 深層 import 路徑
+- **類型**: regex
+- **嚴重度**: medium
+- **模式**: `import.*from\s+['"]\.\.\/\.\.\/\.\.\/|require\s*\(\s*['"]\.\.\/\.\.\/\.\.\/`
+- **訊息**: Deep relative imports indicate poor module boundaries
+- **修復建議**: Use path aliases: `import { X } from '@/modules/x'`
+- **適用**: `*.ts`, `*.js`, `*.tsx`, `*.jsx`
