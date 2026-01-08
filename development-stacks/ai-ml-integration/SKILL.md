@@ -4,6 +4,13 @@ description: AI/ML APIs, LLM integration, and intelligent application patterns
 domain: development-stacks
 version: 1.0.0
 tags: [openai, anthropic, langchain, embeddings, rag, vector-db]
+triggers:
+  keywords:
+    primary: [ai, ml, llm, openai, anthropic, langchain, embedding, rag]
+    secondary: [vector database, pinecone, chromadb, prompt engineering, agent, gpt]
+  context_boost: [intelligent, chatbot, nlp, machine learning]
+  context_penalty: [frontend, css, ui, database]
+  priority: high
 ---
 
 # AI/ML Integration

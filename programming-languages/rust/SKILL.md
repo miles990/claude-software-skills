@@ -4,6 +4,13 @@ description: Rust programming patterns and ownership concepts
 domain: programming-languages
 version: 1.0.0
 tags: [rust, ownership, lifetimes, traits, async]
+triggers:
+  keywords:
+    primary: [rust, cargo, rustc, ownership, borrow, lifetime]
+    secondary: [trait, async, tokio, serde, wasm, unsafe]
+  context_boost: [systems, performance, memory-safety, cli, webassembly]
+  context_penalty: [python, javascript, java, go]
+  priority: high
 ---
 
 # Rust

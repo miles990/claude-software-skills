@@ -4,6 +4,13 @@ description: Edge computing, IoT protocols, and embedded systems integration
 domain: development-stacks
 version: 1.0.0
 tags: [edge, iot, mqtt, embedded, raspberry-pi, arduino, esp32]
+triggers:
+  keywords:
+    primary: [iot, edge, embedded, mqtt, raspberry pi, arduino, esp32]
+    secondary: [sensor, actuator, microcontroller, firmware, zigbee, bluetooth]
+  context_boost: [device, hardware, physical, smart home]
+  context_penalty: [web, frontend, cloud, saas]
+  priority: medium
 ---
 
 # Edge Computing & IoT

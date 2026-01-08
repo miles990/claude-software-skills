@@ -4,6 +4,13 @@ description: Data modeling, schema design, and data architecture
 domain: software-design
 version: 1.0.0
 tags: [data-modeling, schema, normalization, denormalization, etl, data-governance]
+triggers:
+  keywords:
+    primary: [data model, schema design, erd, entity relationship, data architecture]
+    secondary: [normalization, denormalization, etl, data warehouse, data lake, olap]
+  context_boost: [database, analytics, backend, enterprise]
+  context_penalty: [frontend, ui, mobile]
+  priority: high
 ---
 
 # Data Design

@@ -4,6 +4,13 @@ description: Modern PHP programming patterns
 domain: programming-languages
 version: 1.0.0
 tags: [php, laravel, composer, oop, traits]
+triggers:
+  keywords:
+    primary: [php, laravel, composer, symfony, wordpress]
+    secondary: [eloquent, blade, artisan, phpunit, trait, doctrine]
+  context_boost: [web, backend, cms, api, legacy]
+  context_penalty: [python, javascript, java, go]
+  priority: medium
 ---
 
 # PHP

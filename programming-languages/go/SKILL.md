@@ -4,6 +4,13 @@ description: Go programming patterns and idioms
 domain: programming-languages
 version: 1.0.0
 tags: [go, golang, concurrency, goroutines, channels]
+triggers:
+  keywords:
+    primary: [go, golang, goroutine, channel, go mod]
+    secondary: [concurrency, defer, interface, struct, gin, echo]
+  context_boost: [backend, microservice, cli, cloud, kubernetes]
+  context_penalty: [python, javascript, rust, java]
+  priority: high
 ---
 
 # Go

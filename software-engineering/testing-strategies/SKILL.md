@@ -4,6 +4,13 @@ description: Unit, integration, E2E testing and TDD practices
 domain: software-engineering
 version: 1.0.0
 tags: [testing, unit-test, integration-test, e2e, tdd, mocking]
+triggers:
+  keywords:
+    primary: [test, testing, unit test, integration test, e2e, tdd, jest, pytest]
+    secondary: [mock, stub, fixture, coverage, assertion, cypress, playwright]
+  context_boost: [quality, ci, automation, reliability]
+  context_penalty: [design, architecture, frontend]
+  priority: high
 ---
 
 # Testing Strategies

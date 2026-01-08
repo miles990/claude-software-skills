@@ -4,6 +4,13 @@ description: OWASP Top 10, authentication, and secure coding practices
 domain: software-engineering
 version: 1.0.0
 tags: [security, owasp, authentication, authorization, encryption, xss, csrf]
+triggers:
+  keywords:
+    primary: [security, owasp, authentication, authorization, encryption, vulnerability]
+    secondary: [xss, csrf, sql injection, jwt, oauth, cors, sanitize, validate]
+  context_boost: [secure, protect, attack, hack]
+  context_penalty: [design, ui, ux]
+  priority: high
 ---
 
 # Security Practices

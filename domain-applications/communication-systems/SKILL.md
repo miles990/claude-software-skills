@@ -4,6 +4,13 @@ description: Email, notifications, and messaging system patterns
 domain: domain-applications
 version: 1.0.0
 tags: [email, notifications, push, webhooks, messaging]
+triggers:
+  keywords:
+    primary: [email, notification, push notification, webhook, messaging]
+    secondary: [transactional email, fcm, web push, in-app notification, resend]
+  context_boost: [send, alert, notify, communicate]
+  context_penalty: [game, frontend, ui]
+  priority: medium
 ---
 
 # Communication Systems

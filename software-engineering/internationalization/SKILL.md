@@ -3,8 +3,14 @@ schema: "1.0"
 name: internationalization
 version: "1.0.0"
 description: 國際化與本地化開發：i18n/l10n 架構設計、翻譯管理、多語言應用最佳實踐
-triggers: [i18n, l10n, 國際化, 本地化, 多語言, 翻譯, internationalization, localization, translation, multilingual, locale, language]
-keywords: [software-engineering, i18n, l10n, translation]
+domain: software-engineering
+triggers:
+  keywords:
+    primary: [i18n, l10n, 國際化, 本地化, internationalization, localization, 多語言]
+    secondary: [翻譯, translation, locale, language, intl, formatjs, react-intl]
+  context_boost: [multilingual, global, region, currency, date format]
+  context_penalty: [backend, database, devops]
+  priority: medium
 author: claude-software-skills
 ---
 

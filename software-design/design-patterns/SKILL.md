@@ -4,6 +4,13 @@ description: Classic and modern software design patterns
 domain: software-design
 version: 1.0.0
 tags: [patterns, gang-of-four, creational, structural, behavioral, functional]
+triggers:
+  keywords:
+    primary: [design pattern, pattern, singleton, factory, observer, strategy]
+    secondary: [creational, structural, behavioral, gof, gang of four, adapter, decorator]
+  context_boost: [oop, refactor, architecture, clean code]
+  context_penalty: [database, devops, testing]
+  priority: high
 ---
 
 # Design Patterns

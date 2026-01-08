@@ -4,6 +4,13 @@ description: Java and Kotlin programming patterns
 domain: programming-languages
 version: 1.0.0
 tags: [java, kotlin, jvm, spring, android]
+triggers:
+  keywords:
+    primary: [java, kotlin, jvm, spring, springboot, gradle, maven]
+    secondary: [android, hibernate, jpa, stream, coroutine, quarkus]
+  context_boost: [enterprise, backend, microservice, mobile, android]
+  context_penalty: [python, javascript, rust, go]
+  priority: high
 ---
 
 # Java & Kotlin

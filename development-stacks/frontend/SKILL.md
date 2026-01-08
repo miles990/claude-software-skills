@@ -2,8 +2,15 @@
 name: frontend
 description: Modern frontend development with React, Vue, and web technologies
 domain: development-stacks
-version: 1.0.0
+version: 1.1.0
 tags: [react, vue, nextjs, typescript, css, state-management, bundlers]
+triggers:
+  keywords:
+    primary: [frontend, react, vue, nextjs, ui, web, component]
+    secondary: [css, tailwind, state, hooks, spa, pwa, vite]
+  context_boost: [typescript, javascript, html, browser, client]
+  context_penalty: [backend, server, database, api]
+  priority: high
 ---
 
 # Frontend Development

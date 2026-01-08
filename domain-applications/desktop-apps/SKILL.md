@@ -4,6 +4,13 @@ description: Desktop application development with Electron and Tauri
 domain: domain-applications
 version: 1.0.0
 tags: [electron, tauri, desktop, cross-platform, native]
+triggers:
+  keywords:
+    primary: [electron, tauri, desktop app, cross-platform, native app]
+    secondary: [ipc, preload, auto-updater, rust backend, menu, tray]
+  context_boost: [desktop, windows, macos, linux, native]
+  context_penalty: [web, mobile, browser, api]
+  priority: medium
 ---
 
 # Desktop Application Development

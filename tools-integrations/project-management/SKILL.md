@@ -4,6 +4,13 @@ description: Agile methodologies, issue tracking, and team collaboration tools
 domain: tools-integrations
 version: 1.0.0
 tags: [agile, scrum, kanban, jira, github-projects, linear]
+triggers:
+  keywords:
+    primary: [agile, scrum, kanban, jira, linear, sprint, backlog]
+    secondary: [issue, story point, velocity, retrospective, standup, epic]
+  context_boost: [team, planning, roadmap, tracking]
+  context_penalty: [code, implementation, api]
+  priority: medium
 ---
 
 # Project Management

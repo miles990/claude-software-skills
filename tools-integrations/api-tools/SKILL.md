@@ -4,6 +4,13 @@ description: API testing, documentation, and development tools
 domain: tools-integrations
 version: 1.0.0
 tags: [postman, insomnia, swagger, openapi, curl, httpie]
+triggers:
+  keywords:
+    primary: [postman, insomnia, curl, httpie, swagger, openapi]
+    secondary: [api test, request, response, collection, mock server, bruno]
+  context_boost: [api, endpoint, http, rest]
+  context_penalty: [frontend, ui, design]
+  priority: medium
 ---
 
 # API Tools

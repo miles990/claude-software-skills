@@ -4,6 +4,13 @@ description: Shell scripting and Bash programming patterns
 domain: programming-languages
 version: 1.0.0
 tags: [bash, shell, scripting, automation, cli]
+triggers:
+  keywords:
+    primary: [bash, shell, sh, zsh, script, terminal, cli]
+    secondary: [grep, sed, awk, pipe, cron, automation, makefile]
+  context_boost: [devops, linux, unix, automation, sysadmin]
+  context_penalty: [web, frontend, mobile, gui]
+  priority: medium
 ---
 
 # Shell & Bash Scripting

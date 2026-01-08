@@ -4,6 +4,13 @@ description: C# and .NET development patterns
 domain: programming-languages
 version: 1.0.0
 tags: [csharp, dotnet, async, linq, aspnet]
+triggers:
+  keywords:
+    primary: [csharp, c#, dotnet, .net, aspnet, asp.net, nuget]
+    secondary: [linq, async, entity framework, ef core, blazor, maui]
+  context_boost: [enterprise, windows, azure, backend, game, unity]
+  context_penalty: [python, javascript, java, go]
+  priority: high
 ---
 
 # C# & .NET

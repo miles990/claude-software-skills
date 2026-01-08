@@ -4,6 +4,13 @@ description: Swift programming patterns for iOS and macOS
 domain: programming-languages
 version: 1.0.0
 tags: [swift, ios, macos, swiftui, concurrency]
+triggers:
+  keywords:
+    primary: [swift, ios, macos, swiftui, xcode, apple]
+    secondary: [uikit, combine, async await, protocol, codable, spm]
+  context_boost: [mobile, app, apple, watchos, tvos]
+  context_penalty: [android, java, kotlin, web]
+  priority: high
 ---
 
 # Swift

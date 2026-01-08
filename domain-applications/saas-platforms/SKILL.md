@@ -4,6 +4,13 @@ description: SaaS architecture, multi-tenancy, and subscription management
 domain: domain-applications
 version: 1.0.0
 tags: [saas, multi-tenancy, subscriptions, billing, onboarding]
+triggers:
+  keywords:
+    primary: [saas, multi-tenant, subscription, billing, tenant]
+    secondary: [onboarding, feature flag, usage billing, plan, pricing tier]
+  context_boost: [platform, b2b, enterprise, organization]
+  context_penalty: [mobile, game, desktop]
+  priority: high
 ---
 
 # SaaS Platform Development

@@ -4,6 +4,13 @@ description: Modern C++ programming patterns and idioms
 domain: programming-languages
 version: 1.0.0
 tags: [cpp, c++, stl, raii, templates, memory]
+triggers:
+  keywords:
+    primary: [cpp, c++, cmake, stl, template, raii]
+    secondary: [smart pointer, move, constexpr, lambda, boost, qt]
+  context_boost: [systems, performance, embedded, game, graphics]
+  context_penalty: [python, javascript, java, web]
+  priority: high
 ---
 
 # C++

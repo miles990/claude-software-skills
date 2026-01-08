@@ -4,6 +4,13 @@ description: RESTful, GraphQL, gRPC, and API best practices
 domain: software-design
 version: 1.0.0
 tags: [rest, graphql, grpc, websocket, openapi, versioning]
+triggers:
+  keywords:
+    primary: [api, rest, restful, graphql, grpc, endpoint, openapi]
+    secondary: [swagger, websocket, webhook, versioning, rate limit, pagination]
+  context_boost: [backend, microservice, integration, http]
+  context_penalty: [frontend, ui, css]
+  priority: high
 ---
 
 # API Design

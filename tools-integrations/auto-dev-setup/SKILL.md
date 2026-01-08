@@ -1,13 +1,16 @@
 ---
 name: auto-dev-setup
-version: 1.0.0
 description: 設定 Auto-Dev workflow，實現 Human-in-the-Loop 自動化開發
-tags: [github-actions, automation, workflow, ci-cd]
+domain: tools-integrations
+version: 1.0.0
+tags: [github-actions, automation, workflow, ci-cd, human-in-the-loop]
 triggers:
-  - setup auto-dev
-  - 設定自動開發
-  - configure auto dev
-  - init auto-dev
+  keywords:
+    primary: [auto-dev, 自動開發, human-in-the-loop, github actions workflow]
+    secondary: [setup workflow, workflow automation, claude automation, agent workflow]
+  context_boost: [github, ci, automation, workflow]
+  context_penalty: [frontend, ui, design]
+  priority: medium
 ---
 
 # Auto-Dev Setup Skill

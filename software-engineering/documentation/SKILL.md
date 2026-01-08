@@ -4,6 +4,13 @@ description: Technical writing, API docs, and documentation best practices
 domain: software-engineering
 version: 1.0.0
 tags: [documentation, technical-writing, api-docs, adr, readme, runbooks]
+triggers:
+  keywords:
+    primary: [documentation, docs, readme, api docs, technical writing, wiki]
+    secondary: [adr, runbook, changelog, jsdoc, docstring, swagger, typedoc]
+  context_boost: [write, explain, onboarding, knowledge]
+  context_penalty: [deployment, infrastructure, testing]
+  priority: medium
 ---
 
 # Documentation

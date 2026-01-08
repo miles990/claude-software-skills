@@ -4,6 +4,13 @@ description: Build automation, task runners, and scripting tools
 domain: tools-integrations
 version: 1.0.0
 tags: [make, npm-scripts, bash, automation, turbo, nx]
+triggers:
+  keywords:
+    primary: [automation, script, makefile, npm script, task runner, turbo, nx]
+    secondary: [build, gulp, grunt, husky, lint-staged, pre-commit]
+  context_boost: [workflow, ci, build, tooling]
+  context_penalty: [frontend, ui, design]
+  priority: medium
 ---
 
 # Automation & Scripts

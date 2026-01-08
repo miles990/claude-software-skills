@@ -4,6 +4,13 @@ description: Backend development with Node.js, Express, NestJS, and server patte
 domain: development-stacks
 version: 1.0.0
 tags: [nodejs, express, nestjs, fastify, api, middleware, authentication]
+triggers:
+  keywords:
+    primary: [backend, server, nodejs, express, nestjs, api, microservice]
+    secondary: [fastify, middleware, authentication, rest, graphql, queue]
+  context_boost: [service, endpoint, database, http]
+  context_penalty: [frontend, css, ui, mobile]
+  priority: high
 ---
 
 # Backend Development

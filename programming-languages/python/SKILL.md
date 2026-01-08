@@ -2,8 +2,15 @@
 name: python
 description: Python programming patterns and best practices
 domain: programming-languages
-version: 1.0.0
+version: 1.1.0
 tags: [python, typing, async, dataclasses, decorators]
+triggers:
+  keywords:
+    primary: [python, py, pandas, numpy, pip, venv]
+    secondary: [asyncio, typing, dataclass, decorator, pytest]
+  context_boost: [data, analysis, scripting, automation, backend]
+  context_penalty: [java, csharp, golang]
+  priority: high
 ---
 
 # Python

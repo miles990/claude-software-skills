@@ -2,8 +2,15 @@
 name: database
 description: Database design, SQL, NoSQL, and data management patterns
 domain: development-stacks
-version: 1.0.0
+version: 1.1.0
 tags: [postgresql, mysql, mongodb, redis, prisma, migrations, indexing]
+triggers:
+  keywords:
+    primary: [database, sql, postgresql, mysql, mongodb, redis, db]
+    secondary: [query, schema, migration, index, orm, prisma, nosql]
+  context_boost: [data, storage, persistence, backend]
+  context_penalty: [frontend, css, ui]
+  priority: high
 ---
 
 # Database Development

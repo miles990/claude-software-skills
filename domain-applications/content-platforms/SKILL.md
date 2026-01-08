@@ -4,6 +4,13 @@ description: CMS, blogging platforms, and content management patterns
 domain: domain-applications
 version: 1.0.0
 tags: [cms, blog, content, markdown, rich-text, media]
+triggers:
+  keywords:
+    primary: [cms, blog, content management, headless cms, rich text editor]
+    secondary: [markdown, media library, versioning, publishing, seo, tiptap]
+  context_boost: [content, article, post, page, publish]
+  context_penalty: [e-commerce, payment, game]
+  priority: medium
 ---
 
 # Content Platforms

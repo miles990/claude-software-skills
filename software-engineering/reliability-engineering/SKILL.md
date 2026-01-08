@@ -4,6 +4,13 @@ description: SRE principles, observability, and incident management
 domain: software-engineering
 version: 1.0.0
 tags: [sre, observability, incident-management, chaos-engineering, sli, slo]
+triggers:
+  keywords:
+    primary: [sre, reliability, observability, incident, monitoring, alerting]
+    secondary: [sli, slo, sla, chaos engineering, postmortem, on-call, pagerduty]
+  context_boost: [production, uptime, outage, oncall]
+  context_penalty: [frontend, design, ui]
+  priority: high
 ---
 
 # Reliability Engineering

@@ -4,6 +4,13 @@ description: WebSocket, real-time communication, and event-driven architectures
 domain: development-stacks
 version: 1.0.0
 tags: [websocket, socket-io, sse, pubsub, real-time, events]
+triggers:
+  keywords:
+    primary: [realtime, real-time, websocket, socket.io, sse, pubsub]
+    secondary: [event driven, push, streaming, live, notification, kafka, rabbitmq]
+  context_boost: [chat, collaboration, live update, sync]
+  context_penalty: [batch, static, frontend]
+  priority: medium
 ---
 
 # Real-time Systems

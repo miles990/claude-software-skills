@@ -4,6 +4,13 @@ description: Software architecture patterns and best practices
 domain: software-design
 version: 1.0.0
 tags: [architecture, microservices, monolithic, event-driven, serverless, ddd]
+triggers:
+  keywords:
+    primary: [architecture, microservices, monolith, serverless, event-driven, ddd]
+    secondary: [hexagonal, clean architecture, cqrs, saga, domain driven, modular]
+  context_boost: [design, structure, enterprise, scale]
+  context_penalty: [frontend, css, ui]
+  priority: high
 ---
 
 # Architecture Patterns

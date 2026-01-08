@@ -4,6 +4,13 @@ description: Scalability, availability, and distributed systems design
 domain: software-design
 version: 1.0.0
 tags: [scalability, availability, distributed, caching, load-balancing, database]
+triggers:
+  keywords:
+    primary: [system design, scalability, distributed, architecture, high availability]
+    secondary: [load balancer, caching, sharding, replication, cap theorem, microservices]
+  context_boost: [interview, scale, performance, infrastructure]
+  context_penalty: [frontend, ui, mobile]
+  priority: high
 ---
 
 # System Design

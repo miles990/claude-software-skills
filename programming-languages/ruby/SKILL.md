@@ -4,6 +4,13 @@ description: Ruby programming patterns and idioms
 domain: programming-languages
 version: 1.0.0
 tags: [ruby, rails, metaprogramming, blocks, gems]
+triggers:
+  keywords:
+    primary: [ruby, rails, ruby on rails, gem, bundler, rake]
+    secondary: [metaprogramming, block, yield, rspec, sidekiq, activerecord]
+  context_boost: [web, backend, scripting, startup, rapid-development]
+  context_penalty: [python, javascript, java, go]
+  priority: medium
 ---
 
 # Ruby

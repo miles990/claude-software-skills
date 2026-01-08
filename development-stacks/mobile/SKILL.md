@@ -4,6 +4,13 @@ description: Mobile development with React Native, Flutter, and native patterns
 domain: development-stacks
 version: 1.0.0
 tags: [react-native, flutter, ios, android, expo, mobile-ui]
+triggers:
+  keywords:
+    primary: [mobile, react native, flutter, ios, android, app, expo]
+    secondary: [navigation, push notification, deep link, gesture, native module]
+  context_boost: [app store, play store, cross-platform, hybrid]
+  context_penalty: [web, backend, desktop, server]
+  priority: high
 ---
 
 # Mobile Development

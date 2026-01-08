@@ -4,6 +4,13 @@ description: E-commerce platforms, payment processing, and shopping cart pattern
 domain: domain-applications
 version: 1.0.0
 tags: [e-commerce, payments, stripe, cart, checkout, inventory]
+triggers:
+  keywords:
+    primary: [e-commerce, ecommerce, shopping cart, checkout, payment, stripe]
+    secondary: [inventory, order, product catalog, discount, coupon, shipping]
+  context_boost: [shop, store, buy, sell, transaction]
+  context_penalty: [game, mobile, desktop]
+  priority: high
 ---
 
 # E-Commerce Development

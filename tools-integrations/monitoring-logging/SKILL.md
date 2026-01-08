@@ -4,6 +4,13 @@ description: Application monitoring, logging systems, and alerting
 domain: tools-integrations
 version: 1.0.0
 tags: [monitoring, logging, metrics, alerting, datadog, grafana, prometheus]
+triggers:
+  keywords:
+    primary: [monitoring, logging, metrics, alerting, datadog, grafana, prometheus]
+    secondary: [trace, span, elk, loki, sentry, newrelic, splunk]
+  context_boost: [observability, production, debug, incident]
+  context_penalty: [frontend, ui, design]
+  priority: high
 ---
 
 # Monitoring & Logging

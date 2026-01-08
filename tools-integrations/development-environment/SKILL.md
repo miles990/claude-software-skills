@@ -4,6 +4,13 @@ description: IDE setup, dev containers, and local development tools
 domain: tools-integrations
 version: 1.0.0
 tags: [vscode, devcontainers, docker, dotfiles, terminal]
+triggers:
+  keywords:
+    primary: [vscode, ide, devcontainer, docker, dotfiles, terminal, setup]
+    secondary: [extension, config, workspace, neovim, vim, tmux, zsh]
+  context_boost: [development, local, environment, tooling]
+  context_penalty: [production, deploy, cloud]
+  priority: medium
 ---
 
 # Development Environment

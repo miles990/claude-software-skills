@@ -4,6 +4,13 @@ description: Git version control, branching strategies, and collaboration patter
 domain: tools-integrations
 version: 1.0.0
 tags: [git, github, gitlab, branching, merge, rebase, hooks]
+triggers:
+  keywords:
+    primary: [git, github, gitlab, branch, merge, rebase, commit, pr, pull request]
+    secondary: [gitflow, trunk based, cherry pick, stash, hook, conflict]
+  context_boost: [version control, collaboration, code review]
+  context_penalty: [database, frontend, ui]
+  priority: high
 ---
 
 # Git Workflows

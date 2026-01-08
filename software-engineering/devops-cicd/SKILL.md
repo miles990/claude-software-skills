@@ -4,6 +4,13 @@ description: CI/CD pipelines, infrastructure as code, and deployment strategies
 domain: software-engineering
 version: 1.0.0
 tags: [ci, cd, github-actions, kubernetes, docker, terraform, gitops]
+triggers:
+  keywords:
+    primary: [devops, ci, cd, cicd, pipeline, github actions, deployment, docker]
+    secondary: [kubernetes, k8s, terraform, ansible, jenkins, gitlab ci, argocd, helm]
+  context_boost: [automation, infrastructure, deploy, release]
+  context_penalty: [frontend, design, ux]
+  priority: high
 ---
 
 # DevOps & CI/CD

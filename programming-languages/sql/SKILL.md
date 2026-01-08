@@ -4,6 +4,13 @@ description: SQL patterns for database querying and design
 domain: programming-languages
 version: 1.0.0
 tags: [sql, postgresql, mysql, queries, database]
+triggers:
+  keywords:
+    primary: [sql, query, select, join, database, postgresql, mysql]
+    secondary: [index, transaction, cte, window function, stored procedure, view]
+  context_boost: [data, backend, analytics, reporting]
+  context_penalty: [frontend, ui, mobile]
+  priority: high
 ---
 
 # SQL

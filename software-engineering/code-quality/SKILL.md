@@ -4,6 +4,13 @@ description: Clean code principles, SOLID, and code review practices
 domain: software-engineering
 version: 1.0.0
 tags: [clean-code, solid, refactoring, code-review, linting, metrics]
+triggers:
+  keywords:
+    primary: [code quality, clean code, solid, refactor, code review, lint]
+    secondary: [dry, kiss, yagni, code smell, technical debt, static analysis]
+  context_boost: [maintainable, readable, best practice, standards]
+  context_penalty: [deployment, infrastructure, devops]
+  priority: high
 ---
 
 # Code Quality

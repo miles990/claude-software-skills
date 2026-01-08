@@ -4,6 +4,13 @@ description: User experience design principles for developers
 domain: software-design
 version: 1.0.0
 tags: [ux, usability, accessibility, responsive, design-system, wcag]
+triggers:
+  keywords:
+    primary: [ux, user experience, usability, accessibility, a11y, wcag]
+    secondary: [responsive, design system, heuristics, user flow, information architecture]
+  context_boost: [frontend, ui, design, user, interface]
+  context_penalty: [backend, database, devops]
+  priority: medium
 ---
 
 # UX Principles

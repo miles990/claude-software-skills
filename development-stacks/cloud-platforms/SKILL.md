@@ -4,6 +4,13 @@ description: AWS, GCP, Azure services and cloud-native development
 domain: development-stacks
 version: 1.0.0
 tags: [aws, gcp, azure, serverless, lambda, s3, cloudflare]
+triggers:
+  keywords:
+    primary: [aws, gcp, azure, cloud, serverless, lambda, s3]
+    secondary: [ec2, cloudflare, vercel, netlify, dynamodb, cloud function]
+  context_boost: [deploy, infrastructure, scale, hosting]
+  context_penalty: [frontend, ui, design]
+  priority: high
 ---
 
 # Cloud Platforms

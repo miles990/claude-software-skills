@@ -4,6 +4,13 @@ description: Common application development patterns and implementations
 domain: domain-applications
 version: 1.0.0
 tags: [crud, authentication, admin, dashboard, forms, file-upload, search]
+triggers:
+  keywords:
+    primary: [crud, authentication, admin panel, dashboard, file upload, search]
+    secondary: [login, signup, form, data table, bulk operations, workflow, i18n]
+  context_boost: [app, application, feature, implementation, pattern]
+  context_penalty: [infrastructure, deployment, devops]
+  priority: high
 ---
 
 # Application Development Patterns

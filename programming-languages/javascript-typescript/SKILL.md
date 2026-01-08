@@ -4,6 +4,13 @@ description: Modern JavaScript and TypeScript development patterns
 domain: programming-languages
 version: 1.0.0
 tags: [javascript, typescript, es6, nodejs, async, types]
+triggers:
+  keywords:
+    primary: [javascript, typescript, js, ts, nodejs, node, npm, deno, bun]
+    secondary: [es6, async, promise, module, webpack, vite, esbuild]
+  context_boost: [web, frontend, backend, fullstack, react, vue]
+  context_penalty: [python, java, csharp, rust]
+  priority: high
 ---
 
 # JavaScript & TypeScript

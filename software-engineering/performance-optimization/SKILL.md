@@ -4,6 +4,13 @@ description: Profiling, optimization techniques, and performance best practices
 domain: software-engineering
 version: 1.0.0
 tags: [performance, profiling, optimization, caching, database, frontend]
+triggers:
+  keywords:
+    primary: [performance, optimize, optimization, profiling, benchmark, speed]
+    secondary: [caching, latency, throughput, memory, cpu, bottleneck, lighthouse]
+  context_boost: [slow, fast, improve, scale]
+  context_penalty: [design, architecture, security]
+  priority: high
 ---
 
 # Performance Optimization

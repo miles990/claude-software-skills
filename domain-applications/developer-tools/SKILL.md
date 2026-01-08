@@ -4,6 +4,13 @@ description: CLI tools, SDKs, and developer experience patterns
 domain: domain-applications
 version: 1.0.0
 tags: [cli, sdk, api-client, devtools, dx]
+triggers:
+  keywords:
+    primary: [cli, sdk, developer tool, api client, dx, developer experience]
+    secondary: [commander, chalk, api documentation, developer portal, openapi]
+  context_boost: [tool, library, package, npm, developer]
+  context_penalty: [frontend, ui, design, mobile]
+  priority: medium
 ---
 
 # Developer Tools
