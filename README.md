@@ -1,6 +1,6 @@
 # Claude Software Skills
 
-> 47 modular software development skills for Claude Code - from architecture to deployment
+> 48 modular software development skills for Claude Code - from architecture to deployment
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -9,7 +9,7 @@
 │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
 │   │   Software   │  │   Software   │  │ Development  │         │
 │   │    Design    │  │ Engineering  │  │    Stacks    │         │
-│   │      6       │  │      7       │  │      8       │         │
+│   │      6       │  │      7       │  │      9       │         │
 │   └──────────────┘  └──────────────┘  └──────────────┘         │
 │                                                                 │
 │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
@@ -18,7 +18,7 @@
 │   │      6       │  │      8       │  │     12       │         │
 │   └──────────────┘  └──────────────┘  └──────────────┘         │
 │                                                                 │
-│                   Total: 47 skill modules                       │
+│                   Total: 48 skill modules                       │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -158,10 +158,11 @@ git clone https://github.com/miles990/claude-software-skills.git
 - `reliability-engineering` - SRE, chaos engineering, observability
 - `documentation` - Technical writing, API docs, architecture docs
 
-### 3. Development Stacks (8 skills)
+### 3. Development Stacks (9 skills)
 - `frontend` - React, Vue, Angular, Svelte, Next.js
 - `backend` - Node.js, Python, Go, Rust frameworks
 - `mobile` - React Native, Flutter, iOS, Android
+- `mobile/flame` - Flame 2D game engine for Flutter
 - `database` - PostgreSQL, MongoDB, Redis, Elasticsearch
 - `cloud-platforms` - AWS, GCP, Azure, Vercel
 - `ai-ml-integration` - LLM APIs, embeddings, vector DBs
