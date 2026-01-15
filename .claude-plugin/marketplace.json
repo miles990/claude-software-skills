@@ -1,97 +1,52 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-software-skills",
+  "description": "Skills collection converted to Plugin format",
   "owner": {
-    "name": "Claude Software Skills",
+    "name": "miles990",
     "email": "opensource@example.com"
-  },
-  "metadata": {
-    "description": "Collection of software development skills",
-    "version": "1.0.0"
   },
   "plugins": [
     {
-      "name": "software-skills",
-      "description": "265+ software development skills for Claude Code",
-      "strict": false,
-      "skills": [
-        {
-          "category": "Software Design",
-          "skills": [
-            "architecture-patterns",
-            "design-patterns",
-            "api-design",
-            "system-design",
-            "data-design",
-            "ux-principles"
-          ]
-        },
-        {
-          "category": "Software Engineering",
-          "skills": [
-            "code-quality",
-            "testing-strategies",
-            "devops-cicd",
-            "performance-optimization",
-            "security-practices",
-            "reliability-engineering",
-            "documentation"
-          ]
-        },
-        {
-          "category": "Development Stacks",
-          "skills": [
-            "frontend",
-            "backend",
-            "mobile",
-            "database",
-            "cloud-platforms",
-            "ai-ml-integration",
-            "realtime-systems",
-            "edge-iot"
-          ]
-        },
-        {
-          "category": "Tools & Integrations",
-          "skills": [
-            "git-workflows",
-            "project-management",
-            "development-environment",
-            "monitoring-logging",
-            "api-tools",
-            "automation-scripts"
-          ]
-        },
-        {
-          "category": "Domain Applications",
-          "skills": [
-            "application-patterns",
-            "e-commerce",
-            "saas-platforms",
-            "content-platforms",
-            "communication-systems",
-            "developer-tools",
-            "game-development",
-            "desktop-apps"
-          ]
-        },
-        {
-          "category": "Programming Languages",
-          "skills": [
-            "javascript-typescript",
-            "python",
-            "go",
-            "rust",
-            "java-kotlin",
-            "csharp-dotnet",
-            "cpp",
-            "ruby",
-            "php",
-            "swift",
-            "shell-bash",
-            "sql"
-          ]
-        }
-      ]
+      "name": "development-stacks",
+      "description": "8 skills in development-stacks category",
+      "source": "./development-stacks",
+      "category": "development"
+    }
+,
+    {
+      "name": "domain-applications",
+      "description": "12 skills in domain-applications category",
+      "source": "./domain-applications",
+      "category": "development"
+    }
+,
+    {
+      "name": "programming-languages",
+      "description": "12 skills in programming-languages category",
+      "source": "./programming-languages",
+      "category": "development"
+    }
+,
+    {
+      "name": "software-design",
+      "description": "6 skills in software-design category",
+      "source": "./software-design",
+      "category": "development"
+    }
+,
+    {
+      "name": "software-engineering",
+      "description": "8 skills in software-engineering category",
+      "source": "./software-engineering",
+      "category": "development"
+    }
+,
+    {
+      "name": "tools-integrations",
+      "description": "8 skills in tools-integrations category",
+      "source": "./tools-integrations",
+      "category": "development"
     }
   ]
 }
