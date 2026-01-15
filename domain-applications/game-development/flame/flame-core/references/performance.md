@@ -497,3 +497,61 @@ class GoodComponent extends Component {
 | FPS monitored during development | ⬜ |
 | Batch rendering for many similar objects | ⬜ |
 | Priority set for proper render order | ⬜ |
+
+---
+
+## Benchmark 數據
+
+根據 [Filip Hráček 的 Benchmark](https://filiph.net/text/benchmarking-flutter-flame-unity-godot.html)（Flutter/Dart 團隊成員），比較 Flutter、Flame、Unity、Godot：
+
+### 測試環境
+- 測試項目：「The Bench」- 模擬真實遊戲場景
+- 包含：動畫背景、移動精靈、多個 UI 元素、背景音樂
+- 平台：iOS 和 Web
+
+### 效能比較
+
+| 指標 | Flutter/Flame | Unity | Godot |
+|------|---------------|-------|-------|
+| **啟動時間** | 最快 | 較慢 | 較慢 |
+| **最大實體數** | ~數百個 | 數千個 | 數千個 |
+| **CPU 使用率** | ~35-40% | ~35-40% | ~35-40% |
+| **記憶體 (Web)** | 較高 | 較低 | 較低 |
+| **記憶體 (iOS)** | 較低 | 中等 | 中等 |
+
+### 效能瓶頸
+
+Flame 的主要限制在於實體數量：
+
+```dart
+// ⚠️ 超過 200-300 個活躍實體時效能明顯下降
+// 原因：Dart/Flutter 的渲染管線非為遊戲優化
+
+// ✅ 對策
+// 1. 物件池化 - 減少 GC 壓力
+// 2. 視野剔除 - 只更新可見物件
+// 3. 批次渲染 - 減少 draw calls
+// 4. 降低更新頻率 - 非關鍵物件使用 TimerComponent
+```
+
+### 建議場景
+
+基於 Benchmark 結果，Flame 適合：
+
+| 適合 ✅ | 不適合 ❌ |
+|---------|----------|
+| 休閒遊戲 (卡牌、解謎) | 彈幕射擊 |
+| Hyper-casual | RTS / 大規模戰鬥 |
+| 視覺小說 / 互動故事 | 物理模擬密集 |
+| 回合制 RPG / 戰棋 | 粒子效果密集 |
+| 2D 平台遊戲 (適量敵人) | 3D 遊戲 |
+| Flutter App 內嵌小遊戲 | AAA 級遊戲 |
+
+### 優化目標
+
+| 實體數量 | 預期 FPS | 建議 |
+|----------|----------|------|
+| < 50 | 60 FPS | 無需特別優化 |
+| 50-150 | 60 FPS | 基本優化 (物件池) |
+| 150-300 | 30-60 FPS | 完整優化 (池化+剔除+批次) |
+| > 300 | < 30 FPS | 考慮使用 Unity/Godot |

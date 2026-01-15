@@ -1,7 +1,7 @@
 ---
 schema: "1.0"
 name: flame-game-dev
-version: "2.1.0"
+version: "2.2.0"
 description: Flame Engine 2D 遊戲開發完整指南 - 核心、系統、模板、部署
 domain: game-development
 triggers:
@@ -85,6 +85,41 @@ roguelike.md    - 程序生成地下城
 # 部署發布
 要發布遊戲？         → 參考下方「部署平台」章節
 ```
+
+## 建議場景
+
+根據 [Filip Hráček 的 Benchmark 測試](https://filiph.net/text/benchmarking-flutter-flame-unity-godot.html)，Flame 與其他引擎比較：
+
+### Flame 優勢
+| 項目 | Flame | Unity/Godot |
+|------|-------|-------------|
+| **啟動時間** | 最快 | 較慢 |
+| **包體大小** | 較小 | 較大 |
+| **學習曲線** | Flutter 開發者友善 | 需學習新工具 |
+| **跨平台** | 一套代碼 6 平台 | 需平台適配 |
+| **熱重載** | 支援 | 部分支援 |
+
+### Flame 限制
+| 項目 | Flame | Unity/Godot |
+|------|-------|-------------|
+| **最大實體數** | ~數百個 | 數千個 |
+| **3D 支援** | 無 | 完整 |
+| **物理引擎** | 基礎 (Forge2D) | 完整 |
+| **編輯器** | 無視覺化編輯器 | 完整 IDE |
+
+### 推薦使用 Flame
+- ✅ **休閒遊戲**：卡牌、解謎、益智、問答
+- ✅ **Hyper-casual**：簡單機制、快速遊玩
+- ✅ **故事驅動**：視覺小說、互動故事
+- ✅ **2D 平台遊戲**：橫向卷軸、Metroidvania
+- ✅ **回合制遊戲**：戰棋、RPG、桌遊
+- ✅ **Flutter App 內嵌遊戲**：小遊戲、互動元素
+
+### 不推薦使用 Flame
+- ❌ **大量實體**：彈幕、RTS、大規模戰鬥
+- ❌ **3D 遊戲**：任何需要 3D 渲染的遊戲
+- ❌ **物理密集**：複雜物理模擬、賽車
+- ❌ **AAA 級遊戲**：高畫質、複雜特效
 
 ## Quick Start
 
@@ -192,6 +227,7 @@ flame/ (本索引)
 
 ## Version History
 
+- v2.2.0 - 新增建議場景、Benchmark 數據
 - v2.1.0 - 新增 Audio、Particles、Performance、部署指南
 - v2.0.0 - 重構為模組化架構
 - v1.0.0 - 初始版本
