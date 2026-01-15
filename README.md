@@ -67,32 +67,31 @@ curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/mai
 
 ## Installation
 
-### Option 1: skillpkg (Recommended)
+### Option 1: Plugin Marketplace (Recommended)
 
-使用 [skillpkg](https://github.com/anthropics/skillpkg) 安裝單一 skill 或多個 skills：
+使用 Claude Code 內建的 Plugin 系統安裝：
 
-```python
-# 安裝單一 skill
-mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#development-stacks/frontend",
-    scope="local"
-)
+```bash
+# 1. 添加 marketplace
+/plugin marketplace add miles990/claude-software-skills
 
-# 安裝多個 skills（依專案需求選擇）
-skills = [
-    "development-stacks/frontend",
-    "development-stacks/backend",
-    "programming-languages/python",
-    "software-engineering/code-quality",
-]
-for skill in skills:
-    mcp__skillpkg__install_skill(
-        source=f"github:miles990/claude-software-skills#{skill}",
-        scope="local"
-    )
+# 2. 安裝特定分類（選擇你需要的）
+/plugin install software-design@claude-software-skills
+/plugin install development-stacks@claude-software-skills
+/plugin install programming-languages@claude-software-skills
+
+# 或在對話中直接提及 skill 名稱，Claude 會自動載入
 ```
 
-📚 **完整教學**: [USAGE-GUIDE.md](docs/USAGE-GUIDE.md) | [安裝範例](examples/install-for-project.md)
+**可用分類：**
+| 分類 | Skills 數 | 說明 |
+|------|-----------|------|
+| `software-design` | 6 | 架構與設計模式 |
+| `software-engineering` | 8 | 開發實踐 |
+| `development-stacks` | 8 | 技術棧 |
+| `tools-integrations` | 8 | 開發工具 |
+| `domain-applications` | 12 | 領域應用 |
+| `programming-languages` | 12 | 程式語言 |
 
 ### Option 2: Clone to Skills Directory
 
