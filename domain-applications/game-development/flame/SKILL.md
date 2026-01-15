@@ -1,12 +1,23 @@
 ---
+schema: "1.0"
 name: flame-game-dev
-description: Flame Engine 2D game development master index - core, systems, templates
+version: "2.1.0"
+description: Flame Engine 2D 遊戲開發完整指南 - 核心、系統、模板、部署
 domain: game-development
-version: 2.0.0
-tags: [flame, flutter, dart, 2d-games, game-engine]
+triggers:
+  keywords:
+    primary: [flame, flame engine, flutter game, 2d game flutter, FlameGame]
+    secondary: [SpriteComponent, SpriteAnimationComponent, collision detection flutter, flame_audio, flame_tiled]
+  context_boost: [flutter, dart, mobile game, cross-platform game, hyper-casual, platformer, roguelike]
+  context_penalty: [unity, godot, unreal, 3d game]
+  priority: high
+dependencies:
+  prerequisites: [flutter, dart]
+  related: [game-design, mobile]
+author: miles990
 ---
 
-# Flame Game Development
+# Flame Engine 2D Game Development
 
 Flame Engine 遊戲開發完整指南，包含核心基礎、14 個遊戲系統、3 種遊戲類型模板。
 
@@ -160,7 +171,7 @@ flutter build windows --release  # 或 macos / linux
 ## Dependency Graph
 
 ```
-flame-game-dev (總索引)
+flame/ (本索引)
     │
     ├── flame-core (核心基礎)
     │   └── 10 reference files
@@ -181,7 +192,6 @@ flame-game-dev (總索引)
 
 ## Version History
 
-- v2.2.0 - 新增部署平台指南（itch.io、Google Play、Steam）
-- v2.1.0 - 新增 Audio、Particles、Performance references
-- v2.0.0 - 重構為三個子 skills，模組化架構
-- v1.0.0 - 初始版本（單一大檔案）
+- v2.1.0 - 新增 Audio、Particles、Performance、部署指南
+- v2.0.0 - 重構為模組化架構
+- v1.0.0 - 初始版本
