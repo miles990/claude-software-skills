@@ -3,11 +3,11 @@ name: game-development
 description: Game development patterns, architectures, and best practices
 domain: domain-applications
 version: 1.0.0
-tags: [game, unity, unreal, godot, ecs, physics, multiplayer, ai]
+tags: [game, unity, unreal, godot, flame, flutter, ecs, physics, multiplayer, ai]
 triggers:
   keywords:
-    primary: [game, game development, unity, unreal, godot, ecs, game loop]
-    secondary: [sprite, collision, physics, multiplayer, pathfinding, ai, behavior tree]
+    primary: [game, game development, unity, unreal, godot, flame, flutter game, ecs, game loop]
+    secondary: [sprite, collision, physics, multiplayer, pathfinding, ai, behavior tree, dart game, 2d game]
   context_boost: [2d, 3d, animation, rendering, engine]
   context_penalty: [web, api, database, backend]
   priority: medium
