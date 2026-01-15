@@ -86,7 +86,7 @@ roguelike.md    - 程序生成地下城
 要發布遊戲？         → 參考下方「部署平台」章節
 ```
 
-## 建議場景
+## 適用場景
 
 根據 [Filip Hráček 的 Benchmark 測試](https://filiph.net/text/benchmarking-flutter-flame-unity-godot.html)，Flame 與其他引擎比較：
 
@@ -227,7 +227,7 @@ flame/ (本索引)
 
 ## Version History
 
-- v2.2.0 - 新增建議場景、Benchmark 數據
+- v2.2.0 - 新增適用場景、Benchmark 數據
 - v2.1.0 - 新增 Audio、Particles、Performance、部署指南
 - v2.0.0 - 重構為模組化架構
 - v1.0.0 - 初始版本

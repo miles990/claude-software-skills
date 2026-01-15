@@ -534,7 +534,7 @@ Flame 的主要限制在於實體數量：
 // 4. 降低更新頻率 - 非關鍵物件使用 TimerComponent
 ```
 
-### 建議場景
+### 適用場景
 
 基於 Benchmark 結果，Flame 適合：
 
