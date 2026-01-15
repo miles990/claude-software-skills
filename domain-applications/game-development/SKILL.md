@@ -395,15 +395,24 @@ function onBulletHit(bullet: Bullet) {
 
 ## Game Engines Reference
 
-| Engine | Language | Best For | Platform |
-|--------|----------|----------|----------|
-| Unity | C# | Mobile, indie, VR | All |
-| Unreal | C++, Blueprint | AAA, realistic | PC, Console |
-| Godot | GDScript, C# | Indie, 2D | All |
-| Phaser | JavaScript | Web 2D | Browser |
-| Three.js | JavaScript | Web 3D | Browser |
-| Bevy | Rust | Performance | Desktop |
-| LÖVE | Lua | Simple 2D | Desktop |
+| Engine | Language | Best For | Platform | Skill |
+|--------|----------|----------|----------|-------|
+| Unity | C# | Mobile, indie, VR | All | - |
+| Unreal | C++, Blueprint | AAA, realistic | PC, Console | - |
+| Godot | GDScript, C# | Indie, 2D | All | - |
+| **Flame** | Dart | Flutter 2D, casual | All | [flame/](./flame/) |
+| Phaser | JavaScript | Web 2D | Browser | - |
+| Three.js | JavaScript | Web 3D | Browser | - |
+| Bevy | Rust | Performance | Desktop | - |
+| LÖVE | Lua | Simple 2D | Desktop | - |
+
+### Flame Engine (Flutter)
+
+專為 Flutter 開發者設計的 2D 遊戲引擎，詳細文件請參考 [flame/SKILL.md](./flame/SKILL.md)：
+
+- **flame-core/** - 組件、輸入、碰撞、相機、動畫、音效、粒子
+- **flame-systems/** - 14 個遊戲系統（任務、對話、背包、戰鬥等）
+- **flame-templates/** - RPG、Platformer、Roguelike 模板
 
 ---
 
