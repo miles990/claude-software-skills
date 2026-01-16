@@ -72,16 +72,39 @@ curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/mai
 使用 Claude Code 內建的 Plugin 系統安裝：
 
 ```bash
-# 1. 添加 marketplace
+# 步驟 1：添加 marketplace（GitHub 格式：owner/repo）
 /plugin marketplace add miles990/claude-software-skills
 
-# 2. 安裝特定分類（選擇你需要的）
+# 步驟 2：打開 plugin 管理介面，在 Discover 標籤查看可用插件
+/plugin
+
+# 步驟 3：安裝特定分類（選擇你需要的）
 /plugin install software-design@claude-software-skills
 /plugin install development-stacks@claude-software-skills
 /plugin install programming-languages@claude-software-skills
 
 # 或在對話中直接提及 skill 名稱，Claude 會自動載入
 ```
+
+**支援的 GitHub 格式：**
+```bash
+# 簡短格式（推薦）
+/plugin marketplace add miles990/claude-software-skills
+
+# HTTPS URL
+/plugin marketplace add https://github.com/miles990/claude-software-skills.git
+
+# 指定分支或標籤
+/plugin marketplace add miles990/claude-software-skills#main
+```
+
+**其他 Plugin 命令：**
+| 命令 | 說明 |
+|------|------|
+| `/plugin` | 打開互動式 plugin 管理介面 |
+| `/plugin install <name>@<marketplace>` | 安裝特定插件 |
+| `/plugin disable <name>@<marketplace>` | 暫時停用插件 |
+| `/plugin uninstall <name>@<marketplace>` | 完全移除插件 |
 
 **可用分類：**
 | 分類 | Skills 數 | 說明 |
