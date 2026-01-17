@@ -1,52 +1,398 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-software-skills",
-  "description": "Skills collection converted to Plugin format",
   "owner": {
     "name": "miles990",
-    "email": "opensource@example.com"
+    "email": "alexlee7171@gmail.com"
+  },
+  "metadata": {
+    "description": "48 modular software development skills for Claude Code - from architecture to deployment",
+    "version": "1.0.0"
   },
   "plugins": [
     {
-      "name": "development-stacks",
-      "description": "8 skills in development-stacks category",
-      "source": "./development-stacks",
-      "category": "development"
-    }
-,
+      "name": "architecture-patterns",
+      "description": "Software architecture patterns and best practices",
+      "source": "./software-design/architecture-patterns",
+      "version": "1.0.0",
+      "strict": true
+    },
     {
-      "name": "domain-applications",
-      "description": "12 skills in domain-applications category",
-      "source": "./domain-applications",
-      "category": "development"
-    }
-,
+      "name": "design-patterns",
+      "description": "Classic and modern software design patterns",
+      "source": "./software-design/design-patterns",
+      "version": "1.0.0",
+      "strict": true
+    },
     {
-      "name": "programming-languages",
-      "description": "12 skills in programming-languages category",
-      "source": "./programming-languages",
-      "category": "development"
-    }
-,
+      "name": "api-design",
+      "description": "RESTful, GraphQL, gRPC, and API best practices",
+      "source": "./software-design/api-design",
+      "version": "1.0.0",
+      "strict": true
+    },
     {
-      "name": "software-design",
-      "description": "6 skills in software-design category",
-      "source": "./software-design",
-      "category": "development"
-    }
-,
+      "name": "system-design",
+      "description": "Scalability, availability, and distributed systems design",
+      "source": "./software-design/system-design",
+      "version": "1.0.0",
+      "strict": true
+    },
     {
-      "name": "software-engineering",
-      "description": "8 skills in software-engineering category",
-      "source": "./software-engineering",
-      "category": "development"
-    }
-,
+      "name": "data-design",
+      "description": "Data modeling, schema design, and data architecture",
+      "source": "./software-design/data-design",
+      "version": "1.0.0",
+      "strict": true
+    },
     {
-      "name": "tools-integrations",
-      "description": "8 skills in tools-integrations category",
-      "source": "./tools-integrations",
-      "category": "development"
+      "name": "ux-principles",
+      "description": "User experience design principles for developers",
+      "source": "./software-design/ux-principles",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "code-quality",
+      "description": "Clean code principles, SOLID, and code review practices",
+      "source": "./software-engineering/code-quality",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "testing-strategies",
+      "description": "Unit, integration, E2E testing and TDD practices",
+      "source": "./software-engineering/testing-strategies",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "devops-cicd",
+      "description": "CI/CD pipelines, infrastructure as code, and deployment strategies",
+      "source": "./software-engineering/devops-cicd",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "performance-optimization",
+      "description": "Profiling, optimization techniques, and performance best practices",
+      "source": "./software-engineering/performance-optimization",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "security-practices",
+      "description": "OWASP Top 10, authentication, and secure coding practices",
+      "source": "./software-engineering/security-practices",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "reliability-engineering",
+      "description": "SRE principles, observability, and incident management",
+      "source": "./software-engineering/reliability-engineering",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "documentation",
+      "description": "Technical writing, API docs, and documentation best practices",
+      "source": "./software-engineering/documentation",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "internationalization",
+      "description": "i18n/l10n architecture design and multi-language best practices",
+      "source": "./software-engineering/internationalization",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "frontend",
+      "description": "Modern frontend development with React, Vue, and web technologies",
+      "source": "./development-stacks/frontend",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "backend",
+      "description": "Backend development with Node.js, Express, NestJS, and server patterns",
+      "source": "./development-stacks/backend",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "mobile",
+      "description": "Mobile development with React Native, Flutter, and native patterns",
+      "source": "./development-stacks/mobile",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "database",
+      "description": "Database design, SQL, NoSQL, and data management patterns",
+      "source": "./development-stacks/database",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "cloud-platforms",
+      "description": "AWS, GCP, Azure services and cloud-native development",
+      "source": "./development-stacks/cloud-platforms",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "ai-ml-integration",
+      "description": "AI/ML APIs, LLM integration, and intelligent application patterns",
+      "source": "./development-stacks/ai-ml-integration",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "realtime-systems",
+      "description": "WebSocket, real-time communication, and event-driven architectures",
+      "source": "./development-stacks/realtime-systems",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "edge-iot",
+      "description": "Edge computing, IoT protocols, and embedded systems integration",
+      "source": "./development-stacks/edge-iot",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "git-workflows",
+      "description": "Git version control, branching strategies, and collaboration patterns",
+      "source": "./tools-integrations/git-workflows",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "project-management",
+      "description": "Agile methodologies, issue tracking, and team collaboration tools",
+      "source": "./tools-integrations/project-management",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "development-environment",
+      "description": "IDE setup, dev containers, and local development tools",
+      "source": "./tools-integrations/development-environment",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "monitoring-logging",
+      "description": "Application monitoring, logging systems, and alerting",
+      "source": "./tools-integrations/monitoring-logging",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "api-tools",
+      "description": "API testing, documentation, and development tools",
+      "source": "./tools-integrations/api-tools",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "automation-scripts",
+      "description": "Build automation, task runners, and scripting tools",
+      "source": "./tools-integrations/automation-scripts",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "auto-dev-setup",
+      "description": "Auto-Dev workflow setup for Human-in-the-Loop automation",
+      "source": "./tools-integrations/auto-dev-setup",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "claude-code-plugin",
+      "description": "Claude Code Plugin development, publishing, and marketplace management",
+      "source": "./tools-integrations/claude-code-plugin",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "claude-code-sdk",
+      "description": "Claude Code SDK integration for AI-powered applications",
+      "source": "./tools-integrations/claude-code-sdk",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "application-patterns",
+      "description": "Common application development patterns and implementations",
+      "source": "./domain-applications/application-patterns",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "e-commerce",
+      "description": "E-commerce platforms, payment processing, and shopping cart patterns",
+      "source": "./domain-applications/e-commerce",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "saas-platforms",
+      "description": "SaaS architecture, multi-tenancy, and subscription management",
+      "source": "./domain-applications/saas-platforms",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "content-platforms",
+      "description": "CMS, blogging platforms, and content management patterns",
+      "source": "./domain-applications/content-platforms",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "communication-systems",
+      "description": "Email, notifications, and messaging system patterns",
+      "source": "./domain-applications/communication-systems",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "developer-tools",
+      "description": "CLI tools, SDKs, and developer experience patterns",
+      "source": "./domain-applications/developer-tools",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "game-development",
+      "description": "Game development patterns, architectures, and best practices",
+      "source": "./domain-applications/game-development",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "flame",
+      "description": "Flame Engine 2D game development for Flutter",
+      "source": "./domain-applications/game-development/flame",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "flame-core",
+      "description": "Flame Engine core fundamentals - components, input, collision, camera",
+      "source": "./domain-applications/game-development/flame/flame-core",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "flame-systems",
+      "description": "Flame Engine 14 game systems - quest, dialogue, inventory, combat",
+      "source": "./domain-applications/game-development/flame/flame-systems",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "flame-templates",
+      "description": "Game type templates for Flame Engine - RPG, Platformer, Roguelike",
+      "source": "./domain-applications/game-development/flame/flame-templates",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "desktop-apps",
+      "description": "Desktop application development with Electron and Tauri",
+      "source": "./domain-applications/desktop-apps",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "javascript-typescript",
+      "description": "Modern JavaScript and TypeScript development patterns",
+      "source": "./programming-languages/javascript-typescript",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "python",
+      "description": "Python programming patterns and best practices",
+      "source": "./programming-languages/python",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "go",
+      "description": "Go programming patterns and idioms",
+      "source": "./programming-languages/go",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "rust",
+      "description": "Rust programming patterns and ownership concepts",
+      "source": "./programming-languages/rust",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "java-kotlin",
+      "description": "Java and Kotlin programming patterns",
+      "source": "./programming-languages/java-kotlin",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "csharp-dotnet",
+      "description": "C# and .NET development patterns",
+      "source": "./programming-languages/csharp-dotnet",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "cpp",
+      "description": "Modern C++ programming patterns and idioms",
+      "source": "./programming-languages/cpp",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "ruby",
+      "description": "Ruby programming patterns and idioms",
+      "source": "./programming-languages/ruby",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "php",
+      "description": "Modern PHP programming patterns",
+      "source": "./programming-languages/php",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "swift",
+      "description": "Swift programming patterns for iOS and macOS",
+      "source": "./programming-languages/swift",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "shell-bash",
+      "description": "Shell scripting and Bash programming patterns",
+      "source": "./programming-languages/shell-bash",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "sql",
+      "description": "SQL patterns for database querying and design",
+      "source": "./programming-languages/sql",
+      "version": "1.0.0",
+      "strict": true
     }
   ]
 }

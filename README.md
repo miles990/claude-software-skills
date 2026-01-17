@@ -1,6 +1,10 @@
 # Claude Software Skills
 
-> 48 modular software development skills for Claude Code - from architecture to deployment
+> 55 modular software development skills for Claude Code - from architecture to deployment
+
+[![Skills](https://img.shields.io/badge/skills-55-blue)](./README.md)
+[![Categories](https://img.shields.io/badge/categories-6-green)](./README.md)
+[![Plugin](https://img.shields.io/badge/Claude_Code-Plugin-orange)](https://code.claude.com/docs/en/discover-plugins)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -9,50 +13,18 @@
 │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
 │   │   Software   │  │   Software   │  │ Development  │         │
 │   │    Design    │  │ Engineering  │  │    Stacks    │         │
-│   │      6       │  │      7       │  │      9       │         │
+│   │      6       │  │      8       │  │      8       │         │
 │   └──────────────┘  └──────────────┘  └──────────────┘         │
 │                                                                 │
 │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
 │   │    Tools &   │  │   Domain     │  │ Programming  │         │
 │   │ Integrations │  │ Applications │  │  Languages   │         │
-│   │      6       │  │      8       │  │     12       │         │
+│   │      9       │  │     12       │  │     12       │         │
 │   └──────────────┘  └──────────────┘  └──────────────┘         │
 │                                                                 │
-│                   Total: 48 skill modules                       │
+│              AI 自動識別任務 → 載入對應領域知識                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
-
-## 🤖 Auto-Dev: Automated Development Workflow
-
-一鍵設定 GitHub Actions 自動開發流程，讓 Claude 幫你完成開發任務。
-
-### 快速安裝
-
-**使用 API Key：**
-```bash
-curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
-```
-
-**使用 Claude Max（OAuth）：**
-```bash
-curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
-```
-
-### 安裝後設定
-
-| 版本 | 設定方式 |
-|------|----------|
-| API Key | 到 [console.anthropic.com](https://console.anthropic.com/settings/keys) 取得 Key，設定到 GitHub Secrets `ANTHROPIC_API_KEY` |
-| Claude Max | 執行 `claude /install-github-app` 自動設定 OAuth Token |
-
-### 使用方式
-
-- **Issue 觸發**：建立 Issue → 加上 `auto-dev` label
-- **留言觸發**：在任何 Issue/PR 留言 `@claude [指令]`
-
-詳細文檔：[AUTO-DEV.md](.github/AUTO-DEV.md)
-
----
 
 ## Features
 
@@ -67,56 +39,133 @@ curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/mai
 
 ## Installation
 
-### Option 1: Plugin Marketplace (Recommended)
-
-使用 Claude Code 內建的 Plugin 系統安裝：
+### Plugin Marketplace (Recommended)
 
 ```bash
-# 步驟 1：添加 marketplace（GitHub 格式：owner/repo）
+# 1. Add marketplace (GitHub format: owner/repo)
 /plugin marketplace add miles990/claude-software-skills
 
-# 步驟 2：打開 plugin 管理介面，在 Discover 標籤查看可用插件
+# 2. Open plugin management interface, view available plugins in Discover tab
 /plugin
 
-# 步驟 3：安裝特定分類（選擇你需要的）
-/plugin install software-design@claude-software-skills
-/plugin install development-stacks@claude-software-skills
-/plugin install programming-languages@claude-software-skills
+# 3. Install specific skills (choose what you need)
+/plugin install frontend@claude-software-skills
+/plugin install backend@claude-software-skills
+/plugin install api-design@claude-software-skills
 
-# 或在對話中直接提及 skill 名稱，Claude 會自動載入
+# Or mention skill name in conversation, Claude will auto-load
 ```
 
-**支援的 GitHub 格式：**
+**Supported GitHub formats:**
 ```bash
-# 簡短格式（推薦）
+# Short format (recommended)
 /plugin marketplace add miles990/claude-software-skills
 
 # HTTPS URL
 /plugin marketplace add https://github.com/miles990/claude-software-skills.git
 
-# 指定分支或標籤
+# Specify branch or tag
 /plugin marketplace add miles990/claude-software-skills#main
 ```
 
-**其他 Plugin 命令：**
-| 命令 | 說明 |
-|------|------|
-| `/plugin` | 打開互動式 plugin 管理介面 |
-| `/plugin install <name>@<marketplace>` | 安裝特定插件 |
-| `/plugin disable <name>@<marketplace>` | 暫時停用插件 |
-| `/plugin uninstall <name>@<marketplace>` | 完全移除插件 |
+**Plugin commands:**
+| Command | Description |
+|---------|-------------|
+| `/plugin` | Open interactive plugin management interface |
+| `/plugin install <name>@<marketplace>` | Install specific plugin |
+| `/plugin disable <name>@<marketplace>` | Temporarily disable plugin |
+| `/plugin uninstall <name>@<marketplace>` | Completely remove plugin |
 
-**可用分類：**
-| 分類 | Skills 數 | 說明 |
-|------|-----------|------|
-| `software-design` | 6 | 架構與設計模式 |
-| `software-engineering` | 8 | 開發實踐 |
-| `development-stacks` | 8 | 技術棧 |
-| `tools-integrations` | 8 | 開發工具 |
-| `domain-applications` | 12 | 領域應用 |
-| `programming-languages` | 12 | 程式語言 |
+## Available Skills
 
-### Option 2: Clone to Skills Directory
+### Software Design (6 skills)
+
+| Skill | Description |
+|-------|-------------|
+| `architecture-patterns` | Software architecture patterns and best practices |
+| `design-patterns` | Classic and modern software design patterns |
+| `api-design` | RESTful, GraphQL, gRPC, and API best practices |
+| `system-design` | Scalability, availability, and distributed systems design |
+| `data-design` | Data modeling, schema design, and data architecture |
+| `ux-principles` | User experience design principles for developers |
+
+### Software Engineering (8 skills)
+
+| Skill | Description |
+|-------|-------------|
+| `code-quality` | Clean code principles, SOLID, and code review practices |
+| `testing-strategies` | Unit, integration, E2E testing and TDD practices |
+| `devops-cicd` | CI/CD pipelines, infrastructure as code, and deployment |
+| `performance-optimization` | Profiling, optimization techniques, and best practices |
+| `security-practices` | OWASP Top 10, authentication, and secure coding |
+| `reliability-engineering` | SRE principles, observability, and incident management |
+| `documentation` | Technical writing, API docs, and documentation best practices |
+| `internationalization` | i18n/l10n architecture design and multi-language support |
+
+### Development Stacks (8 skills)
+
+| Skill | Description |
+|-------|-------------|
+| `frontend` | Modern frontend with React, Vue, and web technologies |
+| `backend` | Backend with Node.js, Express, NestJS, and server patterns |
+| `mobile` | Mobile with React Native, Flutter, and native patterns |
+| `database` | Database design, SQL, NoSQL, and data management |
+| `cloud-platforms` | AWS, GCP, Azure services and cloud-native development |
+| `ai-ml-integration` | AI/ML APIs, LLM integration, and intelligent apps |
+| `realtime-systems` | WebSocket, real-time communication, event-driven |
+| `edge-iot` | Edge computing, IoT protocols, and embedded systems |
+
+### Tools & Integrations (9 skills)
+
+| Skill | Description |
+|-------|-------------|
+| `git-workflows` | Git version control, branching, and collaboration |
+| `project-management` | Agile, Scrum, Kanban, and issue tracking |
+| `development-environment` | IDE setup, dev containers, and local development |
+| `monitoring-logging` | Application monitoring, logging, and alerting |
+| `api-tools` | API testing, documentation, and development tools |
+| `automation-scripts` | Build automation, task runners, and scripting |
+| `auto-dev-setup` | Auto-Dev workflow for Human-in-the-Loop automation |
+| `claude-code-plugin` | Claude Code Plugin development and marketplace management |
+| `claude-code-sdk` | Claude Code SDK for AI-powered applications |
+
+### Domain Applications (12 skills)
+
+| Skill | Description |
+|-------|-------------|
+| `application-patterns` | Common application development patterns |
+| `e-commerce` | E-commerce platforms, payments, shopping cart |
+| `saas-platforms` | SaaS architecture, multi-tenancy, subscriptions |
+| `content-platforms` | CMS, blogging platforms, content management |
+| `communication-systems` | Email, notifications, messaging systems |
+| `developer-tools` | CLI tools, SDKs, developer experience |
+| `game-development` | Game development patterns and architectures |
+| `flame` | Flame Engine 2D game development for Flutter |
+| `flame-core` | Flame Engine core - components, input, collision |
+| `flame-systems` | Flame Engine 14 game systems |
+| `flame-templates` | Game templates - RPG, Platformer, Roguelike |
+| `desktop-apps` | Desktop apps with Electron and Tauri |
+
+### Programming Languages (12 skills)
+
+| Skill | Description |
+|-------|-------------|
+| `javascript-typescript` | Modern JavaScript and TypeScript patterns |
+| `python` | Python programming patterns and best practices |
+| `go` | Go programming patterns and idioms |
+| `rust` | Rust patterns and ownership concepts |
+| `java-kotlin` | Java and Kotlin programming patterns |
+| `csharp-dotnet` | C# and .NET development patterns |
+| `cpp` | Modern C++ programming patterns and idioms |
+| `ruby` | Ruby programming patterns and idioms |
+| `php` | Modern PHP programming patterns |
+| `swift` | Swift patterns for iOS and macOS |
+| `shell-bash` | Shell scripting and Bash programming |
+| `sql` | SQL patterns for database querying and design |
+
+## Other Installation Methods
+
+### Clone to Skills Directory
 
 ```bash
 # Clone to your skills directory
@@ -125,7 +174,7 @@ git clone https://github.com/miles990/claude-software-skills.git ~/.claude/skill
 
 Claude will automatically discover and use the skills when relevant to your tasks.
 
-### Option 3: With MCP Server
+### With MCP Server
 
 This repository is compatible with [claude-skills-mcp](https://github.com/K-Dense-AI/claude-skills-mcp):
 
@@ -137,7 +186,7 @@ pip install claude-skills-mcp
 # The server will load skills from ~/.claude/skills/
 ```
 
-### Option 4: Cursor IDE
+### Cursor IDE
 
 Add to your Cursor MCP settings:
 ```json
@@ -154,74 +203,42 @@ Add to your Cursor MCP settings:
 }
 ```
 
-### Option 5: Manual Reference
+### Manual Reference
 
 Simply clone and reference the SKILL.md files in your prompts:
 ```bash
 git clone https://github.com/miles990/claude-software-skills.git
 ```
 
-## Skill Categories
+## Auto-Dev: Automated Development Workflow
 
-### 1. Software Design (6 skills)
-- `architecture-patterns` - Microservices, monolith, event-driven, hexagonal
-- `design-patterns` - GoF patterns, SOLID principles, DRY/KISS
-- `api-design` - REST, GraphQL, gRPC, OpenAPI
-- `system-design` - Scalability, high availability, distributed systems
-- `data-design` - Data modeling, normalization, schema design
-- `ux-principles` - Usability, accessibility, design systems
+One-click setup for GitHub Actions automated development workflow, let Claude help you complete development tasks.
 
-### 2. Software Engineering (7 skills)
-- `code-quality` - Clean code, refactoring, code review
-- `testing-strategies` - Unit, integration, E2E, TDD/BDD
-- `devops-cicd` - CI/CD pipelines, GitOps, infrastructure as code
-- `performance-optimization` - Profiling, caching, optimization
-- `security-practices` - OWASP, authentication, encryption
-- `reliability-engineering` - SRE, chaos engineering, observability
-- `documentation` - Technical writing, API docs, architecture docs
+### Quick Setup
 
-### 3. Development Stacks (9 skills)
-- `frontend` - React, Vue, Angular, Svelte, Next.js
-- `backend` - Node.js, Python, Go, Rust frameworks
-- `mobile` - React Native, Flutter, iOS, Android
-- `mobile/flame` - Flame 2D game engine for Flutter
-- `database` - PostgreSQL, MongoDB, Redis, Elasticsearch
-- `cloud-platforms` - AWS, GCP, Azure, Vercel
-- `ai-ml-integration` - LLM APIs, embeddings, vector DBs
-- `realtime-systems` - WebSocket, SSE, message queues
-- `edge-iot` - Edge computing, IoT protocols
+**Using API Key:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
+```
 
-### 4. Tools & Integrations (6 skills)
-- `git-workflows` - Branching strategies, hooks, conventional commits
-- `project-management` - Agile, Scrum, Kanban, issue tracking
-- `development-environment` - Docker, VS Code, debugging
-- `monitoring-logging` - Prometheus, Grafana, structured logging
-- `api-tools` - Postman, curl, API testing
-- `automation-scripts` - Make, npm scripts, task runners
+**Using Claude Max (OAuth):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
+```
 
-### 5. Domain Applications (8 skills)
-- `application-patterns` - MVC, CQRS, event sourcing
-- `e-commerce` - Shopping cart, payments, inventory
-- `saas-platforms` - Multi-tenancy, billing, user management
-- `content-platforms` - CMS, media handling, search
-- `communication-systems` - Email, notifications, chat
-- `developer-tools` - CLI tools, SDKs, plugins
-- `game-development` - Game loop, physics, rendering
-- `desktop-apps` - Electron, Tauri, native apps
+### Post-Installation Setup
 
-### 6. Programming Languages (12 skills)
-- `javascript-typescript` - Modern JS/TS, Node.js ecosystem
-- `python` - Python best practices, async, typing
-- `go` - Go idioms, concurrency, performance
-- `rust` - Ownership, lifetimes, safe concurrency
-- `java-kotlin` - JVM ecosystem, Spring, Android
-- `csharp-dotnet` - .NET ecosystem, ASP.NET, LINQ
-- `cpp` - Modern C++, memory management, performance
-- `ruby` - Ruby idioms, Rails, metaprogramming
-- `php` - Modern PHP, Laravel, Composer
-- `swift` - iOS/macOS development, SwiftUI
-- `shell-bash` - Scripting, automation, CLI tools
-- `sql` - Query optimization, database design
+| Version | Setup Method |
+|---------|--------------|
+| API Key | Get Key from [console.anthropic.com](https://console.anthropic.com/settings/keys), set in GitHub Secrets `ANTHROPIC_API_KEY` |
+| Claude Max | Run `claude /install-github-app` for auto OAuth Token setup |
+
+### Usage
+
+- **Issue Trigger**: Create Issue → Add `auto-dev` label
+- **Comment Trigger**: Comment `@claude [instruction]` on any Issue/PR
+
+Detailed docs: [AUTO-DEV.md](.github/AUTO-DEV.md)
 
 ## Usage Examples
 
@@ -248,10 +265,9 @@ Claude: [Automatically uses devops-cicd + frontend + backend + git-workflows ski
 ```
 claude-software-skills/
 ├── .claude-plugin/          # Plugin configuration
-│   └── marketplace.json
+│   └── marketplace.json     # Lists all 55 skills as individual plugins
 ├── .github/
 │   └── workflows/           # CI/CD automation
-│       └── release.yml
 ├── software-design/         # Architecture & design skills
 ├── software-engineering/    # Development practices
 ├── development-stacks/      # Tech stack skills
@@ -301,7 +317,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## Related Projects
 
-- [claude-scientific-skills](https://github.com/K-Dense-AI/claude-scientific-skills) - Scientific research skills
+- [claude-domain-skills](https://github.com/miles990/claude-domain-skills) - Non-technical domain skills
 - [claude-skills-mcp](https://github.com/K-Dense-AI/claude-skills-mcp) - MCP server for skill discovery
 
 ---
