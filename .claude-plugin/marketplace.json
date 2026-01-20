@@ -192,6 +192,13 @@
       "strict": true
     },
     {
+      "name": "analyze-repo",
+      "description": "Deep analysis tool for GitHub repos and local projects, generates Markdown reports with Mermaid diagrams",
+      "source": "./tools-integrations/analyze-repo",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
       "name": "api-tools",
       "description": "API testing, documentation, and development tools",
       "source": "./tools-integrations/api-tools",
